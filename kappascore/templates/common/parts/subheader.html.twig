@@ -1,0 +1,69 @@
+<style>
+    .subheader-sports {
+        background: rgb(247 247 249);
+        padding: 0 5px;
+        overflow: auto hidden;
+        white-space: nowrap;
+        border-bottom: 2px solid rgb(229 229 240);
+        position: sticky;
+        top: 60px;
+        z-index: 99;
+    }
+    .subheader-sports-content {
+        width: calc(100% - 25px);
+        overflow: auto hidden;
+        padding: 10px 0;
+        position: relative;
+        padding-right: 25px;
+    }
+    .subheader-sport-item {
+        text-align: center;
+        color: rgb(35 54 112);
+        border: 2px solid rgb(216 223 243);
+        display:inline-block;
+    }
+    .subheader-sport-item.selected {
+        border-color: rgb(22 161 220);
+    }
+    .subheader-sport-item a {
+        color: rgb(35 54 112);
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 16px;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 10px;
+        display: inline-block;
+    }
+    .subheader-sport-item svg {
+        height: 16px;
+        color: #fa6507;
+        fill: #fa6507;
+        width: 16px;
+        vertical-align: text-bottom;
+        margin-right: 5px;
+    }
+    .subheader-sports .right-hover {
+        background: linear-gradient(to left, rgb(247 247 249) 0%, transparent 100%);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 5%;
+    }
+</style>
+<div class="subheader-sports">
+    <div class="main-container">
+        <div class="subheader-sports-content scroll-minimalista">
+            {% for sport in sports %}
+                <div class="subheader-sport-item {% if sport_selected == sport._id %}selected{% endif %}" data-sid="{{ sport.oxb_id }}">
+                    <a href="{{ parent_page }}/{{ sport.sport_key }}">
+                        <svg class="icon"><use xlink:href="/images/sport_icons.svg#sports_{{ sport.oxb_id }}"></use></svg>
+                        {{ Translate(sport.name) }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="right-hover"></div>
+    </div>
+</div>

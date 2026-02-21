@@ -1,0 +1,141 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{{ tournament.name }}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+{% endblock %}
+
+{% block content %}
+    <style>
+        div#content_tournament {
+            background: #1c2125;
+        }
+        .event-on-list {
+            margin-bottom: 5px;
+            padding: 15px 0;
+            cursor: pointer;
+            background: #F7F7F9;
+            color: #233670;
+            font-size: 12px;
+            border-bottom: 2px solid #fff;
+        }
+        .event-on-list:last-child {
+            margin-bottom: 0px;
+        }
+        .event-on-list .event-on-list-col {
+            display: inline-block;
+            vertical-align: top;
+            text-decoration: none;
+        }
+        a.event-on-list-details {
+            text-decoration: none;
+        }
+        .event-on-list .event-on-list-col:nth-child(1) {
+            width: 120px;
+            font-size: 12px;
+            text-align: center;
+        }
+        .event-on-list .event-on-list-col:nth-child(2) {
+            width: calc(100% - 210px);
+        }
+        .event-on-list .event-on-list-col:nth-child(3) {
+            width: 75px;
+            text-align: right;
+            font-size: 26px;
+            align-content: center;
+            justify-content: center;
+        }
+        .event-on-list .event-on-list-col .event-on-list-team {
+            position: relative;
+        }
+        .event-on-list .event-on-list-col .event-on-list-team img {
+            height: 16px;
+            vertical-align: middle;
+        }
+        .event-on-list-team-score {
+            position: absolute;
+            right: 15px;
+            top: 0;
+        }
+        .titleOfTournament {
+            color: #fff;
+            background: #1C2B5A;
+            padding: 5px 10px;
+        }
+
+        div#content_sport {
+            background: #F7F7F9;
+            padding:15px;
+            min-height: 600px;
+        }
+        .tournamentInfo {
+            padding: 10px;
+            background: #F7F7F9;
+            color: #233670;
+            display: block;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 75px;
+            border: 2px solid rgb(216 223 243);
+        }
+        .tournamentInfo img {
+            height: 50px;
+            position: absolute;
+            top: 12px;
+            left: 11px;
+            background: #fff;
+            border-radius: 5px;
+            border: 1px solid #dcdcdc;
+            max-width: 50px;
+        }
+        .tournamentInfo p {
+            margin-bottom: 0;
+        }
+    </style>
+    <div class="main-container">
+        <div id="content_sport">
+
+            <div class="tournamentInfo">
+                <img class="flagicon" src="/images/tournaments/{{ tournament._id }}.png" alt="{{ tournament.name }}" onerror="this.onerror=null; this.src='/images/trofeo.jpg';">
+                {{ tournament.name }}
+                <p>{{ Date('Y') }}</p>
+            </div>
+
+            <div class="titleOfTournament">
+                {{ Translate('Next events') }}
+            </div>
+            {% include TemplatePath(template, "models/event_list.html.twig") with {'events': tournament.events, 'with_status': 0, 'lang': lang} only %}
+            <div class="titleOfTournament">
+                {{ Translate('Finished events') }}
+            </div>
+            {% include TemplatePath(template, "models/event_list.html.twig") with {'events': tournament.events, 'with_status': 2, 'lang': lang} only %}
+
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      async function initPage(){
+
+
+
+      }
+
+      initPage();
+
+    </script>
+
+{% endblock %}

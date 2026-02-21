@@ -1,81 +1,172 @@
-<header id="main-header" class="fixed top-0 w-full z-50 transition-all duration-700 bg-transparent py-4">
-    <div class="max-w-[1600px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between relative">
-        
-        {# Logo - Left #}
-        <a href="/{{ lang }}" class="text-2xl md:text-3xl font-black tracking-tighter flex items-center group cursor-pointer z-10">
-            Kappa<span class="text-emerald-500 group-hover:text-emerald-400 transition-colors">score</span>
-            <div class="ml-2 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-        </a>
-        
-        {# Centered Desktop Nav #}
-        <nav class="hidden lg:flex items-center space-x-2 absolute left-1/2 -translate-x-1/2">
-            <a href="https://kappascore.com" class="relative text-[11px] font-black tracking-[0.25em] px-8 py-2.5 rounded-full transition-all group text-white">
-                {{ Translate('Sports') }}
-                <div class="absolute inset-0 bg-white/5 border border-white/10 rounded-full -z-10"></div>
-            </a>
-            <a href="https://kappaslot.com" class="relative text-[11px] font-black tracking-[0.25em] px-8 py-2.5 rounded-full transition-all group text-white/30 hover:text-white">
-                {{ Translate('Games') }}
-            </a>
-            <a href="https://kappatop.com" class="relative text-[11px] font-black tracking-[0.25em] px-8 py-2.5 rounded-full transition-all group text-white/30 hover:text-white">
-                {{ Translate('Top Lists') }}
-            </a>
-        </nav>
+<style>
+    .tophead {
+        background: rgb(22 25 55);
+    }
+    .tophead ul.toplinks {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+    .tophead ul.toplinks > li {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 0;
+    }
+    .tophead ul.toplinks > li a {
+        font-size: 12px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+    }
+    .tophead ul.toplinks > li a.active {
+        color: rgb(230 61 38);
+        font-weight: bold;
+    }
 
-        {# Right Actions #}
-        <div class="flex items-center space-x-4 md:space-x-8 z-10">
-            <div class="hidden xl:flex items-center space-x-3 bg-white/[0.03] border border-white/10 rounded-full px-6 py-2 group focus-within:border-emerald-500/50 transition-all">
-                <i class="fa fa-search text-white/20 group-focus-within:text-emerald-500 transition-colors"></i>
-                <input type="text" placeholder="Search matches..." class="bg-transparent border-none text-[11px] font-bold focus:outline-none w-40 placeholder:text-white/10">
-            </div>
+    .lang-selector {
+        position: relative;
+        display: inline-block;
+        font-family: inherit;
+    }
+    li.lang-selector {
+        float: right;
+        z-index: 9999;
+        padding: 0!important;
+    }
 
-            <div class="flex items-center space-x-2 md:space-x-4">
-                {# Language Selector #}
-                <div class="relative group/lang">
-                    <button class="flex items-center space-x-2 bg-[#0a0a0a] border border-white/60 px-3 md:px-4 py-1.5 md:py-2 rounded-xl hover:bg-white/5 transition-all">
-                        <span class="text-base md:text-lg">{{ countryToFlag(lang|replace({'en':'us'})) }}</span>
-                        <span class="text-[10px] md:text-[11px] font-black tracking-widest text-emerald-500">{{ lang|replace({'en':'us'})|upper }}</span>
-                    </button>
-                    
-                    <div class="absolute right-0 mt-2 w-32 bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50 opacity-0 invisible group-hover/lang:opacity-100 group-hover/lang:visible transition-all duration-300 translate-y-2 group-hover/lang:translate-y-0">
-                        <div class="py-2">
-                            {% for lg, url in alternate_locales %}
-                                <a href="{{ url }}" class="w-full flex items-center space-x-4 px-4 py-3 hover:bg-white/5 transition-all group">
-                                    <span class="text-lg">{{ countryToFlag(lg|replace({'en':'us'})) }}</span>
-                                    <span class="text-[11px] font-black tracking-widest text-white/40 group-hover:text-white">{{ lg|replace({'en':'us'})|upper }}</span>
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+    .lang-selected {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+        background: #111;
+        color: #fff;
+        border: 1px solid rgb(21 32 67);
+        cursor: pointer;
+    }
 
-                <button id="mobile-menu-toggle" class="lg:hidden p-3 rounded-xl bg-white/5 border border-white/10">
-                    <i class="fa fa-bars"></i>
+    .lang-selected .fi {
+        width: 20px;
+        height: 15px;
+    }
+
+    .lang-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #111;
+        /*transform: translate(-40%);*/
+        border: 1px solid rgb(21 32 67);
+        list-style: none;
+        padding: 4px 0;
+        margin: 0;
+        display: none;
+        z-index: 10;
+    }
+
+    .lang-dropdown li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        cursor: pointer;
+        color: #fff;
+    }
+
+    .lang-dropdown li:hover {
+        background: #1e1e1e;
+    }
+
+    .lang-dropdown .fi {
+        width: 20px;
+        height: 15px;
+    }
+
+    .lang-selector:hover .lang-dropdown {
+        display: block;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .tophead ul.toplinks {
+            text-align: center;
+        }
+        li.lang-selector {
+            float: unset;
+            z-index: 9999;
+        }
+    }
+
+</style>
+<div id="preloader" style="display:none;">
+    <div id="loader"></div>
+</div>
+<div class="tophead">
+    <div class="main-container">
+        <ul class="toplinks">
+            <li><a class="active" href="https://kappascore.com">{{ Translate('Sports') }}</a></li>
+            <li><a href="https://kappaslot.com">{{ Translate('Games') }}</a></li>
+            <li><a href="https://kappatop.com">{{ Translate('Top Lists') }}</a></li>
+            <li class="lang-selector">
+                <button class="lang-selected" type="button">
+                    <span class="fi fi-{{ lang }}"></span>
+                    <span class="lang-label">{{ lang|upper }}</span>
                 </button>
-            </div>
+
+                <ul class="lang-dropdown">
+                    {% for lg in langs|keys %}
+                        <li data-lang="{{ lg }}" data-iso="{{ langs[lg] }}">
+                            <span class="fi fi-{{ langs[lg]|replace({'en':'us'}) }}"></span>
+                            <span>{{ langs[lg]|replace({'en':'us'})|upper }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="header">
+    <div class="main-container">
+        <div class="logo">
+            <a href="/{{ lang }}">Kappa<span>score</span></a>
+        </div>
+        <div class="right">
+
         </div>
     </div>
-
-    {# Mobile Navigation #}
-    <div id="mobile-menu" class="hidden lg:hidden px-4 pb-6 space-y-4 overflow-hidden">
-        <div class="grid grid-cols-3 gap-2">
-            <a href="https://kappascore.com" class="text-[10px] font-black tracking-widest py-3 rounded-full transition-all text-center bg-[#10b981] text-black shadow-[0_0_15px_rgba(16,185,129,0.2)]">{{ Translate('Sports') }}</a>
-            <a href="https://kappaslot.com" class="text-[10px] font-black tracking-widest py-3 rounded-full transition-all text-center bg-[#0a0a0a] border border-white/5 text-white/60">{{ Translate('Games') }}</a>
-            <a href="https://kappatop.com" class="text-[10px] font-black tracking-widest py-3 rounded-full transition-all text-center bg-[#0a0a0a] border border-white/5 text-white/60">{{ Translate('Top Lists') }}</a>
-        </div>
-
-        <div class="grid grid-cols-3 gap-1 bg-[#0a0a0a] p-1 rounded-xl border border-white/5">
-            <a href="/{{ lang }}" class="flex flex-col items-center justify-center py-3 rounded-lg text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">
-                <i class="fa fa-th-large mb-1"></i>
-                <span>{{ Translate('Results') }}</span>
-            </a>
-            <a href="/{{ lang }}/statistics" class="flex flex-col items-center justify-center py-3 rounded-lg text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">
-                <i class="fa fa-bar-chart mb-1"></i>
-                <span>{{ Translate('Statistics') }}</span>
-            </a>
-            <a href="/{{ lang }}/live-score" class="flex flex-col items-center justify-center py-3 rounded-lg text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-colors">
-                <i class="fa fa-television mb-1"></i>
-                <span>{{ Translate('Live Score') }}</span>
-            </a>
-        </div>
+</div>
+<div class="subhead">
+    <div class="main-container">
+        <a href="/{{ lang }}" {% if isActiveMenu('/') %}class="active"{% endif %}><i class="fa fa-bars" aria-hidden="true"></i> {{ Translate('Results') }}</a> |
+        <a href="/{{ lang }}/statistics" {% if isActiveMenu('/statistics') %}class="active"{% endif %}><i class="fa fa-line-chart" aria-hidden="true"></i> {{ Translate('Statistics') }}</a> |
+        <a href="/{{ lang }}/live-score" {% if isActiveMenu('/live-score') %}class="active"{% endif %}><i class="fa fa-desktop" aria-hidden="true"></i> {{ Translate('Live Score') }}</a>
     </div>
-</header>
+</div>
+
+<script>
+  function setCookie(name, value, days = 365, path = "/") {
+    const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; expires=${expires}; path=${path}; SameSite=Lax`;
+  }
+
+  document.querySelectorAll('.lang-dropdown li').forEach(item => {
+    item.addEventListener('click', () => {
+      const iso = item.dataset.iso;   // es / fr / de / us
+      const lang = item.dataset.lang; // es_ES / fr_FR / de_DE
+
+      const selected = document.querySelector('.lang-selected');
+      selected.innerHTML = `
+        <span class="fi fi-${iso}"></span>
+        <span class="lang-label">${iso.toUpperCase()}</span>
+      `;
+
+      setCookie('lang', lang, 365);
+
+      const path = window.location.pathname;
+
+      const newPath = path.replace(/^\/[a-z]{2}(?=\/|$)/i, `/${iso}`);
+
+      window.location.href = newPath + window.location.search + window.location.hash;
+    });
+  });
+</script>
+
