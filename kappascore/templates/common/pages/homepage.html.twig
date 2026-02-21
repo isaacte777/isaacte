@@ -1,520 +1,151 @@
-{% extends TemplatePath(template, "base.html.twig") %}
-
-{% block pagetitle %}{% if page_title is defined and page_title is not null %}{{ page_title }}{% else %}{{ Translate('Last results') }}{% endif %}{% endblock %}
-
-{% block header %}
-    {% include TemplatePath(template, "parts/header.html.twig") %}
-    {% include TemplatePath(template, "parts/subheader.html.twig") with {'parent_page': '/' ~ lang} %}
-{% endblock %}
+{% extends 'common/base.html.twig' %}
 
 {% block content %}
-    <style>
-        div#calendar {
-            margin-top: 0;
-            position: relative;
-            background: var(--secundary-bg-color);
-            color: var(--primary-font-color);
-            padding: 10px;
-        }
-        .calendar .day {
-            width: 16px!important;
-            height: 16px!important;
-            font-size: 14px!important;
-            line-height: normal!important;
-            cursor:pointer!important;
-        }
-        .calendar td {
-            font-size: 14px!important;
-        }
-        .calendar .day.has-event:after {
-            background: var(--nav-bg-color) !important;
-            width: 14px !important;
-            height: 2px !important;
-            left: calc(50% - 6.5px)!important;
-            border-radius: 0px !important;
-        }
-        .calendar table {
-            margin: 0px!important;
-        }
-
-        .tabs-homepage-view,
-        .tabs-homepage-filters{
-            display: inline-block;
-            vertical-align: top;
-        }
-        .tabs-homepage-view a,
-        .tabs-homepage-filters a {
-            display: inline-block;
-            line-height: 26px;
-            font-size: 14px;
-            color: #233670;
-            border: 1px solid #D8DFF3;
-            text-decoration: none;
-            padding: 0 15px;
-        }
-        .tabs-homepage-view a.active,
-        .tabs-homepage-view a:hover,
-        .tabs-homepage-filters a.active,
-        .tabs-homepage-filters a:hover {
-            background: #E9F8FD;
-            border: 1px solid #26B2EE;
-        }
-        .tabs-homepage-filters a img {
-            height: 12px;
-            vertical-align: initial;
-        }
-        #live-events-btn > span {
-            color: var(--nav-bg-color);
-            font-weight: bold;
-            display: inline-block;
-            margin-left: 5px;
-        }
-
-        .league_line_items_header {
-            background: #1C2B5A;
-            color: #fff;
-            font-size: 14px;
-            line-height: 36px;
-            position: relative;
-            padding-left: 10px;
-        }
-        .league_line_items_header img.flagicon {
-            position: absolute;
-            top: 11px;
-            left: 9px;
-            height: 14px;
-        }
-        .league_line_items_events > a {
-            text-decoration: none;
-        }
-        .league_line_items_events .league_line_items_event {
-            background: #F7F7F9;
-            white-space: nowrap;
-            padding: 5px 0;
-            color: #233670;
-            height: 38px;
-            border-bottom: 2px solid #fff;
-        }
-        .league_line_items_events .league_line_items_event > div {
-            display: inline-block;
-            vertical-align: top;
-            align-items: center;
-            align-content: center;
-            height: 100%;
-        }
-        .league_line_items_events .league_line_items_event > .league_line_items_event_opt {
-            width: 40px;
-            text-align: center;
-        }
-        .league_line_items_events .league_line_items_event > .league_line_items_event_time {
-            width: 80px;
-            text-align: center;
-            font-size: 12px;
-            white-space: normal;
-        }
-        .league_line_items_events .league_line_items_event > div.league_line_items_event_name {
-            width: calc(100% - 40px - 80px - 50px - 70px);
-            font-size: 14px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-        .league_line_items_events .league_line_items_event > div.league_line_items_event_score {
-            width: 50px;
-            font-size: 14px;
-            text-align: center;
-        }
-        .league_line_items_events .league_line_items_event > div.league_line_items_event_btn {
-            width: 53px;
-        }
-        .league_line_items_events .league_line_items_event > div.league_line_items_event_name a {
-            color: #233670;
-            text-decoration: none;
-            width: 100%;
-            display: inline-block;
-        }
-
-        .content-homepage-view {
-            margin-top: 15px;
-        }
-        .content-homepage-view > div {
-            display: none;
-        }
-        .content-homepage-view > div.active {
-            display: block;
-        }
-        .league_line_items_events .league_line_items_event > div.league_line_items_event_btn a {
-            color: #233670;
-        }
-
-        h2 {
-            color: #233670;
-            font-size: 18px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid rgb(21 32 67 / 22%);
-            width: 90%;
-        }
-
-        .hp-contents {
-            white-space: nowrap;
-            min-height: 600px;
-        }
-        .right-container {
-            width: calc(100% - 230px);
-            display: inline-block;
-            vertical-align: top;
-        }
-        .left-bar-container {
-            width: 230px;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        ul.list-left-bar-hp {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        ul.list-left-bar-hp li {
-            margin-bottom: 5px;
-            padding: 2.5px 0;
-        }
-        ul.list-left-bar-hp li a i {
-            position: absolute;
-            right: 10px;
-            top: 3px;
-            background: #fff;
-            display: none;
-        }
-        ul.list-left-bar-hp li.selected a i {
-            display: block;
-        }
-        ul.list-left-bar-hp li a {
-            position: relative;
-            display: inline-block;
-            color: #233670;
-            text-decoration: none;
-            font-size: 14px;
-            width: calc(100% - 25px);
-        }
-        ul.list-left-bar-hp li img {
-            height: 14px;
-            position: absolute;
-            left: 0;
-            top: 2px;
-        }
-
-        .list-left-bar-hp-countries {
-            max-height: 400px;
-            overflow: hidden;
-        }
-        .list-left-bar-hp-countries.show-all {
-            max-height: unset;
-        }
-
-        a.btn-show-all-countries {
-            color: #233670;
-            margin-bottom: 25px;
-            display: block;
-            margin-top: 15px;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
-        @media only screen and (max-width: 768px) {
-            .left-bar-container {
-                display: none!important;
-            }
-            .right-container {
-                width: 100%;
-            }
-            .tabs-homepage-view, .tabs-homepage-filters {
-                margin: 0 5px;
-            }
-        }
-    </style>
-    <div class="main-container">
-
-        <div class="hp-contents">
-
-            <div class="left-bar-container">
-
-                {% set fixed_leagues = 0 %}
-
-                {% for sport in sport_menu %}
-                    {% if sport._id == sport_selected %}
-                        {% for tournament in sport.tournaments %}
-                            {% set fixed_leagues = fixed_leagues+1 %}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-
-                {% if fixed_leagues > 0 %}
-
-                    <h2><i class="fa fa-thumb-tack" aria-hidden="true"></i> {{ Translate('Fixed leagues') }}</h2>
-
-                    <ul class="list-left-bar-hp">
-                        {% for sport in sport_menu %}
-                            {% if sport._id == sport_selected %}
-
-                                {% for tournament in sport.tournaments %}
-                                    <li><a href="/{{ lang }}/tournament/{{ tournament._id }}" data-cid="{{ tournament.oxb_id }}" data-type="tournament">{{ countryToFlag(tournament.category.name) }} {{ tournament.name }}</a></li>
-                                {% endfor %}
-
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-
-                {% endif %}
-
-                <h2>{{ Translate('Countries') }}</h2>
-
-                <ul class="list-left-bar-hp list-left-bar-hp-countries">
-                    {% set unique_countries = [] %}
-                    {% set total_countries = 0 %}
-                    {% for result in next_events %}
-                        {% if result.country not in unique_countries %}
-                            {% set unique_countries = unique_countries|merge([result.country]) %}
-                            <li class="filter-by-country-btn" data-cid="{{ result.country_id }}" data-country-code="{{ countyToCode(result.country) }}" data-cn="{{ result.country }}">
-                                <a href="#" data-type="tournament">
-                                    {{ countryToFlag(result.country) }}
-                                    {{ result.country }}
-                                    <i class="fa fa-window-close-o" aria-hidden="true"></i>
-                                </a>
-                            </li>
-                            {% set total_countries = total_countries+1 %}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                {% if total_countries > 14 %}
-                <a href="#" class="btn-show-all-countries">{{ Translate('Show all countries') }}</a>
-                {% endif %}
-
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
-                        crossorigin="anonymous"></script>
-                <!-- Leftbar Bottom -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-2502506691273037"
-                     data-ad-slot="3132804372"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                  (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-
-            </div>
-
-            <div class="right-container">
-
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
-                        crossorigin="anonymous"></script>
-                <!-- Banner Top Side -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-2502506691273037"
-                     data-ad-slot="7159679298"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                  (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-
-                {% if favorite_events|length > 0 %}
-
-                    <h2>{{ Translate('Recommended Events') }}</h2>
-
-                    {% for result in favorite_events %}
-                        <div class="league_line_items">
-                            <div class="league_line_items_header">
-                                {{ countryToFlag(result.country) }}
-                                {{ result.country|upper }}: {{ result.name }} <i class="fa fa-thumb-tack" aria-hidden="true"></i>
-                            </div>
-                            <div class="league_line_items_events">
-                                {% for event in result.events %}
-                                    <div class="league_line_items_event">
-                                        <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
-                                        <div class="league_line_items_event_time">{{ jsDate("d/m/Y H:i", event.ste) }}</div>
-                                        <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
-                                        <div class="league_line_items_event_score"></div>
-                                        <div class="league_line_items_event_btn">
-                                            <a href="#results" class="active" title="{{ Translate('View details') }}"><i class="fa fa-desktop" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
+    {# Featured Hero Carousel #}
+    <section class="mb-16">
+        <div class="relative h-[400px] md:h-[500px] rounded-[40px] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
+            <div id="hero-carousel" class="relative w-full h-full">
+                <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1920&h=1080" class="absolute inset-0 w-full h-full object-cover scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex flex-col items-start justify-center p-8 md:p-16">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500 text-black text-[9px] font-black tracking-widest">LIVE NOW</span>
+                            <span class="text-white/60 text-[10px] font-black tracking-widest uppercase">Champions League</span>
                         </div>
-                    {% endfor %}
-
-                {% endif %}
-
-                <br />
-
-                <div class="tabs-homepage-view">
-                    <a href="#results" class="active">{{ Translate('Results') }}</a>
-                    <a href="/{{ lang }}/live-score" id="live-events-btn">{{ Translate('Live') }} <span>0</span></a>
-                    <a href="#next-events">{{ Translate('Next events') }}</a>
-                </div>
-
-                <div class="tabs-homepage-filters"></div>
-
-                <div class="content-homepage-view">
-                    <div class="active" id="results">
-                        {% for result in last_results %}
-                            <div class="league_line_items" data-cid="{{ result.country_id }}">
-                                <div class="league_line_items_header">
-                                    {{ countryToFlag(result.country) }}
-                                    {{ result.country|upper }}: {{ result.name }}</i>
-                                </div>
-                                <div class="league_line_items_events">
-                                    {% for event in result.events %}
-                                        <div class="league_line_items_event">
-                                            <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
-                                            <div class="league_line_items_event_time">{{ Translate('Finished') }}</div>
-                                            <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
-                                            <div class="league_line_items_event_score">{{ event.esc|replace({':': "<br />"})|raw }}</div>
-                                            <div class="league_line_items_event_btn">
-                                                <a href="#results" class="active" title="{{ Translate('View details') }}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <div class="" id="next-events">
-                        {% for result in next_events|sort((a, b) => a.ste <=> b.ste) %}
-                            <div class="league_line_items" data-cid="{{ result.country_id }}">
-                                <div class="league_line_items_header">
-                                    {{ countryToFlag(result.country) }}
-                                    {{ result.country|upper }}: {{ result.name }}
-                                </div>
-                                <div class="league_line_items_events">
-                                    {% for event in result.events %}
-                                        <div class="league_line_items_event">
-                                            <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
-                                            <div class="league_line_items_event_time">{{ jsDate("d/m/Y H:i", event.ste) }}</div>
-                                            <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
-                                            <div class="league_line_items_event_score"></div>
-                                            <div class="league_line_items_event_btn">
-                                                <a href="#results" class="active" title="{{ Translate('View details') }}"><i class="fa fa-desktop" aria-hidden="true"></i></a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
+                        <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-8 leading-none">The Stage is Set.<br><span class="text-emerald-500">Real Madrid vs Man City</span></h2>
+                        <button class="px-10 py-4 rounded-2xl bg-white text-black text-[11px] font-black tracking-widest hover:bg-emerald-500 transition-all">WATCH ANALYTICS</button>
                     </div>
                 </div>
-
             </div>
         </div>
+    </section>
 
+    {# Sports Navigation Bar #}
+    <section class="mb-12">
+        <div class="flex items-center space-x-3 overflow-x-auto no-scrollbar pb-4">
+            <button class="flex items-center space-x-3 px-6 py-3.5 rounded-2xl bg-emerald-500 text-black text-[10px] font-black tracking-widest transition-all">
+                <span>⚽</span><span>SOCCER</span>
+            </button>
+            {% set sports_list = ['ICE HOCKEY', 'BASKETBALL', 'TENNIS', 'VOLLEYBALL', 'TABLE TENNIS', 'BASEBALL', 'CRIQUET', 'HANDBALL'] %}
+            {% for sport_name in sports_list %}
+                <button class="flex items-center space-x-3 px-6 py-3.5 rounded-2xl bg-white/[0.03] border border-white/5 text-white/40 text-[10px] font-black tracking-widest hover:text-white hover:border-white/20 transition-all">
+                    <span>{{ sport_name }}</span>
+                </button>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-12">
+        {# Left Sidebar: Leagues & Countries #}
+        <aside class="space-y-10">
+            {# Fixed Leagues #}
+            <div class="bg-white/[0.02] border border-white/5 rounded-[32px] p-8">
+                <h3 class="text-[10px] font-black tracking-[0.3em] text-white/20 uppercase mb-8 flex items-center justify-between">
+                    <span>{{ Translate('Fixed leagues') }}</span>
+                    <i class="fa fa-thumb-tack"></i>
+                </h3>
+                <div class="space-y-2">
+                    {% for tournament in fixed_leagues %}
+                        <a href="/{{ lang }}/tournament/{{ tournament._id }}" class="flex items-center space-x-4 p-3 rounded-xl hover:bg-white/5 transition-all group">
+                            <span class="text-xl grayscale group-hover:grayscale-0 transition-all">{{ countryToFlag(tournament.category.name) }}</span>
+                            <span class="text-xs font-bold text-white/40 group-hover:text-white transition-colors">{{ tournament.name }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {# Countries List #}
+            <div class="bg-white/[0.02] border border-white/5 rounded-[32px] p-8">
+                <h3 class="text-[10px] font-black tracking-[0.3em] text-white/20 uppercase mb-8">{{ Translate('Countries') }}</h3>
+                <div class="max-h-[600px] overflow-y-auto custom-scrollbar space-y-1 pr-2">
+                    {# In the original template, countries are in 'results' variable #}
+                    {% for result in results %}
+                        <a href="/{{ lang }}?country={{ result.country }}" class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-all group">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-lg">{{ countryToFlag(result.country) }}</span>
+                                <span class="text-xs font-bold text-white/40 group-hover:text-white transition-colors">{{ result.country }}</span>
+                            </div>
+                            <i class="fa fa-chevron-right text-[10px] text-white/5 group-hover:text-white/20 transition-all"></i>
+                        </a>
+                    {% endfor %}
+                </div>
+                <a href="/{{ lang }}/countries" class="block w-full mt-6 py-4 text-center text-[9px] font-black tracking-widest text-emerald-500 uppercase hover:text-emerald-400 transition-colors border-t border-white/5">
+                    {{ Translate('Show all countries') }}
+                </a>
+            </div>
+        </aside>
+
+        {# Main Content: Events #}
+        <section class="space-y-10">
+            {# Event Filters #}
+            <div class="flex items-center justify-between bg-white/[0.02] border border-white/5 p-2 rounded-2xl">
+                <div class="flex items-center space-x-1">
+                    <a href="#results" class="px-6 py-3 rounded-xl bg-emerald-500 text-black text-[10px] font-black tracking-widest transition-all">
+                        {{ Translate('Results') }}
+                    </a>
+                    <a href="/{{ lang }}/live-score" class="px-6 py-3 rounded-xl text-white/40 hover:text-white text-[10px] font-black tracking-widest transition-all">
+                        {{ Translate('Live') }} <span class="ml-1 text-emerald-500">26</span>
+                    </a>
+                    <a href="#next-events" class="px-6 py-3 rounded-xl text-white/40 hover:text-white text-[10px] font-black tracking-widest transition-all">
+                        {{ Translate('Next events') }}
+                    </a>
+                </div>
+                <div class="pr-4">
+                    <i class="fa fa-calendar text-white/20"></i>
+                </div>
+            </div>
+
+            {# Recommended Events List #}
+            <div class="space-y-12">
+                <h2 class="text-2xl font-black tracking-tight flex items-center space-x-4">
+                    <span class="w-2 h-8 bg-emerald-500 rounded-full"></span>
+                    <span>{{ Translate('Recommended Events') }}</span>
+                </h2>
+
+                {# The original template uses a flat loop for recommended_events #}
+                <div class="bg-white/[0.02] border border-white/5 rounded-[32px] overflow-hidden shadow-2xl">
+                    <div class="divide-y divide-white/5">
+                        {% for event in recommended_events %}
+                            <a href="/{{ lang }}/event/{{ event.int_id }}" class="flex items-center px-8 py-6 hover:bg-white/[0.03] transition-all group">
+                                {# Time/Status #}
+                                <div class="w-24 flex flex-col items-start">
+                                    <span class="text-[10px] font-black text-white/20 group-hover:text-white/40 transition-colors">{{ event.date }}</span>
+                                    <span class="text-sm font-mono font-black text-emerald-500">{{ event.time }}</span>
+                                </div>
+
+                                {# Teams & Score #}
+                                <div class="flex-1 flex items-center justify-between px-12">
+                                    <div class="flex-1 text-right pr-8">
+                                        <span class="text-sm font-black tracking-tight group-hover:text-emerald-400 transition-colors">
+                                            {{ event.home_team.name|default(event.en|split(' - ')|first) }}
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="bg-black/40 px-6 py-2 rounded-xl border border-white/5 min-w-[100px] text-center">
+                                        <span class="text-xl font-black tracking-tighter tabular-nums">
+                                            {{ event.score|default('vs') }}
+                                        </span>
+                                    </div>
+
+                                    <div class="flex-1 text-left pl-8">
+                                        <span class="text-sm font-black tracking-tight group-hover:text-emerald-400 transition-colors">
+                                            {{ event.away_team.name|default(event.en|split(' - ')|last) }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {# Actions #}
+                                <div class="flex items-center space-x-4 opacity-20 group-hover:opacity-100 transition-all">
+                                    <div class="p-2 rounded-lg bg-white/5 hover:bg-white/10"><i class="fa fa-television text-xs"></i></div>
+                                    <div class="p-2 rounded-lg bg-white/5 hover:bg-white/10"><i class="fa fa-bar-chart text-xs"></i></div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-{% endblock %}
-
-{% block footer %}
-    {% include TemplatePath(template, "parts/footer.html.twig") %}
-{% endblock %}
-
-{% block scripts %}
-
-    {% include TemplatePath(template, "scripts/shared.html.twig") %}
-
-    <script>
-
-      let countries_selected = [];
-      let timerLiveCounter;
-      async function updateLiveCounter(){
-        let data = await makeRequest({
-          resource: '',
-          data: JSON.stringify({
-            opName: 'GetNrLive'
-          })
-        });
-
-        if(data.resultCode === 0){
-          $('#live-events-btn span').text(data.responseInfo)
-        }
-      }
-
-      function updateCountriesSelected(){
-        $(`.filter-by-country-btn.selected`).removeClass('selected');
-        $('.tabs-homepage-filters').empty();
-        if(countries_selected.length > 0){
-          $('#results > .league_line_items, #next-events .league_line_items').hide();
-          for (let item of countries_selected){
-            let element = $(`.filter-by-country-btn[data-cid="${item}"]`);
-            element.addClass('selected');
-            let category_name = element.data('cn');
-            let category_code = element.data('country-code');
-            $('.tabs-homepage-filters').append(`<a href="#" class="active" data-cid="${item}"><img class="flagicon ct-${category_code}" src="{{ ExternalCustomPath('media/images/flags/4x3/') }}${category_code}.svg" alt="${category_name}"> ${category_name} <i class="fa fa-times" aria-hidden="true"></i></a> `);
-            $(`#results > .league_line_items[data-cid="${item}"]`).show();
-            $(`#next-events .league_line_items[data-cid="${item}"]`).show();
-          }
-        }else{
-          $('#results > .league_line_items, #next-events .league_line_items').show();
-        }
-      }
-
-      $(document).ready(function(){
-
-        updateLiveCounter();
-        timerLiveCounter = setInterval(updateLiveCounter, 10000);
-
-        $(document).off('click', '.tabs-homepage-view > a');
-        $(document).on('click', '.tabs-homepage-view > a', function(e){
-          if($(this).attr('href').indexOf('#') !== -1){
-            e.preventDefault();
-            $('.tabs-homepage-view > a').removeClass('active');
-            $(this).addClass('active');
-            $('.content-homepage-view > div').removeClass('active');
-            $('.content-homepage-view > div' + $(this).attr('href')).addClass('active');
-          }
-        });
-
-        $(document).off('click', '.tabs-homepage-filters a');
-        $(document).on('click', '.tabs-homepage-filters a', function(e){
-          e.preventDefault();
-          let cid   = $(this).data('cid');
-          let newList = [];
-          for(let item of countries_selected){
-            if(cid !== item) newList.push(item);
-          }
-          countries_selected = newList;
-          updateCountriesSelected();
-        });
-
-        $(document).off('click', '.btn-show-all-countries');
-        $(document).on('click', '.btn-show-all-countries', function(e){
-          e.preventDefault();
-          let el = $('.list-left-bar-hp-countries');
-          if(el.hasClass('show-all')){
-            $(this).text('{{ Translate('Show all countries') }}');
-            el.removeClass('show-all');
-          }else{
-            $(this).text('{{ Translate('Hide countries') }}');
-            el.addClass('show-all');
-          }
-        });
-
-        $(document).off('click', '.filter-by-country-btn');
-        $(document).on('click', '.filter-by-country-btn', function(e){
-          e.preventDefault();
-          let el    = $(this);
-          let cid   = el.data('cid');
-          if(countries_selected.indexOf(cid) === -1){
-            countries_selected.push(cid);
-          }else{
-            let newList = [];
-            for(let item of countries_selected){
-              if(cid !== item) newList.push(item);
-            }
-            countries_selected = newList;
-          }
-          updateCountriesSelected();
-        });
-      });
-
-    </script>
-
 {% endblock %}
