@@ -1,0 +1,83 @@
+/**
+ * Unione Partners - CSS Variables
+ * Design tokens for the entire application
+ * Synchronized with React/Lovable Design System
+ */
+
+:root {
+  /* ===== Colors ===== */
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 8%);
+  --card: hsl(0, 0%, 98%);
+  --primary: hsl(0, 0%, 8%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 96%);
+  --muted: hsl(0, 0%, 94%);
+  --muted-foreground: hsl(0, 0%, 45%);
+  --accent: hsl(0, 84%, 60%);
+  --border: hsl(0, 0%, 90%);
+  --success: hsl(142, 76%, 36%);
+  --error: hsl(0, 84%, 60%);
+  
+  /* ===== Layout ===== */
+  --radius: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+  --navbar-height: 3rem;
+  --max-width: 72rem;
+  
+  /* ===== Typography ===== */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  
+  /* ===== Shadows ===== */
+  --shadow-soft: 0 2px 8px hsla(0, 0%, 0%, 0.04);
+  --shadow-card: 0 4px 20px hsla(0, 0%, 0%, 0.06);
+  --shadow-elevated: 0 8px 40px hsla(0, 0%, 0%, 0.08);
+  --shadow-button: 0 4px 14px hsla(0, 0%, 0%, 0.15);
+  --shadow-dropdown: 0 10px 40px hsla(0, 0%, 0%, 0.2);
+  
+  /* ===== Transitions ===== */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-smooth: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --easing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* ===== Z-Index Scale ===== */
+  --z-base: 1;
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-fixed: 200;
+  --z-modal-backdrop: 999;
+  --z-modal: 1000;
+}
+
+/* Responsive navbar height */
+@media (min-width: 640px) {
+  :root {
+    --navbar-height: 3.5rem;
+  }
+}
+
+/* Ultra-small screens */
+@media (max-width: 319px) {
+  :root {
+    --navbar-height: 2.75rem;
+  }
+}
+
+@media (max-width: 280px) {
+  :root {
+    --navbar-height: 2.5rem;
+  }
+}

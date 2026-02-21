@@ -1,0 +1,251 @@
+<header class="navbar" id="navbar">
+    <div class="section-container">
+        <nav class="nav-inner">
+            <a href="/" class="logo" id="mainLogo">
+                <img src="{{ media_server }}assets/img/logo-black.png" alt="Unione Partners" class="logo-img">
+            </a>
+
+            {% if current_internal_page is defined and current_internal_page is not null %}
+            <div class="nav-dropdown-container internal-page" id="navDropdownContainer">
+                <div class="nav-page-indicator">
+                    {{ icon_svg[current_internal_page['icon']]|raw }}
+                    <span>{{ current_internal_page['title'] }}</span>
+                </div>
+
+                <div class="nav-dropdown-arrow" id="navDropdownArrow">
+                    {{ icons_svg['chevron-down']|raw }}
+                </div>
+
+                <div class="nav-dropdown-menu" id="navDropdownMenu">
+                    <div class="nav-dropdown-connector"></div>
+                    <div class="nav-dropdown-content">
+                        <div class="nav-dropdown-item-wrapper secondary">
+                            <a href="{{ dropdown_items['leftSecondary']['path'] }}"
+                               class="nav-dropdown-item secondary{% if current_page == 'terms-of-service' %} active{% endif %}">
+                                {{ icons_svg[dropdown_items['leftSecondary']['icon']]|raw }}
+                                <span>{{ dropdown_items['leftSecondary']['title'] }}</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="{{ dropdown_items['leftPrimary']['path'] }}"
+                               class="nav-dropdown-item primary{% if current_page == 'careers' %} active{% endif %}">
+                                {{ icons_svg[dropdown_items['leftPrimary']['icon']]|raw }}
+                                <span>{{ dropdown_items['leftPrimary']['title'] }}</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="{{ dropdown_items['centerPrimary']['path'] }}"
+                               class="nav-dropdown-item primary{% if current_page == 'contact' %} active{% endif %}">
+                                {{ icons_svg[dropdown_items['centerPrimary']['icon']]|raw }}
+                                <span>{{ dropdown_items['centerPrimary']['title'] }}</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="{{ dropdown_items['rightPrimary']['path'] }}"
+                               class="nav-dropdown-item primary{% if current_page == 'privacy-policy' %} active{% endif %}">
+                                {{ icons_svg[dropdown_items['rightPrimary']['icon']]|raw }}
+                                <span>{{ dropdown_items['rightPrimary']['title'] }}</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper secondary">
+                            <a href="{{ dropdown_items['rightSecondary']['path'] }}"
+                               class="nav-dropdown-item secondary{% if current_page == 'cookie-policy' %} active{% endif %}">
+                                {{ icons_svg[dropdown_items['rightSecondary']['icon']]|raw }}
+                                <span>{{ dropdown_items['rightSecondary']['title'] }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="nav-dropdown-container" id="navDropdownContainer">
+                <div class="nav-tabs" id="navTabs">
+                    {% for section in nav_sections %}
+                        <a href="#{{ section['id'] }}" class="nav-tab" data-section="{{ section['id'] }}">
+                            {{ section['label'] }}
+                        </a>
+                    {% endfor %}
+                    <div class="nav-indicator" id="navIndicator"></div>
+                </div>
+
+                <div class="nav-dropdown-arrow" id="navDropdownArrow">
+                    {{ icons_svg['chevron-down']|raw }}
+                </div>
+
+                <div class="nav-dropdown-menu" id="navDropdownMenu">
+                    <div class="nav-dropdown-connector"></div>
+                    <div class="nav-dropdown-content">
+                        <div class="nav-dropdown-item-wrapper secondary">
+                            <a href="/pages/terms-of-service" class="nav-dropdown-item secondary">
+                                {{ icons_svg['scroll-text']|raw }}
+                                <span>Terms of Service</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="/pages/careers" class="nav-dropdown-item primary">
+                                {{ icons_svg['briefcase']|raw }}
+                                <span>Careers</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="/pages/contact" class="nav-dropdown-item primary">
+                                {{ icons_svg['mail']|raw }}
+                                <span>Contact</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper primary">
+                            <a href="/pages/privacy-policy" class="nav-dropdown-item primary">
+                                {{ icons_svg['shield']|raw }}
+                                <span>P. Policy</span>
+                            </a>
+                        </div>
+                        <div class="nav-dropdown-item-wrapper secondary">
+                            <a href="/pages/cookie-policy" class="nav-dropdown-item secondary">
+                                {{ icons_svg['cookie']|raw }}
+                                <span>Cookie Policy</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="nav-actions">
+                <button type="button" class="nav-login" data-auth-url="https://dash.unione.partners/#/login?next=%2F"><span>Log In</span></button>
+                <button type="button" class="btn btn-primary btn-sm" data-auth-url="https://dash.unione.partners/#/register">Get Started</button>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+                <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-panel">
+        {% if current_internal_page is defined and current_internal_page is not null %}
+        <div class="mobile-page-indicator">
+            {{ icon_svg[current_internal_page['icon']] }}
+            <span>{{ current_internal_page['title'] }}</span>
+        </div>
+        {% else %}
+        <nav class="mobile-nav-grid">
+            {% for index, section in nav_sections %}
+                <a href="#{{ section['id'] }}"
+                   class="mobile-nav-item"
+                   data-section="{{ section['id'] }}"
+                   style="--item-index: {{ index }}">
+                    {{ icons_svg[section['icon']]|raw }}
+                    <span>{{ section['label'] }}</span>
+                </a>
+            {% endfor %}
+        </nav>
+        {% endif %}
+
+        <div class="mobile-menu-divider"></div>
+
+        <div class="mobile-actions-row">
+            <button type="button" class="mobile-login-btn" data-auth-url="https://dash.unione.partners/#/login?next=%2F">Log In</button>
+            <button type="button" class="btn btn-primary btn-compact" data-auth-url="https://dash.unione.partners/#/register">Get Started</button>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Dropdown bubble/droplet animation override */
+.nav-dropdown-menu{opacity:0!important;visibility:hidden!important;transform:scale(0.3)!important;border-radius:50%!important;transform-origin:top center!important;transition:opacity .35s cubic-bezier(.34,1.56,.64,1),transform .35s cubic-bezier(.34,1.56,.64,1),border-radius .35s cubic-bezier(.34,1.56,.64,1),visibility .35s ease!important}
+.nav-dropdown-container.dropdown-open .nav-dropdown-menu{opacity:1!important;visibility:visible!important;transform:scale(1)!important;border-radius:1rem!important}
+
+/* Mobile Menu - matches React/Lovable layout (override media server CSS) */
+.mobile-menu{left:1rem!important;right:1rem!important}
+.mobile-menu-panel{background-color:hsla(0,0%,100%,.95)!important;backdrop-filter:blur(40px)!important;-webkit-backdrop-filter:blur(40px)!important;border:1px solid hsla(0,0%,0%,.08)!important;border-radius:1rem!important;box-shadow:0 25px 50px -12px hsla(0,0%,0%,.25)!important;padding:1rem!important}
+.mobile-nav-grid{gap:.5rem!important}
+.mobile-nav-item{gap:.75rem!important;padding:.75rem 1rem!important;border-radius:.75rem!important;color:hsla(0,0%,8%,.6)!important;border:1px solid transparent!important}
+.mobile-nav-item:hover{border-color:hsla(0,0%,0%,.08)!important}
+.mobile-nav-item.active{box-shadow:0 4px 12px hsla(0,0%,0%,.15)!important}
+.mobile-menu-divider{background:linear-gradient(to right,transparent,hsla(0,0%,0%,.1),transparent)!important;margin:1rem 0!important}
+.mobile-actions-row{gap:.75rem!important}
+.mobile-login-btn{padding:.75rem!important;border-radius:.75rem!important;color:hsla(0,0%,8%,.5)!important;background:none!important;cursor:pointer!important}
+.mobile-login-btn:hover{background-color:hsla(0,0%,0%,.02)!important;border-color:hsla(0,0%,0%,.2)!important}
+.btn-compact{padding:.75rem!important;border-radius:.75rem!important;font-weight:600!important;box-shadow:0 4px 12px hsla(0,0%,0%,.15)!important}
+
+/* Mobile Internal Pages - matches React/Lovable layout (override media server CSS) */
+.mobile-internal-pages{left:1rem!important;right:1rem!important}
+.mobile-internal-pages .mobile-internal-pages-content{background-color:hsl(0,0%,8%)!important;border-radius:1rem!important;box-shadow:0 25px 50px -12px rgba(0,0,0,.25)!important;padding:.75rem!important;display:block!important;grid-template-columns:none!important}
+.mobile-internal-pages .mobile-internal-primary-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:.5rem!important;margin-bottom:.75rem!important}
+.mobile-internal-pages .mobile-internal-divider{height:1px!important;background-color:hsla(0,0%,100%,.1)!important;margin-bottom:.5rem!important}
+.mobile-internal-pages .mobile-internal-secondary-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:.25rem!important}
+
+.mobile-internal-pages .mobile-internal-item{display:flex!important;align-items:center!important;justify-content:center!important;border-radius:.75rem!important;transition:all .3s ease!important;opacity:0;transform:translateY(-5px);text-decoration:none!important}
+.mobile-internal-pages.active .mobile-internal-item{animation:mipIn .2s ease forwards!important;animation-delay:calc(.1s + var(--item-index,0) * .03s)!important}
+@keyframes mipIn{to{opacity:1;transform:translateY(0)}}
+
+/* Primary: vertical, centered */
+.mobile-internal-pages .mobile-internal-item.primary{flex-direction:column!important;gap:.5rem!important;padding:.75rem!important;color:hsla(0,0%,100%,.8)!important;width:auto!important;min-width:0!important}
+.mobile-internal-pages .mobile-internal-item.primary:hover{color:#fff!important;background-color:hsla(0,0%,100%,.15)!important}
+.mobile-internal-pages .mobile-internal-item.primary.active{color:#fff!important;background-color:hsla(0,0%,100%,.2)!important}
+.mobile-internal-pages .mobile-internal-item.primary svg{width:1.25rem!important;height:1.25rem!important;color:hsla(0,0%,100%,.7)!important}
+.mobile-internal-pages .mobile-internal-item.primary:hover svg,.mobile-internal-pages .mobile-internal-item.primary.active svg{color:#fff!important}
+.mobile-internal-pages .mobile-internal-item.primary span{font-size:.75rem!important;font-weight:600!important;text-align:center!important}
+
+/* Secondary: horizontal, smaller */
+.mobile-internal-pages .mobile-internal-item.secondary{flex-direction:row!important;gap:.5rem!important;padding:.5rem .625rem!important;color:hsla(0,0%,100%,.4)!important;width:auto!important;justify-content:flex-start!important}
+.mobile-internal-pages .mobile-internal-item.secondary:hover{color:hsla(0,0%,100%,.7)!important;background-color:hsla(0,0%,100%,.1)!important}
+.mobile-internal-pages .mobile-internal-item.secondary.active{color:hsla(0,0%,100%,.8)!important;background-color:hsla(0,0%,100%,.15)!important}
+.mobile-internal-pages .mobile-internal-item.secondary svg{width:.75rem!important;height:.75rem!important;color:hsla(0,0%,100%,.4)!important;flex-shrink:0!important}
+.mobile-internal-pages .mobile-internal-item.secondary:hover svg,.mobile-internal-pages .mobile-internal-item.secondary.active svg{color:#fff!important}
+.mobile-internal-pages .mobile-internal-item.secondary span{font-size:.625rem!important;font-weight:500!important}
+</style>
+
+<div class="mobile-internal-pages" id="mobileInternalPages">
+    <div class="mobile-internal-pages-content">
+        <!-- Primary items: 3-col grid -->
+        <div class="mobile-internal-primary-grid">
+            <a href="/pages/careers"
+               class="mobile-internal-item primary{% if current_page == 'careers' %} active{% endif %}" style="--item-index: 0">
+                {{ icons_svg['briefcase']|raw }}
+                <span>Careers</span>
+            </a>
+            <a href="/pages/contact"
+               class="mobile-internal-item primary{% if current_page == 'contact' %} active{% endif %}" style="--item-index: 1">
+                {{ icons_svg['mail']|raw }}
+                <span>Contact</span>
+            </a>
+            <a href="/pages/privacy-policy"
+               class="mobile-internal-item primary{% if current_page == 'privacy-policy' %} active{% endif %}" style="--item-index: 2">
+                {{ icons_svg['shield']|raw }}
+                <span>P. Policy</span>
+            </a>
+        </div>
+
+        <!-- Divider -->
+        <div class="mobile-internal-divider"></div>
+
+        <!-- Secondary items: 2-col grid -->
+        <div class="mobile-internal-secondary-grid">
+            <a href="/pages/terms-of-service"
+               class="mobile-internal-item secondary{% if current_page == 'terms-of-service' %} active{% endif %}" style="--item-index: 3">
+                {{ icons_svg['scroll-text']|raw }}
+                <span>Terms of Service</span>
+            </a>
+            <a href="/pages/cookie-policy"
+               class="mobile-internal-item secondary{% if current_page == 'cookie-policy' %} active{% endif %}" style="--item-index: 4">
+                {{ icons_svg['cookie']|raw }}
+                <span>Cookie Policy</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% include "shared/partials/auth-overlay.html.twig" %}
+{% include "shared/partials/header-scripts.html.twig" %}
