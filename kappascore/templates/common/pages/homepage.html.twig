@@ -1,7 +1,7 @@
 {% extends 'common/base.html.twig' %}
 
 {% block content %}
-    {# Featured Hero Carousel (Aesthetics only, sport-specific images) #}
+    {# Featured Hero Carousel #}
     <section class="mb-20">
         <div class="relative h-[450px] md:h-[550px] rounded-[48px] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
             <div id="hero-carousel" class="relative w-full h-full">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-4 md:space-x-6">
-                            <button class="px-8 md:px-12 py-3 md:py-4 rounded-xl md:rounded-2xl bg-emerald-500 text-black text-[10px] md:text-xs font-black tracking-[0.2em] hover:bg-emerald-400 transition-all shadow-[0_0_40px_rgba(16,185,129,0.4)]">WATCH LIVE</button>
+                            <button class="px-8 md:px-12 py-3 md:py-4 rounded-xl md:rounded-2xl bg-emerald-500 text-black text-[10px] md:text-xs font-black tracking-[0.2em] hover:bg-emerald-400 transition-all shadow-[0_0_40_rgba(16,185,129,0.4)]">WATCH LIVE</button>
                             <button class="px-8 md:px-12 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 text-[10px] md:text-xs font-black tracking-[0.2em] hover:bg-white/10 transition-all">ANALYTICS</button>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-16">
         <div class="space-y-20">
-            {# Sports Bar (Aesthetics only) #}
+            {# Sports Bar #}
             <section>
                 <div class="flex items-center justify-between mb-10">
                     <div class="space-y-1">
@@ -115,7 +115,7 @@
                 </div>
             </section>
 
-            {# Recommended Events Bento (Aesthetics only, logic preserved) #}
+            {# Recommended Events Bento #}
             <section class="space-y-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-6">
@@ -130,7 +130,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {% for league_group in recommended_events %}
                         {% for event in league_group.events %}
-                            <a href="{{ path('homepage', {lang: lang}) }}/event/{{ event.int_id }}" class="bg-white/[0.03] border border-white/5 rounded-[40px] p-8 md:p-10 relative overflow-hidden group cursor-pointer shadow-2xl hover:-translate-y-2 transition-all duration-500 block">
+                            <a href="/{{ lang }}/event/{{ event.int_id }}" class="bg-white/[0.03] border border-white/5 rounded-[40px] p-8 md:p-10 relative overflow-hidden group cursor-pointer shadow-2xl hover:-translate-y-2 transition-all duration-500 block">
                                 <div class="absolute top-0 right-0 p-6 md:p-8">
                                     <i class="fa fa-star text-white/5 group-hover:text-yellow-500 transition-all duration-500"></i>
                                 </div>
@@ -177,7 +177,7 @@
             </section>
         </div>
 
-        {# Sidebar (Aesthetics only, logic preserved) #}
+        {# Sidebar #}
         <aside class="space-y-12">
             {# Premium Analytics Card #}
             <div class="bg-emerald-500 rounded-[40px] md:rounded-[48px] p-8 md:p-10 text-black relative overflow-hidden group shadow-[0_30px_60px_rgba(16,185,129,0.3)] hover:scale-[1.02] transition-all duration-500">
@@ -202,7 +202,7 @@
                 </div>
                 <div class="space-y-3">
                     {% for tournament in fixed_leagues %}
-                        <a href="{{ path('homepage', {lang: lang}) }}/tournament/{{ tournament._id }}" class="w-full flex items-center justify-between p-4 md:p-5 rounded-[20px] md:rounded-[24px] hover:bg-white/[0.04] transition-all group relative overflow-hidden border border-transparent hover:border-white/5">
+                        <a href="/{{ lang }}/tournament/{{ tournament._id }}" class="w-full flex items-center justify-between p-4 md:p-5 rounded-[20px] md:rounded-[24px] hover:bg-white/[0.04] transition-all group relative overflow-hidden border border-transparent hover:border-white/5">
                             <div class="flex items-center space-x-5 relative z-10">
                                 <span class="text-2xl grayscale group-hover:grayscale-0 transition-all duration-500">{{ countryToFlag(tournament.category.name) }}</span>
                                 <span class="text-sm font-black text-white/40 group-hover:text-white transition-colors">{{ tournament.name }}</span>
