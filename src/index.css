@@ -1,28 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Unione Partners Design System - Brighty-Inspired Light Minimalist Theme */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 8%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 8%;
+
+    --radius: 1rem;
+
+    /* Custom tokens - Brighty style */
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 8%), hsl(0 0% 18%));
+    --gradient-secondary: linear-gradient(135deg, hsl(0 0% 96%), hsl(0 0% 100%));
+    --gradient-hero: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+    
+    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.04);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.06);
+    --shadow-elevated: 0 8px 40px hsl(0 0% 0% / 0.08);
+    --shadow-button: 0 4px 14px hsl(0 0% 0% / 0.15);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 8%;
+    --sidebar-primary: 0 0% 8%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 8%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 8%;
+  }
 }
 
 @layer base {
+  * {
+    @apply border-border;
+  }
+
   body {
-    @apply bg-[#f5f2ed] text-[#1a1a1a] font-sans antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+  html {
+    scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
   }
 }
 
-.vertical-text {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(0 0% 8%), hsl(0 0% 35%));
+  }
+
+  .gradient-text-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(0 84% 60%), hsl(25 95% 55%));
+  }
+
+  .card-elevated {
+    @apply bg-card rounded-2xl border border-border;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-minimal {
+    @apply bg-card rounded-3xl;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .section-container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-12;
+  }
+
+  .section-spacing {
+    @apply py-12 lg:py-16;
+  }
+
+  /* Improved Typography Scale with Mobile-First Approach */
+  .heading-xl {
+    @apply font-bold tracking-tight leading-[0.95];
+    font-size: clamp(2.25rem, 5vw + 1rem, 4.5rem);
+  }
+
+  .heading-lg {
+    @apply font-bold tracking-tight leading-tight;
+    font-size: clamp(1.875rem, 4vw + 0.5rem, 3rem);
+  }
+
+  .heading-md {
+    @apply font-bold tracking-tight leading-tight;
+    font-size: clamp(1.5rem, 3vw + 0.5rem, 2.5rem);
+  }
+
+  /* Body text with better mobile readability */
+  .body-lg {
+    @apply text-muted-foreground leading-relaxed;
+    font-size: clamp(0.938rem, 1vw + 0.5rem, 1.125rem);
+  }
+
+  .body-md {
+    @apply text-muted-foreground leading-relaxed;
+    font-size: clamp(0.875rem, 0.5vw + 0.5rem, 1rem);
+  }
+
+  /* Section label styling for better hierarchy */
+  .section-label {
+    @apply text-xs sm:text-sm font-semibold tracking-widest uppercase text-muted-foreground mb-4 sm:mb-6 block;
+  }
+
+  /* CTA Button emphasis */
+  .cta-primary {
+    @apply shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200;
+  }
+
+  /* Subtitle styling - distinct from main titles */
+  .subtitle-muted {
+    @apply text-muted-foreground/60;
+  }
 }
 
-.oval-mask {
-  border-radius: 9999px;
-  aspect-ratio: 4/5;
-  object-fit: cover;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Safe area padding for mobile devices */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Touch target minimum size for mobile */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Improved focus states for accessibility */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
 }

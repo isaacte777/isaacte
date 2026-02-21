@@ -1,0 +1,40 @@
+{# Header Scripts - Auth overlay + Logo smooth scroll #}
+<script>
+(function(){
+  {# Auth overlay logic #}
+  var overlay=document.getElementById('authOverlay'),
+      iframe=document.getElementById('authOverlayIframe'),
+      backDesktop=document.getElementById('authOverlayBackDesktop'),
+      backMobile=document.getElementById('authOverlayBackMobile');
+
+  if(overlay&&iframe){
+    function openAuth(url){iframe.src=url;overlay.classList.add('active');document.body.style.overflow='hidden'}
+    function closeAuth(){overlay.classList.remove('active');document.body.style.overflow='';setTimeout(function(){iframe.src=''},300)}
+    // Click outside to close
+    overlay.addEventListener('click',function(e){if(e.target===overlay)closeAuth()});
+    document.querySelectorAll('[data-auth-url]').forEach(function(b){
+      b.addEventListener('click',function(e){e.preventDefault();openAuth(this.getAttribute('data-auth-url'))});
+    });
+    if(backDesktop)backDesktop.addEventListener('click',function(e){e.preventDefault();closeAuth()});
+    if(backMobile)backMobile.addEventListener('click',function(e){e.preventDefault();closeAuth()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('active'))closeAuth()});
+  }
+
+  {# Logo smooth scroll to top #}
+  var logo=document.getElementById('mainLogo');
+  if(logo){
+    logo.addEventListener('click',function(e){
+      var path=window.location.pathname;
+      var isHome=path==='/'||path===''||path.indexOf('/pages/')===-1;
+      if(isHome){
+        e.preventDefault();
+        if(typeof lenis!=='undefined'&&lenis){
+          lenis.scrollTo(0,{duration:1.2});
+        }else{
+          window.scrollTo({top:0,behavior:'smooth'});
+        }
+      }
+    });
+  }
+})();
+</script>

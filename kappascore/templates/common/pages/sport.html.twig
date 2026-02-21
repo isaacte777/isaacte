@@ -1,0 +1,118 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{% if sport_selected is not null %}{{ sport_selected.name }}{% else %}{{ Translate('Sport details') }}{% endif %}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+{% endblock %}
+
+{% block content %}
+    <style>
+        div#content_sport {
+            background: #F7F7F9;
+            padding:15px;
+            min-height: 600px;
+        }
+        .category_item a {
+            padding: 10px;
+            background: #F7F7F9;
+            color: #233670;
+            display: block;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 40px;
+            border: 2px solid rgb(216 223 243);
+        }
+        .category_item:last-child a {
+            margin-bottom: 0px;
+        }
+        .category_item a img {
+            height: 14px;
+            position: absolute;
+            top: 12px;
+            left: 11px;
+        }
+        .category_item a i {
+            position: absolute;
+            right: 20px;
+            top: 12px;
+        }
+
+        .search_box_sport {
+            position: relative;
+            margin-bottom: 10px;
+            color: #233670;
+        }
+        .search_box_sport i {
+            position: absolute;
+            top: 9px;
+            left: 14px;
+        }
+        .search_box_sport input {
+            border: 2px solid rgb(216 223 243);
+            height: 32px;
+            width: calc(100% - 46px);
+            padding-left: 40px;
+            color: #233670;
+        }
+    </style>
+
+    <div class="main-container">
+        <div id="content_sport">
+            <div class="search_box_sport">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="{{ Translate('Search country') }}" />
+            </div>
+            {% for category in categories|sort((a, b) => a.name > b.name) %}
+                <div class="category_item" data-cn="{{ category.name }}">
+                    <a href="/{{ lang }}/sport/{{ sport_selected._id }}/{{ category._id }}">
+                        <img class="flagicon" src="{{ ExternalCustomPath('media/images/flags/4x3/') ~ countyToCode(category.name) }}.svg" alt="{{ category.name }}">
+                        {{ category.name }}
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      async function initPage(){
+
+        $(document).off('keyup', '.search_box_sport input');
+        $(document).on('keyup', '.search_box_sport input', function(e){
+          e.preventDefault();
+          let el = $('#content_sport .category_item');
+          let vu = $(this).val();
+          if(vu.length > 0){
+            el.each(function(){
+              if($(this).data('cn').toLowerCase().indexOf(vu.toLowerCase()) !== -1){
+                $(this).show();
+              }else{
+                $(this).hide();
+              }
+            });
+          }else{
+            el.show();
+          }
+        });
+
+      }
+
+      initPage();
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,602 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+    {% include "shared/header.html.twig" %}
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="section-container">
+            <div class="hero-content">
+                <div class="hero-titles fade-in-up">
+                    <h1 class="heading-xl">The Unified Gateway</h1>
+                    <h1 class="heading-xl subtitle-muted">for Affiliates</h1>
+                </div>
+
+                <p class="hero-description body-lg fade-in-up">
+                    Seamlessly connect your revenue share and CPA platforms. Empower your publishers with elite tools. Maximize earnings, simplify management.
+                </p>
+
+                <div class="hero-buttons fade-in-up">
+                    <a href="/pages/contact" class="btn btn-primary btn-lg">
+                        Start Integrating Today
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#publishers" class="btn btn-outline btn-lg">
+                        Explore Publisher Tools
+                    </a>
+                </div>
+
+                <div class="hero-stats fade-in-up">
+                    <div class="stat">
+                        <div class="stat-value">4.9</div>
+                        <div class="stat-label">average platform rating</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">+10</div>
+                        <div class="stat-label">partner networks</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">+200</div>
+                        <div class="stat-label">active publishers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">+50</div>
+                        <div class="stat-label">countries</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenge -->
+    <section id="challenge" class="section bg-secondary-30 scroll-mt-14">
+        <div class="section-container">
+            <div class="challenge-grid">
+                <div class="challenge-content fade-in-up">
+                    <span class="section-label">The Challenge</span>
+                    <h2 class="heading-md">
+                        Fragmented Networks, <span class="subtitle-muted">Missed Opportunities</span>
+                    </h2>
+                    <p class="body-lg">
+                        The affiliate marketing ecosystem is siloed. Advertisers struggle with disparate platforms and inefficient reporting, while publishers juggle multiple dashboards and subpar promotional tools. This disconnect hinders growth, complicates tracking, and leaves revenue on the table.
+                    </p>
+                </div>
+
+                <div class="puzzle-container fade-in-up">
+                    <div class="puzzle-wrapper">
+                        <svg viewBox="0 0 380 380" class="puzzle-svg">
+                            <defs>
+                                <linearGradient id="puzzleGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 10%, 35%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 10%, 25%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleHighlight1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 10%, 50%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 10%, 35%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 8%, 55%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 8%, 45%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleHighlight2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 8%, 70%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 8%, 55%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 6%, 72%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 6%, 62%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleHighlight3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 6%, 85%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 6%, 72%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 12%, 45%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 12%, 35%)"/>
+                                </linearGradient>
+                                <linearGradient id="puzzleHighlight4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="hsl(220, 12%, 60%)"/>
+                                    <stop offset="100%" stop-color="hsl(220, 12%, 45%)"/>
+                                </linearGradient>
+                            </defs>
+
+                            <g class="puzzle-piece piece-1" transform="translate(-10, -10)">
+                                <g class="puzzle-piece-inner">
+                                    <path d="M 30 30 L 170 30 L 170 70 C 170 70 170 80 160 90 C 150 100 150 100 150 100 C 150 100 150 100 160 110 C 170 120 170 130 170 130 L 170 170 L 130 170 C 130 170 120 170 110 180 C 100 190 100 190 100 190 C 100 190 100 190 90 180 C 80 170 70 170 70 170 L 30 170 L 30 30 Z" fill="url(#puzzleGradient1)" stroke="hsl(220, 10%, 20%)" stroke-width="1.5"/>
+                                    <path d="M 35 35 L 165 35 L 165 68" fill="none" stroke="url(#puzzleHighlight1)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                                </g>
+                            </g>
+                            <g class="puzzle-piece piece-2" transform="translate(10, -10)">
+                                <g class="puzzle-piece-inner">
+                                    <path d="M 170 30 L 310 30 L 310 170 L 270 170 C 270 170 260 170 250 160 C 240 150 240 150 240 150 C 240 150 240 150 230 160 C 220 170 210 170 210 170 L 170 170 L 170 130 C 170 130 170 120 160 110 C 150 100 150 100 150 100 C 150 100 150 100 160 90 C 170 80 170 70 170 70 L 170 30 Z" fill="url(#puzzleGradient2)" stroke="hsl(220, 8%, 40%)" stroke-width="1.5"/>
+                                    <path d="M 175 35 L 305 35 L 305 165" fill="none" stroke="url(#puzzleHighlight2)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                                </g>
+                            </g>
+                            <g class="puzzle-piece piece-3" transform="translate(-10, 10)">
+                                <g class="puzzle-piece-inner">
+                                    <path d="M 30 170 L 70 170 C 70 170 80 170 90 180 C 100 190 100 190 100 190 C 100 190 100 190 110 180 C 120 170 130 170 130 170 L 170 170 L 170 210 C 170 210 170 220 180 230 C 190 240 190 240 190 240 C 190 240 190 240 180 250 C 170 260 170 270 170 270 L 170 310 L 30 310 L 30 170 Z" fill="url(#puzzleGradient3)" stroke="hsl(220, 6%, 55%)" stroke-width="1.5"/>
+                                    <path d="M 35 175 L 35 305 L 165 305" fill="none" stroke="url(#puzzleHighlight3)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                                </g>
+                            </g>
+                            <g class="puzzle-piece piece-4" transform="translate(10, 10)">
+                                <g class="puzzle-piece-inner">
+                                    <path d="M 170 170 L 210 170 C 210 170 220 170 230 160 C 240 150 240 150 240 150 C 240 150 240 150 250 160 C 260 170 270 170 270 170 L 310 170 L 310 310 L 170 310 L 170 270 C 170 270 170 260 180 250 C 190 240 190 240 190 240 C 190 240 190 240 180 230 C 170 220 170 210 170 210 L 170 170 Z" fill="url(#puzzleGradient4)" stroke="hsl(220, 12%, 30%)" stroke-width="1.5"/>
+                                    <path d="M 305 175 L 305 305 L 175 305" fill="none" stroke="url(#puzzleHighlight4)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="section scroll-mt-14">
+        <div class="section-container">
+            <div class="section-header fade-in-up">
+                <span class="section-label">Our Solution</span>
+                <h2 class="heading-md">
+                    Your Single Source of <span class="subtitle-muted">Truth & Performance</span>
+                </h2>
+                <p class="body-lg">
+                    Unione Partners is the powerful web application that bridges the gap. We provide the technological infrastructure for Advertisers to integrate their revenue share and CPA offers into a unified network. Simultaneously, we deliver a sophisticated, all-in-one toolkit for Publishers.
+                </p>
+            </div>
+
+            <div class="dashboard-mockup fade-in-up">
+                <div class="dashboard-frame">
+                    <div class="dashboard-inner">
+                        <div class="browser-chrome">
+                            <div class="browser-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <div class="browser-url">
+                                <span>dashboard.unione.partners</span>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-content">
+                            <div class="dashboard-stats">
+                                <div class="dashboard-stat fade-in-up" style="--delay: 0.4s">
+                                    <div class="stat-header">
+                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                                        </svg>
+                                        <span>Revenue</span>
+                                    </div>
+                                    <div class="stat-value-lg">$124,500</div>
+                                    <div class="stat-change positive">+12.5%</div>
+                                </div>
+                                <div class="dashboard-stat fade-in-up" style="--delay: 0.5s">
+                                    <div class="stat-header">
+                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                        </svg>
+                                        <span>Publishers</span>
+                                    </div>
+                                    <div class="stat-value-lg">1,284</div>
+                                    <div class="stat-change positive">+8.2%</div>
+                                </div>
+                                <div class="dashboard-stat fade-in-up" style="--delay: 0.6s">
+                                    <div class="stat-header">
+                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                        </svg>
+                                        <span>Conversions</span>
+                                    </div>
+                                    <div class="stat-value-lg">8,459</div>
+                                    <div class="stat-change positive">+23.1%</div>
+                                </div>
+                                <div class="dashboard-stat fade-in-up" style="--delay: 0.7s">
+                                    <div class="stat-header">
+                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                        </svg>
+                                        <span>Active Offers</span>
+                                    </div>
+                                    <div class="stat-value-lg">342</div>
+                                    <div class="stat-change positive">+5.8%</div>
+                                </div>
+                            </div>
+
+                            <div class="chart-area">
+                                <div class="chart-header">
+                                    <span class="chart-title">Performance Overview</span>
+                                    <div class="chart-legend">
+                                        <span class="legend-item"><span class="legend-dot dark"></span>Revenue</span>
+                                        <span class="legend-item"><span class="legend-dot light"></span>Conversions</span>
+                                    </div>
+                                </div>
+                                <div class="chart-bars">
+                                    <div class="chart-bar" style="--height: 40%; --delay: 0.6s"></div>
+                                    <div class="chart-bar" style="--height: 65%; --delay: 0.68s"></div>
+                                    <div class="chart-bar" style="--height: 45%; --delay: 0.76s"></div>
+                                    <div class="chart-bar" style="--height: 80%; --delay: 0.84s"></div>
+                                    <div class="chart-bar" style="--height: 55%; --delay: 0.92s"></div>
+                                    <div class="chart-bar" style="--height: 90%; --delay: 1s"></div>
+                                    <div class="chart-bar" style="--height: 70%; --delay: 1.08s"></div>
+                                    <div class="chart-bar" style="--height: 85%; --delay: 1.16s"></div>
+                                    <div class="chart-bar" style="--height: 60%; --delay: 1.24s"></div>
+                                    <div class="chart-bar" style="--height: 95%; --delay: 1.32s"></div>
+                                    <div class="chart-bar" style="--height: 75%; --delay: 1.4s"></div>
+                                    <div class="chart-bar" style="--height: 88%; --delay: 1.48s"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advertisers -->
+    <section id="advertisers" class="section bg-secondary-30 scroll-mt-14">
+        <div class="section-container">
+            <div class="section-header fade-in-up">
+                <span class="section-label">For Advertisers / Networks</span>
+                <h2 class="heading-md">
+                    Amplify Your Reach, <span class="subtitle-muted">Simplify Your Operations</span>
+                </h2>
+            </div>
+
+            <div class="advertisers-grid">
+                <div class="advertisers-features fade-in-up">
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v10l4.5-4.5"/><circle cx="12" cy="14" r="8"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>One-Click Integration</h3>
+                                <p>Connect your existing platform with our robust API. Onboard your offers in minutes, not days.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Unified Dashboard</h3>
+                                <p>Gain a holistic view of performance across all your publisher activities in a single, intuitive interface.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Attract Top Talent</h3>
+                                <p>Offer your publishers the industry's best promotional tools, making your network more attractive and competitive.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Advanced Reporting & Insights</h3>
+                                <p>Make data-driven decisions with real-time analytics and consolidated reporting.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-primary btn-lg">
+                        Learn More for Advertisers
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="network-visual fade-in-up">
+                    <div class="network-container">
+                        <svg class="network-lines" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="var(--border)" stroke-width="2" stroke-dasharray="8 8" opacity="0.6"/>
+                        </svg>
+                        <div class="network-hub">
+                            <img src="{{ media_server }}assets/img/logo-white.png" alt="Unione Partners" class="network-hub-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publishers -->
+    <section id="publishers" class="section scroll-mt-14">
+        <div class="section-container">
+            <div class="publishers-grid">
+                <div class="publishers-visual fade-in-up">
+                    <div class="tools-grid">
+                        <div class="tool-card">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                </svg>
+                            </div>
+                            <span>Smart Links</span>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
+                            <span>Banner Ads</span>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                                </svg>
+                            </div>
+                            <span>Landing Pages</span>
+                        </div>
+                        <div class="tool-card">
+                            <div class="tool-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                            </div>
+                            <span>Tracking Pixels</span>
+                        </div>
+                    </div>
+
+                    <div class="earnings-card">
+                        <div class="earnings-header">
+                            <span>Today's Earnings</span>
+                            <span class="live-badge">Live</span>
+                        </div>
+                        <div class="earnings-value">$2,847.50</div>
+                        <div class="earnings-change">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+                            </svg>
+                            <span class="positive">+18.5%</span>
+                            <span>vs yesterday</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="publishers-content fade-in-up">
+                    <span class="section-label">For Publishers / Affiliates</span>
+                    <h2 class="heading-md">
+                        The Ultimate <span class="subtitle-muted">Promotion Toolkit</span> is Here
+                    </h2>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Centralized Commission Hub</h3>
+                                <p>Access and manage all your campaigns from different advertisers in one place.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8 19 13"/><path d="M15 9h0"/><path d="M17.8 6.2 19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2 11 5"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Powerful Promotional Assets</h3>
+                                <p>Get instant access to high-converting tools—smart links, banners, landing pages, and tracking pixels.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Real-Time Performance Tracking</h3>
+                                <p>See exactly what's working with live stats, click-through rates, and conversion data.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+                                </svg>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Earn More</h3>
+                                <p>With better tools and consolidated insights, optimize your strategies and maximize earnings.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="btn btn-primary btn-lg">
+                        Explore the Publisher Toolkit
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section bg-secondary-30 scroll-mt-14">
+        <div class="section-container">
+            <div class="section-header fade-in-up">
+                <span class="section-label">How It Works</span>
+                <h2 class="heading-md">
+                    Four Simple Steps to <span class="subtitle-muted">Unified Success</span>
+                </h2>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card fade-in-up" style="--delay: 0s">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v10l4.5-4.5"/><circle cx="12" cy="14" r="8"/>
+                        </svg>
+                    </div>
+                    <h3>Integrate</h3>
+                    <p>Advertisers connect their platform via our secure API.</p>
+                </div>
+                <div class="step-card fade-in-up" style="--delay: 0.15s">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+                        </svg>
+                    </div>
+                    <h3>Unify</h3>
+                    <p>Offers are aggregated into the Unione network.</p>
+                </div>
+                <div class="step-card fade-in-up" style="--delay: 0.3s">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Empower</h3>
+                    <p>Publishers access integrated offers and advanced toolkit.</p>
+                </div>
+                <div class="step-card fade-in-up" style="--delay: 0.45s">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+                        </svg>
+                    </div>
+                    <h3>Grow</h3>
+                    <p>Everyone enjoys streamlined operations and increased revenue.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="why-unione" class="section scroll-mt-14">
+        <div class="section-container">
+            <div class="section-header fade-in-up">
+                <span class="section-label">Why Choose Us</span>
+                <h2 class="heading-md">
+                    Why Choose <span class="subtitle-muted">Unione Partners</span>?
+                </h2>
+            </div>
+
+            <div class="reasons-grid">
+                <div class="reason-card fade-in-up" style="--delay: 0s">
+                    <div class="reason-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                        </svg>
+                    </div>
+                    <h3>Technology-First</h3>
+                    <p>Built on a secure, scalable, and lightning-fast infrastructure.</p>
+                </div>
+                <div class="reason-card fade-in-up" style="--delay: 0.1s">
+                    <div class="reason-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Fair & Transparent</h3>
+                    <p>We believe in clear reporting and fair commission structures.</p>
+                </div>
+                <div class="reason-card fade-in-up" style="--delay: 0.2s">
+                    <div class="reason-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+                        </svg>
+                    </div>
+                    <h3>Dedicated Support</h3>
+                    <p>Get help when you need it from our expert team.</p>
+                </div>
+                <div class="reason-card fade-in-up" style="--delay: 0.3s">
+                    <div class="reason-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Designed for Growth</h3>
+                    <p>Our features are built to scale with your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section scroll-mt-14">
+        <div class="section-container">
+            <div class="cta-content fade-in-up">
+                <h2 class="heading-md">
+                    Ready to Unify Your <span class="text-background-muted">Affiliate Ecosystem</span>?
+                </h2>
+                <p class="body-md text-background-muted">
+                    Join the partners who are already streamlining their operations and boosting their revenue. Whether you're an Advertiser looking to expand your reach or a Publisher seeking better tools, Unione is your gateway.
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="/pages/contact" class="btn btn-accent btn-lg">
+                        Start Now
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <div class="badge-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <span>Supported at all times</span>
+                    </div>
+                    <div class="trust-badge">
+                        <div class="badge-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <span>Easy to integrate and operate</span>
+                    </div>
+                    <div class="trust-badge">
+                        <div class="badge-check">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <span>Operational from minute 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block footer %}
+    {% include "shared/footer.html.twig" %}
+{% endblock %}
