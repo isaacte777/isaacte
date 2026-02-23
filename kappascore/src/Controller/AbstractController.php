@@ -113,13 +113,28 @@ abstract class AbstractController extends BaseController implements ControllerIn
     }
 
     protected function defaultTwigParams(array $extra = []) {
-        $currentLang = $lang ?? 'es';
         $uri   = $_SERVER['REQUEST_URI'];
         $parts = parse_url($uri);
         $path  = $parts['path'] ?? '/';
         $query = isset($parts['query']) ? '?'.$parts['query'] : '';
 
-        $pattern = '#^/(es|en|de|fr|it)(?=/|$)#i';
+        $pattern = '#^/(es|en|de|fr|it|us|mx|in)(?=/|$)#i';
+        
+        $currentLang = 'es';
+        if (preg_match($pattern, $path, $matches)) {
+            $currentLang = $matches[1];
+        }
+
+        // Helper to check if a menu item is active
+        $isActiveMenu = function($menuPath) use ($path, $pattern) {
+            $cleanPath = preg_replace($pattern, '', $path);
+            if ($cleanPath === '') $cleanPath = '/';
+            
+            if ($menuPath === '/') {
+                return $cleanPath === '/';
+            }
+            return strpos($cleanPath, $menuPath) === 0;
+        };
 
         $alternate_locales = array_map(function($l) use ($path, $pattern, $query) {
             if (preg_match($pattern, $path)) {
@@ -134,6 +149,7 @@ abstract class AbstractController extends BaseController implements ControllerIn
 
         return [
             'lang' => $currentLang,
+            'isActiveMenu' => $isActiveMenu,
             'alternate_locales' => $alternate_locales,
             'canonical_url' => $canonical,
             'x_default_url' => 'https://kappascore.com/',
