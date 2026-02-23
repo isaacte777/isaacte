@@ -1,0 +1,912 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{% if page_title is defined and page_title is not null %}{{ page_title }}{% else %}{{ Translate('Last results') }}{% endif %}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+    {% include TemplatePath(template, "parts/subheader.html.twig") with {'parent_page': '/' ~ lang} %}
+{% endblock %}
+
+{% block content %}
+    <style>
+        div#calendar {
+            margin-top: 0;
+            position: relative;
+            background: var(--secundary-bg-color);
+            color: var(--primary-font-color);
+            padding: 10px;
+        }
+        .calendar .day {
+            width: 16px!important;
+            height: 16px!important;
+            font-size: 14px!important;
+            line-height: normal!important;
+            cursor:pointer!important;
+        }
+        .calendar td {
+            font-size: 14px!important;
+        }
+        .calendar .day.has-event:after {
+            background: var(--nav-bg-color) !important;
+            width: 14px !important;
+            height: 2px !important;
+            left: calc(50% - 6.5px)!important;
+            border-radius: 0px !important;
+        }
+        .calendar table {
+            margin: 0px!important;
+        }
+
+        /* ─── Unified tab bar ─── */
+        .tabs-homepage-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tabs-homepage-bar .tabs-homepage-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 26px;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+            padding: 7px 20px;
+            border-radius: 7px;
+            background: var(--ks-accent);
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .tabs-homepage-bar .tabs-homepage-live:hover {
+            background: var(--ks-accent-soft);
+        }
+        .tabs-homepage-bar .tabs-homepage-live .live-dot {
+            width: 6px;
+            height: 6px;
+            background: #000;
+            border-radius: 50%;
+            animation: livePulse 1.5s infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .tabs-homepage-bar .tabs-homepage-live .live-count {
+            background: rgba(0,0,0,0.2);
+            padding: 1px 7px;
+            border-radius: 999px;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        .tabs-homepage-bar .tabs-filter-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: 10px;
+            padding: 4px;
+            margin-left: auto;
+        }
+        .tabs-filter-group a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 26px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ks-text-secondary);
+            border: none;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .tabs-filter-group a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .tabs-filter-group a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-weight: 700;
+        }
+        .tabs-filter-group .filter-icon-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 10px;
+            color: var(--ks-text-secondary);
+            cursor: pointer;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+        }
+        .tabs-filter-group .filter-icon-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .tabs-homepage-filters {
+            display: inline-flex;
+            vertical-align: top;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .tabs-homepage-filters a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 26px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ks-text-secondary);
+            border: none;
+            text-decoration: none;
+            padding: 7px 20px;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+        }
+        .tabs-homepage-filters a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .tabs-homepage-filters a.active {
+            background: var(--ks-accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+        }
+        .tabs-homepage-filters a.active:hover {
+            background: var(--ks-accent-soft);
+            color: #000;
+        }
+        .tabs-homepage-filters a img {
+            height: 12px;
+            vertical-align: initial;
+        }
+
+        #all-events {
+            max-height: 520px;
+            overflow: hidden;
+            position: relative;
+        }
+        #all-events-inner {
+            max-height: 520px;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        #all-events-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Custom scrollbar track + thumb */
+        .ks-custom-scrollbar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 8px;
+            z-index: 10;
+            cursor: pointer;
+        }
+        .ks-custom-scrollbar__thumb {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            min-height: 50px;
+            background: var(--ks-accent);
+            border-radius: 8px;
+            cursor: grab;
+            transition: background 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+        }
+        .ks-custom-scrollbar__thumb:hover,
+        .ks-custom-scrollbar__thumb.dragging {
+            background: var(--ks-accent-soft);
+            box-shadow: 0 0 14px rgba(34, 197, 94, 0.5);
+            cursor: grabbing;
+        }
+
+        .league_line_items {
+            margin-bottom: 12px;
+            border-radius: var(--ks-radius);
+            overflow: hidden;
+            border: 1px solid var(--ks-border);
+            background: var(--third-bg-color);
+            transition: border-color 0.2s ease;
+        }
+        .league_line_items:hover {
+            border-color: var(--ks-border-hover);
+        }
+        .league_line_items_header {
+            background: rgba(34, 197, 94, 0.08);
+            color: #fff;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 36px;
+            position: relative;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--ks-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .league_line_items_header img.flagicon {
+            height: 14px;
+            flex-shrink: 0;
+        }
+        .league_line_items_events > a {
+            text-decoration: none;
+        }
+        .league_line_items_events .league_line_items_event {
+            background: var(--third-bg-color);
+            white-space: nowrap;
+            padding: 5px 0;
+            color: var(--primary-font-color);
+            height: auto;
+            min-height: 38px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.12s ease;
+            display: flex;
+            align-items: center;
+        }
+        .league_line_items_events .league_line_items_event:last-child {
+            border-bottom: none;
+        }
+        .league_line_items_events .league_line_items_event:hover {
+            background: rgba(34, 197, 94, 0.04);
+        }
+        .league_line_items_events .league_line_items_event > div {
+            display: inline-block;
+            vertical-align: top;
+            align-items: center;
+            align-content: center;
+            height: 100%;
+        }
+        .league_line_items_events .league_line_items_event > .league_line_items_event_opt {
+            width: 40px;
+            text-align: center;
+            color: var(--ks-text-dim);
+        }
+        .league_line_items_events .league_line_items_event > .league_line_items_event_time {
+            width: 80px;
+            text-align: center;
+            font-size: 12px;
+            white-space: normal;
+            color: var(--ks-text-secondary);
+        }
+        .league_line_items_events .league_line_items_event > div.league_line_items_event_name {
+            width: calc(100% - 40px - 80px - 50px - 70px);
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .league_line_items_events .league_line_items_event > div.league_line_items_event_score {
+            width: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            color: #fff;
+        }
+        .league_line_items_events .league_line_items_event > div.league_line_items_event_btn {
+            width: 53px;
+        }
+        .league_line_items_events .league_line_items_event > div.league_line_items_event_name a {
+            color: var(--primary-font-color);
+            text-decoration: none;
+            width: 100%;
+            display: inline-block;
+            transition: color 0.12s ease;
+        }
+        .league_line_items_events .league_line_items_event:hover > div.league_line_items_event_name a {
+            color: #fff;
+        }
+        .league_line_items_events .league_line_items_event > div.league_line_items_event_btn a {
+            color: var(--ks-text-dim);
+            transition: color 0.12s ease;
+        }
+        .league_line_items_events .league_line_items_event:hover > div.league_line_items_event_btn a {
+            color: var(--ks-accent);
+        }
+
+        /* Event type badge */
+        .event-type-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 1px 5px;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+        }
+        .event-type-badge--finished {
+            background: rgba(255,255,255,0.08);
+            color: var(--ks-text-secondary);
+        }
+        .event-type-badge--upcoming {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--ks-accent);
+        }
+
+        h2 {
+            color: var(--ks-accent);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--ks-border);
+            width: 100%;
+        }
+
+        .hp-contents {
+            white-space: nowrap;
+            min-height: 600px;
+            padding: 24px 0 48px;
+            display: flex;
+            align-items: stretch;
+        }
+        .right-container {
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            vertical-align: top;
+            padding-left: 24px;
+        }
+        .left-bar-container {
+            width: 240px;
+            min-width: 240px;
+            display: flex;
+            flex-direction: column;
+            vertical-align: top;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius);
+            padding: 14px;
+            overflow: hidden;
+        }
+
+        ul.list-left-bar-hp {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        ul.list-left-bar-hp li {
+            margin-bottom: 1px;
+            padding: 0;
+        }
+        ul.list-left-bar-hp li a i {
+            position: absolute;
+            right: 10px;
+            top: 3px;
+            background: transparent;
+            display: none;
+            color: var(--ks-accent);
+        }
+        ul.list-left-bar-hp li.selected a i {
+            display: block;
+        }
+        ul.list-left-bar-hp li a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ks-text-secondary);
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 500;
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: all 0.12s ease;
+        }
+        ul.list-left-bar-hp li a:hover {
+            background: var(--ks-accent-glow);
+            color: var(--ks-accent);
+        }
+        ul.list-left-bar-hp li img {
+            height: 14px;
+            position: static;
+            flex-shrink: 0;
+        }
+
+        .list-left-bar-hp-countries {
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.15) transparent;
+        }
+        .list-left-bar-hp-countries::-webkit-scrollbar {
+            width: 5px;
+        }
+        .list-left-bar-hp-countries::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .list-left-bar-hp-countries::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
+        }
+        .list-left-bar-hp-countries::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        @media only screen and (max-width: 768px) {
+            .left-bar-container {
+                display: none!important;
+            }
+            .right-container {
+                width: 100%;
+                padding-left: 0;
+            }
+            .tabs-homepage-bar {
+                flex-wrap: wrap;
+                margin: 0 5px 16px;
+            }
+            .tabs-filter-group {
+                margin-left: 0 !important;
+            }
+            .tabs-homepage-filters {
+                margin: 0 5px;
+            }
+        }
+    </style>
+    <div class="main-container">
+
+        <div class="hp-contents">
+
+            <div class="left-bar-container">
+
+                {% set fixed_leagues = 0 %}
+
+                {% for sport in sport_menu %}
+                    {% if sport._id == sport_selected %}
+                        {% for tournament in sport.tournaments %}
+                            {% set fixed_leagues = fixed_leagues+1 %}
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if fixed_leagues > 0 %}
+
+                    <h2><i class="fa fa-thumb-tack" aria-hidden="true"></i> {{ Translate('Fixed leagues') }}</h2>
+
+                    <ul class="list-left-bar-hp">
+                        {% for sport in sport_menu %}
+                            {% if sport._id == sport_selected %}
+
+                                {% for tournament in sport.tournaments %}
+                                    <li><a href="/{{ lang }}/tournament/{{ tournament._id }}" data-cid="{{ tournament.oxb_id }}" data-type="tournament">{{ countryToFlag(tournament.category.name) }} {{ tournament.name }}</a></li>
+                                {% endfor %}
+
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                {% endif %}
+
+                <h2>{{ Translate('Countries') }}</h2>
+
+                <ul class="list-left-bar-hp list-left-bar-hp-countries">
+                    {% set unique_countries = [] %}
+                    {% set total_countries = 0 %}
+                    {% for result in next_events %}
+                        {% if result.country not in unique_countries %}
+                            {% set unique_countries = unique_countries|merge([result.country]) %}
+                            <li class="filter-by-country-btn" data-cid="{{ result.country_id }}" data-country-code="{{ countyToCode(result.country) }}" data-cn="{{ result.country }}">
+                                <a href="#" data-type="tournament">
+                                    {{ countryToFlag(result.country) }}
+                                    {{ result.country }}
+                                    <i class="fa fa-window-close-o" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            {% set total_countries = total_countries+1 %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <div class="ks-ad-wrapper" id="ks-ad-leftbar">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
+                            crossorigin="anonymous"></script>
+                    <!-- Leftbar Bottom -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2502506691273037"
+                         data-ad-slot="3132804372"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
+            </div>
+
+            <div class="right-container">
+
+                <div class="ks-ad-wrapper" id="ks-ad-top">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
+                            crossorigin="anonymous"></script>
+                    <!-- Banner Top Side -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2502506691273037"
+                         data-ad-slot="7159679298"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
+                {% if favorite_events|length > 0 %}
+
+                    <h2>{{ Translate('Recommended Events') }}</h2>
+
+                    {% for result in favorite_events %}
+                        <div class="league_line_items">
+                            <div class="league_line_items_header">
+                                {{ countryToFlag(result.country) }}
+                                {{ result.country|upper }}: {{ result.name }} <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                            </div>
+                            <div class="league_line_items_events">
+                                {% for event in result.events %}
+                                    <div class="league_line_items_event">
+                                        <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                        <div class="league_line_items_event_time">{{ jsDate("d/m/Y H:i", event.ste) }}</div>
+                                        <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
+                                        <div class="league_line_items_event_score"></div>
+                                        <div class="league_line_items_event_btn">
+                                            <a href="#results" class="active" title="{{ Translate('View details') }}"><i class="fa fa-desktop" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                {# ─── UNIFIED TAB BAR: Live primary + filter by Results/Next ─── #}
+                <div class="tabs-homepage-bar">
+                    <a href="/{{ lang }}/live-score" class="tabs-homepage-live" id="live-events-btn">
+                        <span class="live-dot"></span>
+                        {{ Translate('Live') }}
+                        <span class="live-count">0</span>
+                    </a>
+
+                    <div class="tabs-filter-group">
+                        <a href="#" class="filter-type-btn active" data-filter="all">
+                            <i class="fa fa-list"></i> {{ Translate('All') }}
+                        </a>
+                        <a href="#" class="filter-type-btn" data-filter="results">
+                            <i class="fa fa-check-circle"></i> {{ Translate('Results') }}
+                        </a>
+                        <a href="#" class="filter-type-btn" data-filter="next">
+                            <i class="fa fa-clock-o"></i> {{ Translate('Next events') }}
+                        </a>
+                    </div>
+                </div>
+
+                <div class="tabs-homepage-filters"></div>
+
+                {# ─── ALL EVENTS UNIFIED LIST (sorted by date ASC) ─── #}
+                <div id="all-events">
+                    <div id="all-events-inner">
+                    {# Results #}
+                    {% for result in last_results %}
+                        <div class="league_line_items league_line_items--results" data-cid="{{ result.country_id }}" data-event-type="results">
+                            <div class="league_line_items_header">
+                                {{ countryToFlag(result.country) }}
+                                {{ result.country|upper }}: {{ result.name }}
+                            </div>
+                            <div class="league_line_items_events">
+                                {% for event in result.events %}
+                                    <div class="league_line_items_event">
+                                        <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                        <div class="league_line_items_event_time">
+                                            <span class="event-type-badge event-type-badge--finished">FT</span>
+                                        </div>
+                                        <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
+                                        <div class="league_line_items_event_score">{{ event.esc|replace({':': "<br />"})|raw }}</div>
+                                        <div class="league_line_items_event_btn">
+                                            <a href="/{{ lang }}/event/{{ event.int_id }}" title="{{ Translate('View details') }}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    {# Next Events #}
+                    {% for result in next_events|sort((a, b) => a.ste <=> b.ste) %}
+                        <div class="league_line_items league_line_items--next" data-cid="{{ result.country_id }}" data-event-type="next">
+                            <div class="league_line_items_header">
+                                {{ countryToFlag(result.country) }}
+                                {{ result.country|upper }}: {{ result.name }}
+                            </div>
+                            <div class="league_line_items_events">
+                                {% for event in result.events %}
+                                    <div class="league_line_items_event">
+                                        <div class="league_line_items_event_opt"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                        <div class="league_line_items_event_time">{{ jsDate("d/m/Y H:i", event.ste) }}</div>
+                                        <div class="league_line_items_event_name"><a href="/{{ lang }}/event/{{ event.int_id }}">{{ event.en|replace({' - ': "<br />"})|raw }}</a></div>
+                                        <div class="league_line_items_event_score"></div>
+                                        <div class="league_line_items_event_btn">
+                                            <a href="/{{ lang }}/event/{{ event.int_id }}" title="{{ Translate('View details') }}"><i class="fa fa-desktop" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <div class="ks-custom-scrollbar" id="ks-scrollbar-track">
+                        <div class="ks-custom-scrollbar__thumb" id="ks-scrollbar-thumb"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      let countries_selected = [];
+      let currentFilter = 'all';
+      let timerLiveCounter;
+
+      async function updateLiveCounter(){
+        let data = await makeRequest({
+          resource: '',
+          data: JSON.stringify({
+            opName: 'GetNrLive'
+          })
+        });
+
+        if(data.resultCode === 0){
+          $('.live-count').text(data.responseInfo)
+        }
+      }
+
+      function applyFilters(){
+        // Apply type filter
+        $('#all-events .league_line_items').each(function(){
+          var $el = $(this);
+          var type = $el.data('event-type');
+          var showByType = (currentFilter === 'all') || (currentFilter === type);
+
+          // Apply country filter
+          var cid = $el.data('cid');
+          var showByCountry = (countries_selected.length === 0) || (countries_selected.indexOf(cid) !== -1);
+
+          if(showByType && showByCountry){
+            $el.show();
+          } else {
+            $el.hide();
+          }
+        });
+      }
+
+      function updateCountriesSelected(){
+        $(`.filter-by-country-btn.selected`).removeClass('selected');
+        $('.tabs-homepage-filters').empty();
+        if(countries_selected.length > 0){
+          for (let item of countries_selected){
+            let element = $(`.filter-by-country-btn[data-cid="${item}"]`);
+            element.addClass('selected');
+            let category_name = element.data('cn');
+            let category_code = element.data('country-code');
+            $('.tabs-homepage-filters').append(`<a href="#" class="active" data-cid="${item}"><img class="flagicon ct-${category_code}" src="{{ ExternalCustomPath('media/images/flags/4x3/') }}${category_code}.svg" alt="${category_name}"> ${category_name} <i class="fa fa-times" aria-hidden="true"></i></a> `);
+          }
+        }
+        applyFilters();
+      }
+
+      $(document).ready(function(){
+
+        updateLiveCounter();
+        timerLiveCounter = setInterval(updateLiveCounter, 10000);
+
+        // Type filter buttons
+        $(document).off('click', '.filter-type-btn');
+        $(document).on('click', '.filter-type-btn', function(e){
+          e.preventDefault();
+          $('.filter-type-btn').removeClass('active');
+          $(this).addClass('active');
+          currentFilter = $(this).data('filter');
+          applyFilters();
+        });
+
+        // Country filter tag removal
+        $(document).off('click', '.tabs-homepage-filters a');
+        $(document).on('click', '.tabs-homepage-filters a', function(e){
+          e.preventDefault();
+          let cid   = $(this).data('cid');
+          let newList = [];
+          for(let item of countries_selected){
+            if(cid !== item) newList.push(item);
+          }
+          countries_selected = newList;
+          updateCountriesSelected();
+        });
+
+        // Country sidebar click
+        $(document).off('click', '.filter-by-country-btn');
+        $(document).on('click', '.filter-by-country-btn', function(e){
+          e.preventDefault();
+          let el    = $(this);
+          let cid   = el.data('cid');
+          if(countries_selected.indexOf(cid) === -1){
+            countries_selected.push(cid);
+          }else{
+            let newList = [];
+            for(let item of countries_selected){
+              if(cid !== item) newList.push(item);
+            }
+            countries_selected = newList;
+          }
+          updateCountriesSelected();
+        });
+      });
+
+    </script>
+
+    <script>
+      /* ─── AdSense gap fix for Chrome/Edge ─── */
+      (function collapseEmptyAds() {
+        document.querySelectorAll('.ks-ad-wrapper').forEach(function(wrapper) {
+          var ins = wrapper.querySelector('ins.adsbygoogle');
+          if (!ins) { wrapper.classList.add('ks-ad-collapsed'); return; }
+
+          function check() {
+            var status = ins.getAttribute('data-ad-status');
+            var hasIframe = ins.querySelector('iframe');
+            var iframeH = hasIframe ? hasIframe.offsetHeight : 0;
+
+            if (status === 'unfilled' || (!hasIframe && ins.children.length === 0) || iframeH < 10) {
+              wrapper.classList.add('ks-ad-collapsed');
+              ins.style.display = 'none';
+              ins.style.height = '0';
+            } else if (status === 'filled' && iframeH > 10) {
+              wrapper.classList.remove('ks-ad-collapsed');
+            }
+          }
+
+          var observer = new MutationObserver(check);
+          observer.observe(ins, { attributes: true, childList: true, subtree: true });
+
+          setTimeout(check, 500);
+          setTimeout(check, 1500);
+          setTimeout(check, 3000);
+          setTimeout(check, 5000);
+        });
+      })();
+    </script>
+
+    <script>
+      /* ─── Custom scrollbar for #all-events ─── */
+      (function() {
+        var inner = document.getElementById('all-events-inner');
+        var track = document.getElementById('ks-scrollbar-track');
+        var thumb = document.getElementById('ks-scrollbar-thumb');
+        if (!inner || !track || !thumb) return;
+
+        // Block wheel scroll on events — page scroll passes through
+        inner.parentElement.addEventListener('wheel', function(e) {
+          // Prevent internal scroll, let page scroll naturally
+          e.preventDefault();
+          // Forward the scroll to the page
+          window.scrollBy(0, e.deltaY);
+        }, { passive: false });
+
+        function updateThumb() {
+          var ratio = inner.clientHeight / inner.scrollHeight;
+          if (ratio >= 1) {
+            track.style.display = 'none';
+            return;
+          }
+          track.style.display = 'block';
+          var thumbH = Math.max(50, ratio * track.clientHeight);
+          thumb.style.height = thumbH + 'px';
+          var scrollRatio = inner.scrollTop / (inner.scrollHeight - inner.clientHeight);
+          thumb.style.top = (scrollRatio * (track.clientHeight - thumbH)) + 'px';
+        }
+
+        inner.addEventListener('scroll', updateThumb);
+        window.addEventListener('resize', updateThumb);
+        setTimeout(updateThumb, 200);
+        setTimeout(updateThumb, 1000);
+
+        // Drag thumb
+        var dragging = false, startY = 0, startTop = 0;
+        thumb.addEventListener('mousedown', function(e) {
+          e.preventDefault();
+          dragging = true;
+          startY = e.clientY;
+          startTop = parseInt(thumb.style.top) || 0;
+          thumb.classList.add('dragging');
+          document.body.style.userSelect = 'none';
+        });
+        document.addEventListener('mousemove', function(e) {
+          if (!dragging) return;
+          var dy = e.clientY - startY;
+          var ratio = inner.clientHeight / inner.scrollHeight;
+          var thumbH = Math.max(50, ratio * track.clientHeight);
+          var maxTop = track.clientHeight - thumbH;
+          var newTop = Math.min(Math.max(0, startTop + dy), maxTop);
+          thumb.style.top = newTop + 'px';
+          inner.scrollTop = (newTop / maxTop) * (inner.scrollHeight - inner.clientHeight);
+        });
+        document.addEventListener('mouseup', function() {
+          if (dragging) {
+            dragging = false;
+            thumb.classList.remove('dragging');
+            document.body.style.userSelect = '';
+          }
+        });
+
+        // Click on track to jump
+        track.addEventListener('click', function(e) {
+          if (e.target === thumb) return;
+          var rect = track.getBoundingClientRect();
+          var clickY = e.clientY - rect.top;
+          var ratio = inner.clientHeight / inner.scrollHeight;
+          var thumbH = Math.max(50, ratio * track.clientHeight);
+          var maxTop = track.clientHeight - thumbH;
+          var newTop = Math.min(Math.max(0, clickY - thumbH / 2), maxTop);
+          thumb.style.top = newTop + 'px';
+          inner.scrollTop = (newTop / maxTop) * (inner.scrollHeight - inner.clientHeight);
+        });
+
+        // Touch support
+        thumb.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          dragging = true;
+          startY = e.touches[0].clientY;
+          startTop = parseInt(thumb.style.top) || 0;
+          thumb.classList.add('dragging');
+        }, { passive: false });
+        document.addEventListener('touchmove', function(e) {
+          if (!dragging) return;
+          var dy = e.touches[0].clientY - startY;
+          var ratio = inner.clientHeight / inner.scrollHeight;
+          var thumbH = Math.max(50, ratio * track.clientHeight);
+          var maxTop = track.clientHeight - thumbH;
+          var newTop = Math.min(Math.max(0, startTop + dy), maxTop);
+          thumb.style.top = newTop + 'px';
+          inner.scrollTop = (newTop / maxTop) * (inner.scrollHeight - inner.clientHeight);
+        }, { passive: false });
+        document.addEventListener('touchend', function() {
+          if (dragging) {
+            dragging = false;
+            thumb.classList.remove('dragging');
+          }
+        });
+      })();
+    </script>
+
+{% endblock %}

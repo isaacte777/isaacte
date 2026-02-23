@@ -1,0 +1,509 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{{ Translate('Live scores') }}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+    {% include TemplatePath(template, "parts/subheader.html.twig") with {'parent_page': '/' ~ lang ~ '/live-score'} %}
+{% endblock %}
+
+{% block content %}
+
+    <style>
+        .league_line_items {
+            margin-bottom: 12px;
+            border-radius: var(--ks-radius);
+            overflow: hidden;
+            border: 1px solid var(--ks-border);
+            background: var(--third-bg-color);
+            transition: border-color 0.2s ease;
+        }
+        .league_line_items:hover {
+            border-color: var(--ks-border-hover);
+        }
+        .league_line_items_header {
+            background: rgba(34, 197, 94, 0.08);
+            color: #fff;
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 36px;
+            position: relative;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--ks-border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .league_line_items_header img.flagicon {
+            height: 14px;
+            flex-shrink: 0;
+        }
+        .league_line_items_events > a {
+            text-decoration: none;
+        }
+        .league_line_items_events .league_line_items_event {
+            background: var(--third-bg-color);
+            padding: 0;
+            color: var(--primary-font-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.12s ease;
+        }
+        .league_line_items_events .league_line_items_event:last-child {
+            border-bottom: none;
+        }
+        .league_line_items_events .league_line_items_event:hover {
+            background: rgba(34, 197, 94, 0.04);
+        }
+        .league_line_items_events .league_line_items_event a.event-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-font-color);
+            padding: 8px 0;
+            min-height: 48px;
+        }
+        .league_line_items_events .league_line_items_event .event-col-fav {
+            width: 40px;
+            text-align: center;
+            color: var(--ks-text-dim);
+            flex-shrink: 0;
+        }
+        .league_line_items_events .league_line_items_event .event-col-time {
+            width: 70px;
+            text-align: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        .league_line_items_events .league_line_items_event .event-col-teams {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .league_line_items_events .league_line_items_event .event-team-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .league_line_items_events .league_line_items_event .event-team-name {
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .league_line_items_events .league_line_items_event .event-team-score {
+            width: 28px;
+            text-align: center;
+            font-weight: 700;
+            color: #fff;
+        }
+        .league_line_items_events .league_line_items_event .event-col-action {
+            width: 40px;
+            text-align: center;
+            flex-shrink: 0;
+            color: var(--ks-text-dim);
+        }
+        .league_line_items_events .league_line_items_event:hover .event-col-action {
+            color: var(--ks-accent);
+        }
+
+        .live-lbl {
+            position: relative;
+            color: #22c55e;
+            font-weight: 700;
+        }
+        .live-lbl::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            height: 2px;
+            width: 100%;
+            background: linear-gradient(
+                    90deg,
+                    transparent,
+                    #00ff5a,
+                    transparent
+            );
+            background-size: 200% 100%;
+            animation: liveBarMove 2s linear infinite;
+        }
+        @keyframes liveBarMove {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .tabs-homepage-view {
+            display: inline-flex;
+            vertical-align: top;
+            gap: 4px;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+        .tabs-homepage-view a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 26px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ks-text-secondary);
+            border: none;
+            text-decoration: none;
+            padding: 7px 20px;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+        }
+        .tabs-homepage-view a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .tabs-homepage-view a.active {
+            background: var(--ks-accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .tabs-homepage-filters {
+            display: inline-flex;
+            vertical-align: top;
+            gap: 4px;
+        }
+        .tabs-homepage-filters a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 26px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ks-text-secondary);
+            border: 1px solid var(--ks-border);
+            text-decoration: none;
+            padding: 7px 20px;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+            background: var(--third-bg-color);
+        }
+        .tabs-homepage-filters a.active {
+            background: var(--ks-accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+        }
+        .tabs-homepage-filters a img {
+            height: 12px;
+        }
+
+        .hp-contents {
+            white-space: nowrap;
+            min-height: 600px;
+            padding: 24px 0 48px;
+        }
+        .right-container {
+            width: calc(100% - 260px);
+            display: inline-block;
+            vertical-align: top;
+            padding-left: 24px;
+        }
+        .left-bar-container {
+            width: 240px;
+            display: inline-block;
+            vertical-align: top;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius);
+            padding: 14px;
+        }
+
+        ul.list-left-bar-hp {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        ul.list-left-bar-hp li {
+            margin-bottom: 1px;
+            padding: 0;
+        }
+        ul.list-left-bar-hp li a i {
+            position: absolute;
+            right: 10px;
+            top: 3px;
+            display: none;
+            color: var(--ks-accent);
+        }
+        ul.list-left-bar-hp li.selected a i {
+            display: block;
+        }
+        ul.list-left-bar-hp li a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ks-text-secondary);
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 500;
+            padding: 8px 10px;
+            border-radius: 6px;
+            transition: all 0.12s ease;
+        }
+        ul.list-left-bar-hp li a:hover {
+            background: var(--ks-accent-glow);
+            color: var(--ks-accent);
+        }
+        ul.list-left-bar-hp li img {
+            height: 14px;
+            position: static;
+            flex-shrink: 0;
+        }
+
+        .list-left-bar-hp-countries {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+
+        h2 {
+            color: var(--ks-accent);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--ks-border);
+            width: 100%;
+        }
+
+        .live-empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--ks-text-secondary);
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius);
+        }
+        .live-empty-state i {
+            font-size: 48px;
+            color: var(--ks-text-dim);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .live-empty-state p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .left-bar-container {
+                display: none!important;
+            }
+            .right-container {
+                width: 100%;
+                padding-left: 0;
+            }
+            .tabs-homepage-view, .tabs-homepage-filters {
+                margin: 0 5px;
+            }
+        }
+    </style>
+
+    <div class="main-container">
+
+        <div class="hp-contents">
+
+            <div class="left-bar-container">
+
+                <h2><i class="fa fa-globe"></i> {{ Translate('Countries') }}</h2>
+
+                <ul class="list-left-bar-hp list-left-bar-hp-countries">
+                    {% set unique_countries = [] %}
+                    {% set total_countries = 0 %}
+                    {% for result in live_results %}
+                        {% if result.country not in unique_countries %}
+                            {% set unique_countries = unique_countries|merge([result.country]) %}
+                            <li class="filter-by-country-btn" data-cid="{{ result.country_id }}" data-country-code="{{ countyToCode(result.country) }}" data-cn="{{ result.country }}">
+                                <a href="#" data-type="tournament">
+                                    {{ countryToFlag(result.country) }}
+                                    {{ result.country }}
+                                    <i class="fa fa-window-close-o" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            {% set total_countries = total_countries+1 %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <div class="right-container">
+
+                {% if favorite_events|length > 0 %}
+
+                    <h2>{{ Translate('Recommended Events') }}</h2>
+
+                    {% for result in favorite_events %}
+                        <div class="league_line_items">
+                            <div class="league_line_items_header">
+                                {{ countryToFlag(result.country) }}
+                                {{ result.country|upper }}: {{ result.name }} <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                            </div>
+                            <div class="league_line_items_events">
+                                {% for event in result.events %}
+                                    {% set score_parts = event.esc|default('0:0')|split(':') %}
+                                    <div class="league_line_items_event">
+                                        <a href="/{{ lang }}/event/{{ event._id }}" class="event-link">
+                                            <div class="event-col-fav"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                            <div class="event-col-time">{{ jsDate("d/m/Y H:i", event.ste) }}</div>
+                                            <div class="event-col-teams">
+                                                <div class="event-team-row">
+                                                    <span class="event-team-name">{{ event.th.name|default('') }}</span>
+                                                </div>
+                                                <div class="event-team-row">
+                                                    <span class="event-team-name">{{ event.ta.name|default('') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="event-col-action"><i class="fa fa-chevron-right"></i></div>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% endif %}
+
+                <div class="tabs-homepage-view">
+                    <a href="/{{ lang }}"><i class="fa fa-arrow-left"></i> {{ Translate('Results') }}</a>
+                    <a href="/{{ lang }}/live-score" class="active"><i class="fa fa-signal"></i> {{ Translate('Live') }}</a>
+                </div>
+
+                <div class="tabs-homepage-filters"></div>
+
+                {% if live_results|length == 0 %}
+                    <div class="live-empty-state">
+                        <i class="fa fa-signal"></i>
+                        <p>{{ Translate('No live events at the moment') }}</p>
+                    </div>
+                {% endif %}
+
+                {% for result in live_results %}
+                    <div class="league_line_items" data-cid="{{ result.country_id }}">
+                        <div class="league_line_items_header">
+                            {{ countryToFlag(result.country) }}
+                            {{ result.country|upper }}: {{ result.name }}
+                        </div>
+                        <div class="league_line_items_events">
+                            {% for event in result.events %}
+                                {% set score_parts = event.esc|default('0:0')|split(':') %}
+                                <div class="league_line_items_event">
+                                    <a href="/{{ lang }}/event/{{ event.int_id }}" class="event-link">
+                                        <div class="event-col-fav"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                                        <div class="event-col-time"><span class="live-lbl">{{ MatchCurrentTime(event.ect) }}</span></div>
+                                        <div class="event-col-teams">
+                                            <div class="event-team-row">
+                                                <span class="event-team-name">{{ event.th.name }}</span>
+                                                <span class="event-team-score">{{ score_parts[0]|default('0') }}</span>
+                                            </div>
+                                            <div class="event-team-row">
+                                                <span class="event-team-name">{{ event.ta.name }}</span>
+                                                <span class="event-team-score">{{ score_parts[1]|default('0') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="event-col-action"><i class="fa fa-chevron-right"></i></div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      let countries_selected = [];
+
+      function updateCountriesSelected(){
+        $(`.filter-by-country-btn.selected`).removeClass('selected');
+        $('.tabs-homepage-filters').empty();
+        if(countries_selected.length > 0){
+          $('.league_line_items').hide();
+          for (let item of countries_selected){
+            let element = $(`.filter-by-country-btn[data-cid="${item}"]`);
+            element.addClass('selected');
+            let category_name = element.data('cn');
+            let category_code = element.data('country-code');
+            $('.tabs-homepage-filters').append(`<a href="#" class="active" data-cid="${item}"><img class="flagicon ct-${category_code}" src="{{ ExternalCustomPath('media/images/flags/4x3/') }}${category_code}.svg" alt="${category_name}"> ${category_name} <i class="fa fa-times" aria-hidden="true"></i></a> `);
+            $(`.league_line_items[data-cid="${item}"]`).show();
+          }
+        }else{
+          $('.league_line_items').show();
+        }
+      }
+
+      $(document).ready(function(){
+
+        $(document).off('click', '.tabs-homepage-filters a');
+        $(document).on('click', '.tabs-homepage-filters a', function(e){
+          e.preventDefault();
+          let cid   = $(this).data('cid');
+          let newList = [];
+          for(let item of countries_selected){
+            if(cid !== item) newList.push(item);
+          }
+          countries_selected = newList;
+          updateCountriesSelected();
+        });
+
+        $(document).off('click', '.filter-by-country-btn');
+        $(document).on('click', '.filter-by-country-btn', function(e){
+          e.preventDefault();
+          let el    = $(this);
+          let cid   = el.data('cid');
+          if(countries_selected.indexOf(cid) === -1){
+            countries_selected.push(cid);
+          }else{
+            let newList = [];
+            for(let item of countries_selected){
+              if(cid !== item) newList.push(item);
+            }
+            countries_selected = newList;
+          }
+          updateCountriesSelected();
+        });
+      });
+
+      async function initPage(){
+
+      }
+
+      initPage();
+
+    </script>
+
+{% endblock %}

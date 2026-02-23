@@ -1,0 +1,677 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{% if event_details is not null %}{% if event_details.es == 1 %}{{ Translate('Watch live') }} {{ event_details.en }}{% else %}{{ event_details.en }}{% endif %}{% else %}{{ Translate('Event details') }}{% endif %}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+{% endblock %}
+
+{% block content %}
+
+    <style>
+        .event-page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px 0 48px;
+        }
+
+        /* Event header box */
+        .event-header {
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius);
+            padding: 24px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .event-header > div {
+            width: calc(33.333333% - 5px);
+            display: inline-block;
+            text-align: center;
+            padding: 10px 0;
+            color: var(--primary-font-color);
+            vertical-align: top;
+        }
+        .event-header .event-header-team-logo img {
+            max-height: 60px;
+            max-width: 60px;
+            filter: brightness(0.95);
+        }
+        .event-header .event-header-team-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 8px;
+            color: #fff;
+        }
+        .event-header .event-header-score .event-score {
+            font-weight: 900;
+            font-size: 42px;
+            margin-top: 10px;
+            color: #fff;
+        }
+        .event-header .event-header-score .event-date {
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--ks-text-secondary);
+        }
+        .event-header .event-header-score .event-status {
+            color: var(--ks-text-secondary);
+            font-size: 12px;
+        }
+        .event-header .event-header-score .event-time {
+            margin-top: 5px;
+            font-weight: bold;
+            color: var(--ks-accent);
+        }
+
+        div#content_sport {
+            min-height: 600px;
+        }
+
+        /* Match detail navbar */
+        .match_details_navbar {
+            display: flex;
+            gap: 4px;
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+        .match_details_navbar .match_nb_item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 18px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ks-text-secondary);
+            text-decoration: none;
+            border-radius: 7px;
+            transition: all 0.2s ease;
+        }
+        .match_details_navbar .match_nb_item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .match_details_navbar .match_nb_item.active {
+            background: var(--ks-accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Match details content boxes */
+        .match_details_content {
+            display: none;
+        }
+        .match_details_content.active {
+            display: block;
+        }
+        .match_details_item {
+            background: var(--third-bg-color);
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .match_details_item-head {
+            background: rgba(34, 197, 94, 0.08);
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--ks-accent);
+            border-bottom: 1px solid var(--ks-border);
+        }
+        .match_details_item-body {
+            padding: 16px;
+        }
+        .match_details_item-body table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--primary-font-color);
+        }
+        .match_details_item-body table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--ks-text-secondary);
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--ks-border);
+            text-align: center;
+        }
+        .match_details_item-body table th:first-child {
+            text-align: left;
+        }
+        .match_details_item-body table td {
+            padding: 10px 12px;
+            font-size: 13px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .match_details_item-body table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: #fff;
+        }
+        .match_details_item-body table td img {
+            max-height: 18px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        /* Statistics grid */
+        .stats_grid {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        @media (max-width: 680px) {
+            .stats_grid { grid-template-columns: 1fr; }
+        }
+
+        .stat_card {
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius-sm);
+            padding: 12px;
+            background: var(--third-bg-color);
+        }
+        .stat_title {
+            font-weight: 600;
+            font-size: 13px;
+            opacity: .9;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary-font-color);
+        }
+
+        /* BAR */
+        .bar_row {
+            display: grid;
+            grid-template-columns: 44px 1fr 44px;
+            align-items: center;
+            gap: 10px;
+        }
+        .bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            border-radius: 5px;
+        }
+        .bar_fill {
+            height: 100%;
+            background: var(--ks-accent);
+            border-radius: 5px;
+        }
+        .bar_val {
+            font-weight: 700;
+            font-size: 12px;
+            opacity: .95;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            line-height: 1.1;
+        }
+        .bar_val.home { align-items: flex-start; text-align: left; }
+        .bar_val.away { align-items: flex-end; text-align: right; }
+        .bar_team {
+            font-size: 10px;
+            opacity: .75;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--ks-text-secondary);
+        }
+        .bar_num {
+            font-weight: 900;
+            font-size: 12px;
+            opacity: .95;
+            color: #fff;
+        }
+
+        /* CHIPS */
+        .chips_row {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .chip {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 12px;
+            font-weight: 800;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .chip_val { font-weight: 900; font-size: 14px; color: #fff; }
+        .chip_team {
+            font-size: 10px;
+            opacity: .75;
+            max-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--ks-text-secondary);
+        }
+
+        /* BADGES (cards) */
+        .badges_row {
+            display: flex;
+            gap: 10px;
+        }
+        .badge {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.05);
+        }
+        .badge_dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: #f7d54a;
+        }
+        .badge_val { font-weight: 900; font-size: 14px; color: #fff; }
+        .badge_team {
+            font-size: 10px;
+            opacity: .75;
+            max-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--ks-text-secondary);
+        }
+
+        /* DONUT */
+        .stat_donut { grid-column: span 2; }
+        @media (max-width: 680px) {
+            .stat_donut { grid-column: span 1; }
+        }
+        .donut {
+            --p: 50;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            background: conic-gradient(
+                var(--ks-accent) calc(var(--p) * 1%),
+                rgba(255,255,255,.10) 0
+            );
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+        .donut::after {
+            content: "";
+            width: 104px;
+            height: 104px;
+            border-radius: 50%;
+            background: var(--third-bg-color);
+            border: 1px solid rgba(255,255,255,.08);
+            position: absolute;
+        }
+        .donut_center { position: relative; z-index: 2; text-align: center; }
+        .donut_big { font-weight: 900; font-size: 20px; color: #fff; }
+        .donut_small { font-size: 12px; opacity: .85; color: var(--ks-text-secondary); }
+
+        .stat_legend {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .legend_item { display: flex; align-items: center; gap: 8px; min-width: 0; }
+        .legend_name {
+            font-size: 10px;
+            opacity: .75;
+            max-width: 140px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--ks-text-secondary);
+        }
+        .legend_val { font-weight: 900; font-size: 12px; opacity: .95; color: #fff; }
+
+        .team_dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: var(--ks-accent);
+        }
+        .team.away .team_dot, .legend_item.away .team_dot { background: rgba(255,255,255,.30); }
+
+        .stats_teams_legend {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 10px 0 14px 0;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid rgba(255,255,255,.07);
+        }
+        .stats_teams_legend .team {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+        .team_name {
+            font-weight: 800;
+            font-size: 12px;
+            opacity: .95;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #fff;
+        }
+
+        .stat_badges .badge_dot { background: #f7d54a; }
+        .stat_badges .stat_title:empty { display: none; }
+
+        @media (max-width: 768px) {
+            .event-page-container {
+                padding: 16px 0 32px;
+            }
+        }
+    </style>
+
+    <div class="main-container">
+        <div class="event-page-container">
+            <div id="content_sport">
+                <div class="event-header">
+                    <div class="event-header-team">
+                        <div class="event-header-team-logo">
+                            <img src="/media-receiver/{{ encrypt(event_details.th.logo)|url_encode }}.png" alt="{{ event_details.th.name }}" />
+                        </div>
+                        <div class="event-header-team-name">
+                            {{ event_details.th.name }}
+                        </div>
+                    </div>
+                    <div class="event-header-score">
+                        {% if event_details.es == 1 %}
+                            <div class="event-score">
+                                {{ event_details.esc }}
+                            </div>
+                            <div class="event-date">
+                                {{ jsDate('d/m/Y H:i', event_details.ste) }}
+                            </div>
+                            <div class="event-status">
+                                {{ Translate('Live') }} <i style="color:var(--ks-accent);" class="fa fa-signal" aria-hidden="true"></i>
+                            </div>
+                            <div class="event-time">
+                                {% if event_details.eht == true %}
+                                    {{ Translate('Halftime') }}
+                                {% else %}
+                                    {{ FormatEventTime(event_details.ect) }}
+                                {% endif %}
+                            </div>
+                        {% elseif event_details.es == 2 %}
+                            <div class="event-score">
+                                {{ event_details.esc }}
+                            </div>
+                            <div class="event-date">
+                                {{ jsDate('d/m/Y H:i', event_details.ste) }}
+                            </div>
+                            <div class="event-status">
+                                {{ Translate('Finished') }}
+                            </div>
+                        {% else %}
+
+                        {% endif %}
+                    </div>
+                    <div class="event-header-team">
+                        <div class="event-header-team-logo">
+                            <img src="/media-receiver/{{ encrypt(event_details.ta.logo)|url_encode }}.png" alt="{{ event_details.ta.name }}" />
+                        </div>
+                        <div class="event-header-team-name">
+                            {{ event_details.ta.name }}
+                        </div>
+                    </div>
+                </div>
+                {% include TemplatePath(template, "parts/promotional-event.html.twig") %}
+                <div id="tracker">
+
+                </div>
+                <div class="match_details_navbar">
+                    <a href="/{{ lang }}/event/{{ event_id }}" class="match_nb_item {% if subpage is null %}active{% endif %}" data-tab-match="match"><i class="fa fa-info" aria-hidden="true"></i> {{ Translate('Match') }}</a>
+                    <a href="/{{ lang }}/event/{{ event_id }}/head2head" class="match_nb_item {% if subpage is not null and subpage == 'head2head' %}active{% endif %}" data-tab-match="h2h"><i class="fa fa-exchange" aria-hidden="true"></i> {{ Translate('H2H') }}</a>
+                    <a href="/{{ lang }}/event/{{ event_id }}/classifications" class="match_nb_item {% if subpage is not null and subpage == 'classifications' %}active{% endif %}" data-tab-match="h2h"><i class="fa fa-level-up" aria-hidden="true"></i> {{ Translate('Classifications') }}</a>
+                </div>
+                {% if subpage is null %}
+                    <div class="match_details_content active" data-tab-match="match">
+                        <div class="match_details_item">
+                            <div class="match_details_item-head">
+                                {{ Translate('Score') }}
+                            </div>
+                            <div class="match_details_item-body">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{ Translate('Total') }}</th>
+                                        {% set indexPart = 0 %}
+                                        {% for score in event_details.etsc %}
+                                            {% set indexPart = indexPart+1 %}
+                                            <th>{{ Translate('Period')}} {{ indexPart }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set team_scores = event_details.esc|split(':') %}
+                                    <tr>
+                                        <td><img src="{{ event_details.th.logo }}" alt="{{ event_details.th.name }}" /> {{ event_details.th.name }}</td>
+                                        <td>{{ team_scores[0] }}</td>
+                                        {% for score in event_details.etsc %}
+                                            {% set teamscore = score|split(':') %}
+                                            <td>{{ teamscore[0] }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ event_details.ta.logo }}" alt="{{ event_details.ta.name }}" /> {{ event_details.ta.name }}</td>
+                                        <td>{{ team_scores[1] }}</td>
+                                        {% for score in event_details.etsc %}
+                                            {% set teamscore = score|split(':') %}
+                                            <td>{{ teamscore[1] }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% if event_details.ests|length > 0 %}
+                            {% set sport = event_details.sn|default('soccer')|lower %}
+                            {% set homeTeam = event_details.th.name|default('Home') %}
+                            {% set awayTeam = event_details.ta.name|default('Away') %}
+
+                            <div class="match_details_item">
+                                <div class="match_details_item-head">
+                                    {{ Translate('Statistics') }}
+                                </div>
+
+                                <div class="match_details_item-body">
+                                <div class="stats_grid" data-sport="{{ sport }}">
+
+                                    {% set statType = {
+                                        'POSSESSION': 'donut',
+                                        'YELLOW_CARD': 'cards',
+                                        'RED_CARD': 'cards',
+                                        'SHOT_ON_TARGET': 'bar',
+                                        'SHOT_OFF_TARGET': 'bar',
+                                        'ATTACKS': 'bar',
+                                        'DANGER_ATTACKS': 'bar',
+                                        'FREE_KICKS': 'bar',
+                                        'FAULTS': 'bar',
+                                        'CORNER': 'chips',
+                                        'PENALTY': 'chips',
+                                        'SUBSTITUTIONS': 'chips',
+                                        'TIMEOUTS': 'chips',
+                                        '2PTS_GOALS': 'stack',
+                                        '3PTS_GOALS': 'stack',
+                                        'ACES': 'chips',
+                                        'DOUBLE_FAULTS': 'chips',
+                                        'FIRST_SERVE': 'bar',
+                                        'WIN_FIRST_SERVE': 'bar',
+                                        'WIN_SECOND_SERVE': 'bar',
+                                        'BREAK_POINTS': 'bar'
+                                    } %}
+
+                                    {% for key, stat in event_details.ests %}
+                                        {% set type = statType[key]|default('bar') %}
+
+                                        {% set homeVal = stat.home|default(0) %}
+                                        {% set awayVal = stat.away|default(0) %}
+                                        {% set total = homeVal + awayVal %}
+                                        {% set homePct = (total > 0) ? ((100/total) * homeVal) : 50 %}
+
+                                        {% if type == 'donut' %}
+                                            <div class="stat_card stat_donut">
+                                                <div class="stat_title">{{ Translate(stat.name) }}</div>
+
+                                                <div class="donut" style="--p:{{ homePct|round(0,'floor') }};">
+                                                    <div class="donut_center">
+                                                        <div class="donut_big">{{ homePct|round }}%</div>
+                                                        <div class="donut_small">{{ homeVal }} - {{ awayVal }}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="stat_legend">
+                                                  <span class="legend_item home">
+                                                    <span class="legend_name">{{ homeTeam }}</span>
+                                                    <span class="legend_val">{{ homeVal }}</span>
+                                                  </span>
+                                                  <span class="legend_item away">
+                                                    <span class="legend_name">{{ awayTeam }}</span>
+                                                    <span class="legend_val">{{ awayVal }}</span>
+                                                  </span>
+                                                </div>
+                                            </div>
+
+                                        {% elseif type == 'cards' %}
+                                            <div class="stat_card stat_badges">
+                                                <div class="stat_title">{{ Translate(stat.name) }}</div>
+                                                <div class="badges_row">
+                                                    <div class="badge home" title="{{ homeTeam }}">
+                                                        <span class="badge_val">{{ homeVal }}</span>
+                                                        <span class="badge_team">{{ homeTeam }}</span>
+                                                    </div>
+                                                    <div class="badge away" title="{{ awayTeam }}">
+                                                        <span class="badge_val">{{ awayVal }}</span>
+                                                        <span class="badge_team">{{ awayTeam }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        {% elseif type == 'chips' %}
+                                            <div class="stat_card stat_chips">
+                                                <div class="stat_title">{{ Translate(stat.name) }}</div>
+                                                <div class="chips_row">
+                                                  <span class="chip home" title="{{ homeTeam }}">
+                                                    <span class="chip_val">{{ homeVal }}</span>
+                                                    <span class="chip_team">{{ homeTeam }}</span>
+                                                  </span>
+                                                  <span class="chip away" title="{{ awayTeam }}">
+                                                    <span class="chip_val">{{ awayVal }}</span>
+                                                    <span class="chip_team">{{ awayTeam }}</span>
+                                                  </span>
+                                                </div>
+                                            </div>
+
+                                        {% else %}
+                                            <div class="stat_card stat_bar">
+                                                <div class="stat_title">{{ Translate(stat.name) }}</div>
+                                                <div class="bar_row" style="display: block">
+                                                    <div class="bar">
+                                                        <div class="bar_fill" style="width:{{ homePct }}%;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="bar_row" style="grid-template-columns: 26px 1fr 0px;">
+                                                  <span class="bar_val home" title="{{ homeTeam }}">
+                                                    <span class="bar_team">{{ homeTeam }}</span>
+                                                    <span class="bar_num">{{ homeVal }}</span>
+                                                  </span>
+
+                                                    <span class="bar_val away" title="{{ awayTeam }}">
+                                                        <span class="bar_team">{{ awayTeam }}</span>
+                                                        <span class="bar_num">{{ awayVal }}</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if subpage is not null and subpage == 'head2head' %}
+                    <div class="match_details_content active" data-tab-match="h2h">
+                        {{ Translate('Loading...') }}
+                    </div>
+                {% endif %}
+                {% if subpage is not null and subpage == 'classifications' %}
+                    <div class="match_details_content active" data-tab-match="h2h">
+                        {{ Translate('Loading...') }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="https://feedh.fra1.cdn.digitaloceanspaces.com/tracker/new/lmt-widget.js" async></script>
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      window.FeedhLMT = new LMTWidget("kappascore");
+
+      async function initPage(){
+
+      }
+
+      initPage();
+
+      document.addEventListener('DOMContentLoaded', function(){
+        FeedhLMT.initLMT("tracker", "{{ event_id }}", {
+          header: true,
+          footer: true
+        });
+      });
+
+    </script>
+
+{% endblock %}

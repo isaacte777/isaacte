@@ -1,0 +1,25 @@
+{% for event in events %}
+    {% if with_status is not defined or with_status == event.es %}
+        {% set score = event.esc|split(':') %}
+        <a href="/{{ lang }}/event/{{ event._id }}" class="event-on-list-details">
+            <div class="event-on-list">
+                <div class="event-on-list-col">
+                    {{ jsDate("d/m/Y_H:i", event.ste)|replace({'_': '<br />'})|raw }}
+                </div>
+                <div class="event-on-list-col">
+                    <div class="event-on-list-team">
+                        <span>{{ event.th.name }}</span>
+                        {% if event.es != 0 %}<div class="event-on-list-team-score">{{ score[0] }}</div>{% endif %}
+                    </div>
+                    <div class="event-on-list-team">
+                        <span>{{ event.ta.name }}</span>
+                        {% if event.es != 0 %}<div class="event-on-list-team-score">{{ score[1] }}</div>{% endif %}
+                    </div>
+                </div>
+                <div class="event-on-list-col">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </div>
+            </div>
+        </a>
+    {% endif %}
+{% endfor %}

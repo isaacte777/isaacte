@@ -1,0 +1,244 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{{ Translate('Page not found') }}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="main-container">
+        <div class="error-page">
+            <div class="error-code-container">
+                <span class="error-code-digit">4</span>
+                <div class="sports-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M2 12h20"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M5 5l14 14M19 5L5 19"/>
+                    </svg>
+                </div>
+                <span class="error-code-digit">4</span>
+            </div>
+
+            <h1 class="error-title">{{ Translate('Offside! Page Not Found') }}</h1>
+
+            <p class="error-message">
+                {{ Translate("Looks like you've taken a wrong turn. The page you're looking for doesn't exist or has been moved. Let's get you back to the action.") }}
+            </p>
+
+            <div class="action-buttons">
+                <a href="/{{ lang }}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    {{ Translate('Return to Homepage') }}
+                </a>
+                <a href="/{{ lang }}/live-score" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20v-6M6 20v-6M18 20v-6"/>
+                        <path d="M12 4v6M6 10v6M18 10v6"/>
+                        <line x1="3" y1="4" x2="21" y2="4"/>
+                        <line x1="3" y1="8" x2="21" y2="8"/>
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="16" x2="21" y2="16"/>
+                        <line x1="3" y1="20" x2="21" y2="20"/>
+                    </svg>
+                    {{ Translate('Live Scores') }}
+                </a>
+                <button onclick="window.history.back()" class="btn btn-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    {{ Translate('Go Back') }}
+                </button>
+            </div>
+
+        </div>
+
+        <style>
+            .error-page {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 3rem 1.5rem;
+                text-align: center;
+            }
+
+            .error-code-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+                position: relative;
+            }
+
+            .error-code-digit {
+                font-size: 8rem;
+                font-weight: 900;
+                background: linear-gradient(135deg, var(--ks-accent) 0%, var(--ks-accent-soft) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                line-height: 1;
+            }
+
+            .sports-icon {
+                width: 100px;
+                height: 100px;
+                color: var(--ks-accent);
+                animation: pulse 2s infinite;
+            }
+
+            .error-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+                color: #fff;
+            }
+
+            .error-message {
+                font-size: 1.25rem;
+                color: var(--ks-text-secondary);
+                margin-bottom: 3rem;
+                line-height: 1.6;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .action-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+                margin-bottom: 3rem;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.875rem 1.75rem;
+                font-weight: 600;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                border: none;
+                cursor: pointer;
+                font-size: 1rem;
+                border-radius: var(--ks-radius-sm);
+            }
+
+            .btn-primary {
+                background: var(--ks-accent);
+                color: #000;
+                font-weight: 700;
+                box-shadow: 0 2px 12px rgba(34, 197, 94, 0.4);
+            }
+
+            .btn-primary:hover {
+                background: var(--ks-accent-soft);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+            }
+
+            .btn-secondary {
+                background: rgba(34, 197, 94, 0.1);
+                color: var(--ks-accent);
+                border: 1px solid rgba(34, 197, 94, 0.2);
+            }
+
+            .btn-secondary:hover {
+                background: rgba(34, 197, 94, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .btn-outline {
+                background: transparent;
+                color: var(--ks-text-secondary);
+                border: 1px solid var(--ks-border);
+            }
+
+            .btn-outline:hover {
+                background: rgba(255, 255, 255, 0.05);
+                color: #fff;
+                border-color: var(--ks-border-hover);
+            }
+
+            @keyframes pulse {
+                0%, 100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1.05);
+                    opacity: 0.8;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .error-code-digit {
+                    font-size: 6rem;
+                }
+                .sports-icon {
+                    width: 80px;
+                    height: 80px;
+                }
+                .error-title {
+                    font-size: 2rem;
+                }
+                .error-message {
+                    font-size: 1.125rem;
+                }
+                .action-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .btn {
+                    width: 100%;
+                    max-width: 300px;
+                    justify-content: center;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .error-code-digit {
+                    font-size: 4rem;
+                }
+                .sports-icon {
+                    width: 60px;
+                    height: 60px;
+                }
+                .error-title {
+                    font-size: 1.75rem;
+                }
+                .error-page {
+                    padding: 2rem 1rem;
+                }
+            }
+        </style>
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      async function initPage(){
+
+      }
+
+      initPage();
+
+    </script>
+
+{% endblock %}

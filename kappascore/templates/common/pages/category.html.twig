@@ -1,0 +1,150 @@
+{% extends TemplatePath(template, "base.html.twig") %}
+
+{% block pagetitle %}{% if sport_selected is not null %}{{ sport_selected.name }}{% else %}{{ Translate('Sport details') }}{% endif %}{% endblock %}
+
+{% block header %}
+    {% include TemplatePath(template, "parts/header.html.twig") %}
+{% endblock %}
+
+{% block content %}
+    <style>
+        div#content_sport {
+            background: var(--secundary-bg-color);
+            padding: 24px 15px;
+            min-height: 600px;
+        }
+        .category_item a {
+            padding: 14px 16px 14px 75px;
+            background: var(--third-bg-color);
+            color: var(--primary-font-color);
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            margin-bottom: 8px;
+            position: relative;
+            border: 1px solid var(--ks-border);
+            border-radius: var(--ks-radius-sm);
+            transition: all 0.12s ease;
+        }
+        .category_item a:hover {
+            background: var(--ks-surface-hover);
+            border-color: var(--ks-border-hover);
+            color: #fff;
+        }
+        .category_item:last-child a {
+            margin-bottom: 0px;
+        }
+        .category_item a img {
+            height: 50px;
+            position: absolute;
+            top: 8px;
+            left: 11px;
+            background: var(--secundary-bg-color);
+            border-radius: 5px;
+            border: 1px solid var(--ks-border);
+            max-width: 50px;
+        }
+        .category_item a i {
+            position: absolute;
+            right: 20px;
+            top: 18px;
+            font-size: 34px;
+            color: var(--ks-text-dim);
+        }
+        .category_item a:hover i {
+            color: var(--ks-accent);
+        }
+        .category_item a p {
+            margin-bottom: 0;
+            color: var(--ks-text-secondary);
+            font-size: 12px;
+        }
+
+        .search_box_sport {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .search_box_sport i {
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            color: var(--ks-text-secondary);
+        }
+        .search_box_sport input {
+            border: 1px solid var(--ks-border);
+            background: var(--third-bg-color);
+            height: 36px;
+            width: 100%;
+            padding-left: 40px;
+            color: var(--primary-font-color);
+            border-radius: var(--ks-radius-sm);
+            font-size: 13px;
+            transition: border-color 0.2s ease;
+        }
+        .search_box_sport input:focus {
+            outline: none;
+            border-color: var(--ks-accent);
+        }
+        .search_box_sport input::placeholder {
+            color: var(--ks-text-dim);
+        }
+    </style>
+
+    <div class="main-container">
+        <div id="content_sport">
+            <div class="search_box_sport">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="{{ Translate('Search country') }}" />
+            </div>
+            {% for tournament in tournaments|sort((a, b) => a.name > b.name) %}
+                <div class="category_item" data-cn="{{ tournament.name }}">
+                    <a href="/{{ lang }}/tournament/{{ tournament._id }}">
+                        <img class="flagicon" src="/images/tournaments/{{ tournament._id }}.png" alt="{{ tournament.name }}" onerror="this.onerror=null; this.src='/images/trofeo.jpg';">
+                        {{ tournament.name }}
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <p>{{ Date('Y') }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include TemplatePath(template, "parts/footer.html.twig") %}
+{% endblock %}
+
+{% block scripts %}
+
+    {% include TemplatePath(template, "scripts/shared.html.twig") %}
+
+    <script>
+
+      async function initPage(){
+
+        $(document).off('keyup', '.search_box_sport input');
+        $(document).on('keyup', '.search_box_sport input', function(e){
+          e.preventDefault();
+          let el = $('#content_sport .category_item');
+          let vu = $(this).val();
+          if(vu.length > 0){
+            el.each(function(){
+              if($(this).data('cn').toLowerCase().indexOf(vu.toLowerCase()) !== -1){
+                $(this).show();
+              }else{
+                $(this).hide();
+              }
+            });
+          }else{
+            el.show();
+          }
+        });
+
+      }
+
+      initPage();
+
+    </script>
+
+{% endblock %}

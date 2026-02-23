@@ -1,0 +1,2523 @@
+/*
+** STATISTICS V2. COBRA DEVELOPMENT SYSTEMS S.L.
+** SOFTWARE ENGINER's: Iulian-Alexandru Tanase & Daniel Florean
+** REDESIGNED: Premium Dark + Green Monochromatic — 2026
+*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --main-bg-color: #000000;
+    --secundary-bg-color: #0a0a0a;
+    --third-bg-color: #111111;
+    --primary-font-color: #f0f0f0;
+    --main-font-color: #ffffff;
+    --nav-bg-color: #22c55e;
+    --nav-bg-hover: #4ade80;
+    --container-head-color: #1a1a1a;
+    --ks-border: rgba(255, 255, 255, 0.08);
+    --ks-border-hover: rgba(255, 255, 255, 0.15);
+    --ks-border-accent: rgba(34, 197, 94, 0.25);
+    --ks-surface: #111111;
+    --ks-surface-hover: rgba(34, 197, 94, 0.05);
+    --ks-text-muted: #555555;
+    --ks-text-secondary: #888888;
+    --ks-text-dim: #333333;
+    --ks-accent: #22c55e;
+    --ks-accent-soft: #4ade80;
+    --ks-accent-glow: rgba(34, 197, 94, 0.1);
+    --ks-accent-glow-strong: rgba(34, 197, 94, 0.25);
+    --ks-gold: #f59e0b;
+    --ks-glass: rgba(0, 0, 0, 0.7);
+    --ks-glass-border: rgba(255, 255, 255, 0.08);
+    --ks-radius: 12px;
+    --ks-radius-sm: 8px;
+    --ks-radius-xs: 6px;
+    --ks-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    --ks-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+    --ks-shadow-glow: 0 0 30px rgba(34, 197, 94, 0.08);
+    --ks-transition: 0.2s ease;
+    --ks-transition-fast: 0.12s ease;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: #000000;
+    color: var(--primary-font-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+*, *::before, *::after {
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: normal;
+    box-sizing: border-box;
+}
+.main-container {
+    position: relative;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 80px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   HEADER (legacy — replaced by unified header in header.html.twig)
+   ═══════════════════════════════════════════════════════ */
+.header {
+    display: none;
+}
+.tophead {
+    display: none;
+}
+.subhead {
+    display: none;
+}
+.mainRow {
+    width: 100%;
+    height: auto;
+    min-height: 500px;
+}
+.menuCol {
+    width: 240px;
+    padding-top: 4px;
+    display: inline-block;
+}
+.searchlabel{
+    width: 100%;
+    margin-bottom: 5px;
+}
+.searchlabel .searchlabelTitle{
+    background: var(--container-head-color);
+    padding-left: 1px;
+    color: var(--primary-font-color);
+    line-height: 38px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: relative;
+}
+.searchlabel .searchlabelTitle h5{
+    padding: 0px !important;
+    margin: 0px;
+    width: 40%;
+    padding-left: 10px !important;
+    white-space:nowrap;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--ks-accent);
+}
+.searchlabel .searchlabelTitle h5 i {
+    margin-right: 5px;
+    color: var(--ks-accent);
+}
+.searchlabel .searchlabelTitle a{
+    color: var(--primary-font-color);
+    position: absolute;
+    right: 10px;
+    top: 0px;
+}
+.searchlabel .searchlabelContent{
+    background: var(--third-bg-color);
+    text-align: center;
+}
+.searchlabel .searchlabelContent input{
+    height: 27px;
+    width: calc(100% - 100px);
+    background: var(--secundary-bg-color);
+    border: 1px solid var(--ks-border);
+    color: var(--primary-font-color);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left:10px;
+    border-radius: 5px 0 0 5px;
+}
+.searchlabel .searchlabelContent a{
+    color: var(--primary-font-color);
+    width: 75px;
+    height: 27px;
+    background: var(--container-head-color);
+    margin-top: 10px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 29px;
+    font-size: 12px;
+    border-radius: 0 5px 5px 0;
+}
+.sportlabel{
+    width: auto;
+}
+.sportlabel .sportlabelElement{
+    padding-left: 1px;
+    color: var(--primary-font-color);
+    line-height: 30px;
+    position: relative;
+}
+.sportlabel .sportlabelElement ul{
+    margin: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+.sportlabel .sportlabelElement ul li.sportListItem {
+    position: relative;
+    margin-bottom: 1px;
+}
+.sportlabel .sportlabelElement ul li.sportListItem a{
+    text-decoration: none;
+    color: var(--ks-text-secondary);
+    width: 100%;
+    display: inline-block;
+    padding: 8px 10px;
+    background: var(--third-bg-color);
+    transition: all var(--ks-transition-fast);
+    font-size: 12.5px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+.sportlabel .sportlabelElement ul li.sportListItem a:hover {
+    background: var(--ks-accent-glow);
+    color: var(--ks-accent);
+}
+.sportlabel .sportlabelElement ul li.sportListItem a.master-item {
+    text-transform: uppercase;
+    font-weight: 700;
+    background: var(--container-head-color);
+    border-bottom: 1px solid var(--ks-border);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: var(--ks-accent);
+    border-radius: 6px 6px 0 0;
+}
+.sportlabel .sportlabelElement ul li.sportListItem a.master-item svg {
+    margin-right: 5px;
+}
+.sportlabel .sportlabelElement ul li.sportListItem i:nth-child(2){
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 12px;
+}
+.sportlabel .subSportElement {
+    margin:0px;
+    padding: 0px;
+    list-style: none;
+}
+.sportlabel .subSportElement li {
+    background: var(--third-bg-color)!important;
+    max-height: 30px;
+    color:var(--primary-font-color);
+}
+.sportlabel .subSportElement li a {
+    padding-left: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.contentCol {
+    width: calc(100% - 250px);
+    vertical-align: top;
+    display: inline-block;
+}
+.contentCol .contentColPage {
+    display: none;
+}
+.contentCol .contentColPage.active {
+    display: block;
+}
+.contentColTitle {
+    background: var(--container-head-color);
+    padding-left: 1px;
+    color: var(--primary-font-color);
+    line-height: 38px;
+    position: relative;
+    margin-top: 5px;
+    text-transform:uppercase;
+    border-radius: 6px;
+}
+.contentColTitle h5 {
+    padding: 0px;
+    margin:0px;
+    padding-left: 10px
+}
+.contentColTitle .label {
+    position: absolute;
+    right: 10px;
+    color:var(--primary-font-color);
+    font-size: 10px;
+}
+.leagueContent {
+    padding: 10px;
+    background: var(--third-bg-color);
+    border-radius: 0 0 var(--ks-radius-sm) var(--ks-radius-sm);
+}
+.leagueContent .leagueTitle {
+    color: var(--primary-font-color) !important;
+    font-size: 14px;
+}
+.leagueContent .leagueTitle .icon {
+    color:var(--primary-font-color);
+    width: 18px;
+    height: 18px;
+    margin: 0 15px 0 13px;
+    fill: var(--primary-font-color);
+    vertical-align: top;
+}
+.eventContent {
+    display: block;
+    background: var(--secundary-bg-color);
+    border-radius: 6px;
+    color: var(--primary-font-color);
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: background var(--ks-transition-fast);
+    border: 1px solid var(--ks-border);
+}
+.eventContent:hover {
+    background: var(--ks-surface-hover);
+    border-color: var(--ks-border-hover);
+}
+.eventContent .eventDateTime {
+    display: inline-block;
+    width: 15%;
+    vertical-align: top;
+    text-align: center;
+}
+.eventContent .eventStatus {
+    width: 15%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.eventContent .eventHomeTeam,
+.eventContent .eventAwayTeam {
+    width: 30%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.eventContent .eventHomeTeam {
+    text-align: right;
+}
+.eventContent .eventAwayTeam {
+    text-align: left;
+}
+.eventContent .eventScore {
+    width:10%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.sportlabel .sportlabelElement ul li.sportListItem a .icon {
+    fill: var(--primary-font-color);
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+#content_sportsmenu {
+    width: 100%;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    background: var(--main-bg-color);
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+#content_sportsmenu ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    grid-gap: 5px;
+    padding:0px;
+    margin:0px;
+    list-style: none;
+    align-items: center;
+    align-content: center;
+}
+#content_sportsmenu ul li {
+    display: inline-block;
+    color: var(--primary-font-color);
+    text-align: center;
+    margin: 5px 0px;
+    width: 100%;
+}
+#content_sportsmenu ul li a {
+    color: var(--primary-font-color);
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid var(--ks-border);
+    padding: 25px;
+    width: calc(100% - 20px - 60px);
+    margin: 5px 10px;
+    border-radius: 8px;
+    background: var(--third-bg-color);
+    transition: all var(--ks-transition-fast);
+}
+#content_sportsmenu ul li:hover a,
+#content_sportsmenu ul li.active a{
+    color: #fff;
+    border-color: var(--nav-bg-color);
+    background: var(--ks-surface-hover);
+}
+#content_sportsmenu ul li .icon {
+    width: 84px;
+    height: 84px;
+    display: block;
+    fill: var(--nav-bg-color);
+    margin: 10px auto;
+}
+#content_sportsmenu ul li:hover .icon,
+#content_sportsmenu ul li.active .icon {
+    fill: var(--nav-bg-color);
+}
+#message_selectmenu {
+    width: calc(100% - 30px);
+    padding: 15px;
+    border-top: 10px solid var(--main-bg-color);
+    color:var(--main-font-color);
+    line-height: 18px;
+    background: var(--third-bg-color);
+}
+#content_competitions,
+#content_standings,
+#selector_tabs_stand,
+#content_match_details{
+    display: none;
+    width: calc(100% - 30px);
+    padding: 15px;
+    border-top: 10px solid var(--main-bg-color);
+    color: var(--main-font-color);
+    position: relative;
+}
+#content_competitions .competitions_tab {
+    display: none;
+}
+#content_competitions .competitions_tab.selected {
+    display: block;
+}
+#selector_tabs_stand .itemStandSelect {
+    width: calc(50% - 5px);
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    text-align: center;
+    border-right: 5px solid var(--main-bg-color);
+    line-height: 32px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+#selector_tabs_stand .itemStandSelect.selected {
+    color:var(--primary-font-color);
+    background: var(--secundary-bg-color);
+}
+#selector_tabs_stand .itemStandSelect:last-child {
+    border-right: 0px;
+    border-left: 5px solid var(--main-bg-color);
+}
+#selector_tabs_stand .itemStandSelect span.standings {
+    font-size: 32px;
+    display: block;
+    margin: 5px auto;
+}
+#selector_tabs_stand .itemStandSelect span.next_events {
+    font-size: 32px;
+    display: block;
+    margin: 5px auto;
+}
+#selector_tabs_stand {
+    padding:0px;
+    display: none;
+    width: 100%;
+}
+#content_competitions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin-right: 5px;
+}
+#content_competitions ul:nth-child(2) {
+    width: calc(50% - 5px);
+    margin-right: 0px;
+}
+#content_competitions ul li {
+    line-height: 32px;
+    background: var(--third-bg-color);
+    max-height: unset;
+    color: var(--primary-font-color);
+}
+#content_competitions ul li.title {
+    line-height: 45px;
+    background: var(--container-head-color);
+    padding: 0 10px;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+#content_competitions ul li:hover,
+#content_competitions ul li.active{
+    background: var(--ks-surface-hover);
+}
+#content_competitions ul li.title:hover {
+    background: var(--container-head-color);
+}
+#content_competitions ul li a {
+    text-decoration: none;
+    width: 100%;
+    display: inline-block;
+    padding: 0 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-height: 32px;
+    color: var(--primary-font-color);
+    overflow: hidden;
+    margin-bottom: -10px;
+}
+#content_competitions ul li:nth-child(2) {
+
+}
+#content_competitions ul li.search_competitions {
+    position: relative;
+}
+#content_competitions ul li.search_competitions i {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+}
+#content_competitions ul li.search_competitions input {
+    width: 100%;
+    border: 1px solid var(--ks-border);
+    margin: 0px;
+    padding: 10px;
+    background: var(--secundary-bg-color);
+    color: var(--primary-font-color);
+}
+.rating-icon {
+    width: 20px;
+    height: 19px;
+    background: url(/assets/imgs/podium.svg) no-repeat;
+    background-size: auto;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: middle;
+}
+#content_competitions #more_competitions li {
+    position: relative;
+}
+#content_competitions #more_competitions li span.xleft {
+    position: absolute;
+    right: 10px;
+    top: 1px;
+}
+#content_competitions ul .submenu {
+    width: 100%;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: none;
+    z-index: 1;
+    overflow: hidden;
+    height: auto;
+    max-height: unset;
+}
+#content_competitions ul li.active .submenu {
+    display: block;
+}
+#content_competitions ul .submenu li {
+    max-height: unset;
+}
+#content_competitions ul .submenu li:nth-child(2) {
+    margin-top: 0px;
+}
+#content_competitions ul .submenu li {
+    max-height: unset;
+    background: var(--container-head-color);
+}
+#content_competitions ul .submenu li a {
+    color: var(--main-font-color);
+}
+#content_standings p.standingsTitle {
+    width: 100%;
+    margin: 5px;
+    text-align: center;
+    text-transform: uppercase;
+}
+#content_standings .visible_standings_content {
+    display: none;
+}
+#content_standings .visible_standings_content.visible {
+    display: block;
+}
+#content_standings p.standingsTitle {
+    width: calc(100% - 30px);
+    margin: 5px;
+    text-align: left;
+    text-transform: uppercase;
+    background: var(--third-bg-color) !important;
+    color: var(--primary-font-color);
+    padding: 0 10px;
+    border-radius: 5px;
+    line-height: 36px;
+}
+.logo-team-meets {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-size: 100%;
+    background-position: center;
+    vertical-align: top;
+    margin-right: 10px;
+}
+table.standingsTable {
+    margin: 5px;
+    width: calc(100% - 10px);
+    border: none;
+    margin-bottom: 25px;
+}
+table.standingsTable tr {
+    background: var(--container-head-color);
+    color:var(--primary-font-color);
+}
+table.standingsTable .thead {
+    background: var(--third-bg-color) !important;
+    color: var(--primary-font-color);
+}
+table.standingsTable td {
+    padding: 5px 0px;
+    white-space: nowrap;
+}
+table.standingsTable .thead td {
+    min-width: 40px;
+}
+table.standingsTable .thead td:last-child {
+    min-width: 100px;
+}
+table.standingsTable .td_num {
+    text-align: center;
+    width: 35px;
+}
+table.standingsTable .td_name {
+    width: 70%;
+}
+table.standingsTable .td_name a {
+    text-decoration: none;
+    color:var(--main-font-color);
+}
+#standingsSelector {
+    border: 1px solid var(--ks-border);
+    background: var(--container-head-color);
+    color: var(--primary-font-color);
+    padding: 5px;
+    margin-left: 5px;
+    float: none;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+#preloader {
+    position: fixed;
+    z-index: 999;
+    background: rgba(0,0,0,0.5);
+    left: 0px;
+    top:0px;
+    width: 100%;
+    height: 100%;
+}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #22c55e;
+    animation: spin 2s linear infinite;
+    z-index:1001;
+}
+#loader:before {
+    content:"";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--secundary-bg-color);
+    animation: spin 3s linear infinite;
+}
+#loader:after {
+    content:"";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #4ade80;
+    animation: spin 1.5s linear infinite;
+}
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.team-form {
+    width: 18px;
+    background: var(--ks-text-muted);
+    margin: 0 5px;
+    display: inline-block;
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px;
+    border-radius: 3px;
+    color: #fff;
+}
+.team-form.winner {
+    background: #22c55e;
+}
+.team-form.losing {
+    background: #ef4444;
+}
+
+/*DISABLE RANKING*/
+#ranking {
+    display: none!important;
+}
+.statusLineTable {
+    font-size: 11px;
+    vertical-align: top;
+    margin: 0 5px;
+    background: var(--container-head-color);
+    line-height: 20px;
+    margin-top: 7px;
+    padding: 0 5px;
+    border-left: 3px solid var(--primary-font-color);
+    white-space: nowrap;
+    display: block;
+}
+#mobile_detect {
+    position: fixed;
+    z-index: 1000;
+    background: var(--main-bg-color);
+    color: var(--primary-font-color);
+    width: 100%;
+    height: 100%;
+    top:0px;
+    left:0px;
+    padding:10px;
+    display: none;
+    font-size: 32px;
+    text-transform: uppercase;
+    text-align: center;
+}
+#mobile_detect img {
+    display: block;
+    margin: 25px auto;
+}
+.sliderhome img {
+    display:none;
+}
+.statusLineTable.color_promotion {
+    border-color: #00e600d4;
+}
+table.standingsTable tr.color_promotion td:first-child {
+    border-left: 3px solid #00e600d4;
+}
+.statusLineTable.color_2 {
+    border-color: #00e6cdd4;
+}
+table.standingsTable tr.color_2 td:first-child {
+    border-left: 3px solid #00e6cdd4;
+}
+.statusLineTable.color_3 {
+    border-color: #e6c500d4;
+}
+table.standingsTable tr.color_3 td:first-child {
+    border-left: 3px solid #e6c500d4;
+}
+.statusLineTable.color_relegation {
+    border-color: #e60000d4;
+}
+table.standingsTable tr.color_relegation td:first-child {
+    border-left: 3px solid #e60000d4;
+}
+#top_competitions {
+    display: none !important;
+}
+.sportlabel .sportlabelElement ul.subSportElement {
+    display: none;
+}
+.sportlabel .sportlabelElement li.active ul.subSportElement {
+    display: block;
+}
+#last_results_hp .leagueContent .leagueTitle {
+    background: var(--secundary-bg-color);
+    line-height: 34px;
+}
+#last_results_hp .leagueContent .leagueTitle .icon {
+    margin-top: 7px;
+}
+#last_results_hp .eventContent {
+    margin: 1px 0;
+    border-radius: 0px;
+    background: var(--container-head-color);
+}
+#last_results_hp .eventContent .eventDateTime {
+    width: 160px;
+}
+#last_results_hp .eventContent .eventHomeTeam {
+    text-align: left;
+    width: 45%;
+}
+#last_results_hp .eventContent .eventScore {
+    width: calc(55% - 160px);
+    text-align: right;
+}
+.eventContent > div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.match_details_head {
+    width:calc(100% + 30px);
+    background-image: url(/assets/imgs/head.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% auto;
+    min-height: 180px;
+    margin-top: -15px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.match_details_head.sport1 {
+    background-image: url(/assets/imgs/stadion.jpg);
+}
+.match_details_head .league_details {
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.match_details_head .partsTeam {
+    width: 35%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.match_details_head .partsTeam img {
+    vertical-align: middle;
+}
+.match_details_head .partsTeam.score {
+    width: 30%;
+}
+.match_details_head .partsTeam.score p {
+    margin:0px;
+    padding-top: 10px;
+    text-align: center;
+}
+.match_details_head .partsTeam.score .scoreboard {
+    padding:10px 0;
+    width:90%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgba(0,0,0,0.4);
+    color:var(--primary-font-color);
+    text-align: center;
+    margin: auto;
+    font-size: 24px;
+    border-top: 3px solid var(--secundary-bg-color);
+    border-bottom: 3px solid var(--secundary-bg-color);
+    border-left: 3px solid #22c55e;
+    border-right: 3px solid #4ade80;
+    border-radius: 4px;
+}
+.match_details_navbar {
+    width: calc(100%);
+    background: var(--third-bg-color);
+    line-height: 32px;
+    color: var(--primary-font-color);
+    text-align: center;
+    border-bottom: 1px solid var(--ks-border);
+}
+.match_details_navbar .match_nb_item {
+    line-height: 32px;
+    display: inline-block;
+    padding:0 10px;
+    position: relative;
+    cursor: pointer;
+    color: var(--ks-text-muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    transition: color var(--ks-transition-fast);
+}
+.match_details_navbar .match_nb_item:hover {
+    color: var(--primary-font-color);
+}
+.match_details_navbar .match_nb_item.active {
+    background: var(--nav-bg-color);
+    color: #000;
+    font-weight: bold;
+    margin: 0 15px;
+    font-size: 12px;
+}
+.match_details_navbar .match_nb_item.active:before {
+    left: -15px;
+    width: 34px;
+    -webkit-transform: skewX(-11deg);
+    transform: skewX(-11deg);
+}
+.match_details_navbar .match_nb_item.active:after {
+    right: -15px;
+    width: 34px;
+    -webkit-transform: skewX(11deg);
+    transform: skewX(11deg);
+}
+.match_details_navbar .match_nb_item.active:after,
+.match_details_navbar .match_nb_item.active:before {
+    background: var(--nav-bg-color);
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 20px;
+    height: 100%;
+}
+.match_details_content {
+    display: none;
+}
+.match_details_content.active {
+    display: block;
+}
+.h2h_stats_match .h2h_stats_match_title {
+    line-height: 32px;
+    margin-top: 10px;
+    background: var(--container-head-color);
+    padding: 0 10px;
+}
+.h2h_stats_match_event div {
+    display: inline-block;
+    background: var(--main-bg-color);
+    line-height: 28px;
+    vertical-align: top;
+}
+.h2h_stats_match_event div.h2h_match_event_icon {
+    width: 26px;
+    text-align: center;
+}
+.h2h_stats_match_event div.h2h_match_event_stats {
+    width: 26px;
+    text-align: center;
+}
+.h2h_stats_match_event div.h2h_match_event_stats a {
+    color:var(--primary-font-color);
+}
+.h2h_stats_match_event div.h2h_match_event_date {
+    width: 110px;
+    text-align: center;
+    font-size: 12px;
+}
+.h2h_stats_match_event div.h2h_match_event_home, .h2h_stats_match_event div.h2h_match_event_away {
+    width: calc(50% - 106px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.h2h_stats_match_event div.h2h_match_event_home img, .h2h_stats_match_event div.h2h_match_event_away img {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.h2h_stats_match_event div.h2h_match_event_away img {
+    margin-right: 0px;
+    margin-left: 10px;
+}
+.h2h_stats_match_event div.h2h_match_event_home {
+    text-align: right;
+}
+.h2h_stats_match_event div.h2h_match_event_score {
+    width: 50px;
+    text-align: center;
+    background: var(--primary-font-color);
+    color:var(--main-bg-color);
+    font-size: 12px;
+}
+.h2h_stats_match_event div.h2h_stats_match_teamscore {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 16px;
+    width: 190px;
+}
+.h2h_stats_match_event div.h2h_stats_match_teamscore img {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.h2h_stats_match_event div.h2h_stats_match_1halfscore {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+}
+.sr-jersey {
+    width: 100px;
+    vertical-align: middle;
+}
+.sr-widget .sr-widget-title {
+    display: none;
+}
+.sr-widgetHeight-auto > .sr-content {
+    margin-top: 15px;
+}
+.sr-widget .sr-team-header-home,
+.sr-widget .sr-teams-header .sr-team-header-away {
+    background: var(--nav-bg-color);
+    color: var(--main-font-color);
+}
+#last_results_hp .leagueContent .leagueTitle,
+.eventContent > div,
+.sportlabel .sportlabelElement ul li.sportListItem a,
+#content_sportsmenu ul li a,
+#selector_tabs_stand .itemStandSelect {font-size:12px;}
+.leagueContent .leagueTitle {
+    font-size: 14px;
+}
+
+
+/*
+
+FLAG ICONS
+
+*/
+
+.land-icon.ldt_68,
+.sports-top__country-item[data-country="68"]:before {
+    background-position:.407332% .407332%
+}
+.land-icon.ldt_189,
+.sports-top__country-item[data-country="189"]:before {
+    background-position:5.09165% .407332%
+}
+.land-icon.ldt_191,
+.sports-top__country-item[data-country="191"]:before {
+    background-position:9.77597% .407332%
+}
+.land-icon.ldt_192,
+.sports-top__country-item[data-country="192"]:before {
+    background-position:14.4603% .407332%
+}
+.land-icon.ldt_193,
+.sports-top__country-item[data-country="193"]:before {
+    background-position:19.1446% .407332%
+}
+.land-icon.ldt_194,
+.sports-top__country-item[data-country="194"]:before {
+    background-position:23.8289% .407332%
+}
+.land-icon.ldt_195,
+.sports-top__country-item[data-country="195"]:before {
+    background-position:28.5132% .407332%
+}
+.land-icon.ldt_196,
+.sports-top__country-item[data-country="196"]:before {
+    background-position:33.1976% .407332%
+}
+.land-icon.ldt_197,
+.sports-top__country-item[data-country="197"]:before {
+    background-position:37.8819% .407332%
+}
+.land-icon.ldt_198,
+.sports-top__country-item[data-country="198"]:before {
+    background-position:42.5662% .407332%
+}
+.land-icon.ldt_199,
+.sports-top__country-item[data-country="199"]:before {
+    background-position:47.2505% .407332%
+}
+.land-icon.ldt_200,
+.sports-top__country-item[data-country="200"]:before {
+    background-position:51.9348% .407332%
+}
+.land-icon.ldt_201,
+.sports-top__country-item[data-country="201"]:before {
+    background-position:56.6191% .407332%
+}
+.land-icon.ldt_202,
+.sports-top__country-item[data-country="202"]:before {
+    background-position:61.3035% .407332%
+}
+.land-icon.ldt_203,
+.sports-top__country-item[data-country="203"]:before {
+    background-position:65.9878% .407332%
+}
+.land-icon.ldt_204,
+.sports-top__country-item[data-country="204"]:before {
+    background-position:70.6721% .407332%
+}
+.land-icon.ldt_205,
+.sports-top__country-item[data-country="205"]:before {
+    background-position:75.3564% .407332%
+}
+.land-icon.ldt_206,
+.sports-top__country-item[data-country="206"]:before {
+    background-position:80.0407% .407332%
+}
+.land-icon.ldt_207,
+.sports-top__country-item[data-country="207"]:before {
+    background-position:84.7251% .407332%
+}
+.land-icon.ldt_208,
+.sports-top__country-item[data-country="208"]:before {
+    background-position:89.4094% .407332%
+}
+.land-icon.ldt_209,
+.sports-top__country-item[data-country="209"]:before {
+    background-position:94.0937% .407332%
+}
+.land-icon.ldt_210,
+.sports-top__country-item[data-country="210"]:before {
+    background-position:98.778% .407332%
+}
+.land-icon.ldt_211,
+.sports-top__country-item[data-country="211"]:before {
+    background-position:.407332% 5.09165%
+}
+.land-icon.ldt_212,
+.sports-top__country-item[data-country="212"]:before {
+    background-position:5.09165% 5.09165%
+}
+.land-icon.ldt_213,
+.sports-top__country-item[data-country="213"]:before {
+    background-position:9.77597% 5.09165%
+}
+.land-icon.ldt_214,
+.sports-top__country-item[data-country="214"]:before {
+    background-position:14.4603% 5.09165%
+}
+.land-icon.ldt_215,
+.sports-top__country-item[data-country="215"]:before {
+    background-position:19.1446% 5.09165%
+}
+.land-icon.ldt_216,
+.sports-top__country-item[data-country="216"]:before {
+    background-position:23.8289% 5.09165%
+}
+.land-icon.ldt_217,
+.sports-top__country-item[data-country="217"]:before {
+    background-position:28.5132% 5.09165%
+}
+.land-icon.ldt_218,
+.sports-top__country-item[data-country="218"]:before {
+    background-position:33.1976% 5.09165%
+}
+.land-icon.ldt_219,
+.sports-top__country-item[data-country="219"]:before {
+    background-position:37.8819% 5.09165%
+}
+.land-icon.ldt_222,
+.sports-top__country-item[data-country="222"]:before {
+    background-position:42.5662% 5.09165%
+}
+.land-icon.ldt_223,
+.sports-top__country-item[data-country="223"]:before {
+    background-position:47.2505% 5.09165%
+}
+.land-icon.ldt_224,
+.sports-top__country-item[data-country="224"]:before {
+    background-position:51.9348% 5.09165%
+}
+.land-icon.ldt_226,
+.sports-top__country-item[data-country="226"]:before {
+    background-position:56.6191% 5.09165%
+}
+.land-icon.ldt_227,
+.sports-top__country-item[data-country="227"]:before {
+    background-position:61.3035% 5.09165%
+}
+.land-icon.ldt_228,
+.sports-top__country-item[data-country="228"]:before {
+    background-position:65.9878% 5.09165%
+}
+.land-icon.ldt_230,
+.sports-top__country-item[data-country="230"]:before {
+    background-position:70.6721% 5.09165%
+}
+.land-icon.ldt_231,
+.sports-top__country-item[data-country="231"]:before {
+    background-position:75.3564% 5.09165%
+}
+.land-icon.ldt_232,
+.sports-top__country-item[data-country="232"]:before {
+    background-position:80.0407% 5.09165%
+}
+.land-icon.ldt_233,
+.sports-top__country-item[data-country="233"]:before {
+    background-position:84.7251% 5.09165%
+}
+.land-icon.ldt_236,
+.sports-top__country-item[data-country="236"]:before {
+    background-position:9.91% 19.1446%
+}
+.land-icon.ldt_237,
+.sports-top__country-item[data-country="237"]:before {
+    background-position:94.0937% 5.09165%
+}
+.land-icon.ldt_238,
+.sports-top__country-item[data-country="238"]:before {
+    background-position:98.778% 5.09165%
+}
+.land-icon.ldt_239,
+.sports-top__country-item[data-country="239"]:before {
+    background-position:.407332% 9.77597%
+}
+.land-icon.ldt_240,
+.sports-top__country-item[data-country="240"]:before {
+    background-position:5.09165% 9.77597%
+}
+.land-icon.ldt_241,
+.sports-top__country-item[data-country="241"]:before {
+    background-position:9.77597% 9.77597%
+}
+.land-icon.ldt_alter_1,
+.sports-top__country-item[data-country=alter_1]:before {
+    background-position:14.4603% 9.77597%
+}
+.land-icon.ldt_alter_2,
+.sports-top__country-item[data-country=alter_2]:before {
+    background-position:19.1446% 9.77597%
+}
+.land-icon.ldt_alter_8,
+.sports-top__country-item[data-country=alter_8]:before {
+    background-position:23.8289% 9.77597%
+}
+.land-icon.ldt_champ_3355,
+.sports-top__country-item[data-country=champ_3355]:before {
+    background-position:28.5132% 9.77597%
+}
+.land-icon.ldt_champ_default,
+.sports-top__country-item[data-country=champ_default]:before {
+    background-position:33.1976% 9.77597%
+}
+.land-icon.ldt_1,
+.sports-top__country-item[data-country="1"]:before {
+    background-position:37.8819% 9.77597%
+}
+.land-icon.ldt_2,
+.sports-top__country-item[data-country="2"]:before {
+    background-position:42.5662% 9.77597%
+}
+.land-icon.ldt_4,
+.sports-top__country-item[data-country="4"]:before {
+    background-position:47.2505% 9.77597%
+}
+.land-icon.ldt_5,
+.sports-top__country-item[data-country="5"]:before {
+    background-position:51.9348% 9.77597%
+}
+.land-icon.ldt_6,
+.sports-top__country-item[data-country="6"]:before {
+    background-position:56.6191% 9.77597%
+}
+.land-icon.ldt_7,
+.sports-top__country-item[data-country="7"]:before {
+    background-position:61.3035% 9.77597%
+}
+.land-icon.ldt_8,
+.sports-top__country-item[data-country="8"]:before {
+    background-position:84.7251% 47.25051%
+}
+.land-icon.ldt_9,
+.sports-top__country-item[data-country="9"]:before {
+    background-position:70.6721% 9.77597%
+}
+.land-icon.ldt_10,
+.sports-top__country-item[data-country="10"]:before {
+    background-position:75.3564% 9.77597%
+}
+.land-icon.ldt_11,
+.sports-top__country-item[data-country="11"]:before {
+    background-position:80.0407% 9.77597%
+}
+.land-icon.ldt_12,
+.sports-top__country-item[data-country="12"]:before {
+    background-position:84.7251% 9.77597%
+}
+.land-icon.ldt_13,
+.sports-top__country-item[data-country="13"]:before {
+    background-position:89.4094% 9.77597%
+}
+.land-icon.ldt_14,
+.sports-top__country-item[data-country="14"]:before {
+    background-position:94.0937% 9.77597%
+}
+.land-icon.ldt_15,
+.sports-top__country-item[data-country="15"]:before {
+    background-position:98.778% 9.77597%
+}
+.land-icon.ldt_16,
+.sports-top__country-item[data-country="16"]:before {
+    background-position:.407332% 14.46029%
+}
+.land-icon.ldt_17,
+.sports-top__country-item[data-country="17"]:before {
+    background-position:5.09165% 14.46029%
+}
+.land-icon.ldt_18,
+.sports-top__country-item[data-country="18"]:before {
+    background-position:9.77597% 14.46029%
+}
+.land-icon.ldt_19,
+.sports-top__country-item[data-country="19"]:before {
+    background-position:14.4603% 14.46029%
+}
+.land-icon.ldt_20,
+.sports-top__country-item[data-country="20"]:before {
+    background-position:19.1446% 14.46029%
+}
+.land-icon.ldt_21,
+.sports-top__country-item[data-country="21"]:before {
+    background-position:23.8289% 14.46029%
+}
+.land-icon.ldt_22,
+.sports-top__country-item[data-country="22"]:before {
+    background-position:28.5132% 14.46029%
+}
+.land-icon.ldt_23,
+.sports-top__country-item[data-country="23"]:before {
+    background-position:33.1976% 14.46029%
+}
+.land-icon.ldt_24,
+.sports-top__country-item[data-country="24"]:before {
+    background-position:37.8819% 14.46029%
+}
+.land-icon.ldt_25,
+.sports-top__country-item[data-country="25"]:before {
+    background-position:42.5662% 14.46029%
+}
+.land-icon.ldt_26,
+.sports-top__country-item[data-country="26"]:before {
+    background-position:47.2505% 14.46029%
+}
+.land-icon.ldt_27,
+.sports-top__country-item[data-country="27"]:before {
+    background-position:51.9348% 14.46029%
+}
+.land-icon.ldt_28,
+.sports-top__country-item[data-country="28"]:before {
+    background-position:56.6191% 14.46029%
+}
+.land-icon.ldt_29,
+.sports-top__country-item[data-country="29"]:before {
+    background-position:61.3035% 14.46029%
+}
+.land-icon.ldt_30,
+.sports-top__country-item[data-country="30"]:before {
+    background-position:65.9878% 14.46029%
+}
+.land-icon.ldt_31,
+.sports-top__country-item[data-country="31"]:before {
+    background-position:70.6721% 14.46029%
+}
+.land-icon.ldt_32,
+.sports-top__country-item[data-country="32"]:before {
+    background-position:75.3564% 14.46029%
+}
+.land-icon.ldt_33,
+.sports-top__country-item[data-country="33"]:before {
+    background-position:80.0407% 14.46029%
+}
+.land-icon.ldt_34,
+.sports-top__country-item[data-country="34"]:before {
+    background-position:84.7251% 14.46029%
+}
+.land-icon.ldt_35,
+.sports-top__country-item[data-country="35"]:before {
+    background-position:89.4094% 14.46029%
+}
+.land-icon.ldt_36,
+.sports-top__country-item[data-country="36"]:before {
+    background-position:94.0937% 14.46029%
+}
+.land-icon.ldt_37,
+.sports-top__country-item[data-country="37"]:before {
+    background-position:98.778% 14.46029%
+}
+.land-icon.ldt_38,
+.sports-top__country-item[data-country="38"]:before {
+    background-position:.407332% 19.1446%
+}
+.land-icon.ldt_39,
+.sports-top__country-item[data-country="39"]:before {
+    background-position:9.91% 19.1446%
+}
+.land-icon.ldt_39_2,
+.sports-top__country-item[data-country="39_2"]:before {
+    background-position:9.77597% 19.1446%
+}
+.land-icon.ldt_40,
+.sports-top__country-item[data-country="40"]:before {
+    background-position:14.4603% 19.1446%
+}
+.land-icon.ldt_41,
+.sports-top__country-item[data-country="41"]:before {
+    background-position:19.1446% 19.1446%
+}
+.land-icon.ldt_42,
+.sports-top__country-item[data-country="42"]:before {
+    background-position:23.8289% 19.1446%
+}
+.land-icon.ldt_43,
+.sports-top__country-item[data-country="43"]:before {
+    background-position:28.5132% 19.1446%
+}
+.land-icon.ldt_44,
+.sports-top__country-item[data-country="44"]:before {
+    background-position:33.1976% 19.1446%
+}
+.land-icon.ldt_45,
+.sports-top__country-item[data-country="45"]:before {
+    background-position:37.8819% 19.1446%
+}
+.land-icon.ldt_46,
+.sports-top__country-item[data-country="46"]:before {
+    background-position:42.5662% 19.1446%
+}
+.land-icon.ldt_47,
+.sports-top__country-item[data-country="47"]:before {
+    background-position:47.2505% 19.1446%
+}
+.land-icon.ldt_48,
+.sports-top__country-item[data-country="48"]:before {
+    background-position:51.9348% 19.1446%
+}
+.land-icon.ldt_49,
+.sports-top__country-item[data-country="49"]:before {
+    background-position:56.6191% 19.1446%
+}
+.land-icon.ldt_50,
+.sports-top__country-item[data-country="50"]:before {
+    background-position:61.3035% 19.1446%
+}
+.land-icon.ldt_51,
+.sports-top__country-item[data-country="51"]:before {
+    background-position:65.9878% 19.1446%
+}
+.land-icon.ldt_52,
+.sports-top__country-item[data-country="52"]:before {
+    background-position:70.6721% 19.1446%
+}
+.land-icon.ldt_53,
+.sports-top__country-item[data-country="53"]:before {
+    background-position:75.3564% 19.1446%
+}
+.land-icon.ldt_54,
+.sports-top__country-item[data-country="54"]:before {
+    background-position:80.0407% 19.1446%
+}
+.land-icon.ldt_55,
+.sports-top__country-item[data-country="55"]:before {
+    background-position:84.7251% 19.1446%
+}
+.land-icon.ldt_56,
+.sports-top__country-item[data-country="56"]:before {
+    background-position:89.4094% 19.1446%
+}
+.land-icon.ldt_57,
+.land-icon.ldt_er,
+.sports-top__country-item[data-country="57"]:before {
+    background-position:94.0937% 19.1446%
+}
+.land-icon.ldt_58,
+.sports-top__country-item[data-country="58"]:before {
+    background-position:98.778% 19.1446%
+}
+.land-icon.ldt_59,
+.sports-top__country-item[data-country="59"]:before {
+    background-position:.407332% 23.82892%
+}
+.land-icon.ldt_60,
+.sports-top__country-item[data-country="60"]:before {
+    background-position:5.09165% 23.82892%
+}
+.land-icon.ldt_61,
+.sports-top__country-item[data-country="61"]:before {
+    background-position:9.77597% 23.82892%
+}
+.land-icon.ldt_62,
+.sports-top__country-item[data-country="62"]:before {
+    background-position:14.4603% 23.82892%
+}
+.land-icon.ldt_63,
+.sports-top__country-item[data-country="63"]:before {
+    background-position:19.1446% 23.82892%
+}
+.land-icon.ldt_64,
+.sports-top__country-item[data-country="64"]:before {
+    background-position:23.8289% 23.82892%
+}
+.land-icon.ldt_65,
+.sports-top__country-item[data-country="65"]:before {
+    background-position:28.5132% 23.82892%
+}
+.land-icon.ldt_66,
+.sports-top__country-item[data-country="66"]:before {
+    background-position:33.1976% 23.82892%
+}
+.land-icon.ldt_67,
+.sports-top__country-item[data-country="67"]:before {
+    background-position:37.8819% 23.82892%
+}
+.land-icon.ldt_190,
+.sports-top__country-item[data-country="190"]:before {
+    background-position:42.5662% 23.82892%
+}
+.land-icon.ldt_69,
+.sports-top__country-item[data-country="69"]:before {
+    background-position:47.2505% 23.82892%
+}
+.land-icon.ldt_70,
+.sports-top__country-item[data-country="70"]:before {
+    background-position:51.9348% 23.82892%
+}
+.land-icon.ldt_71,
+.sports-top__country-item[data-country="71"]:before {
+    background-position:56.6191% 23.82892%
+}
+.land-icon.ldt_72,
+.sports-top__country-item[data-country="72"]:before {
+    background-position:61.3035% 23.82892%
+}
+.land-icon.ldt_73,
+.sports-top__country-item[data-country="73"]:before {
+    background-position:65.9878% 23.82892%
+}
+.land-icon.ldt_74,
+.sports-top__country-item[data-country="74"]:before {
+    background-position:70.6721% 23.82892%
+}
+.land-icon.ldt_75,
+.sports-top__country-item[data-country="75"]:before {
+    background-position:75.3564% 23.82892%
+}
+.land-icon.ldt_76,
+.sports-top__country-item[data-country="76"]:before {
+    background-position:80.0407% 23.82892%
+}
+.land-icon.ldt_77,
+.sports-top__country-item[data-country="77"]:before {
+    background-position:84.7251% 23.82892%
+}
+.land-icon.ldt_78,
+.sports-top__country-item[data-country="78"]:before {
+    background-position:89.4094% 23.82892%
+}
+.land-icon.ldt_79,
+.sports-top__country-item[data-country="79"]:before {
+    background-position:94.0937% 23.82892%
+}
+.land-icon.ldt_80,
+.sports-top__country-item[data-country="80"]:before {
+    background-position:98.778% 23.82892%
+}
+.land-icon.ldt_81,
+.sports-top__country-item[data-country="81"]:before {
+    background-position:.407332% 28.51324%
+}
+.land-icon.ldt_82,
+.sports-top__country-item[data-country="82"]:before {
+    background-position:5.09165% 28.51324%
+}
+.land-icon.ldt_83,
+.sports-top__country-item[data-country="83"]:before {
+    background-position:9.77597% 28.51324%
+}
+.land-icon.ldt_84,
+.sports-top__country-item[data-country="84"]:before {
+    background-position:14.4603% 28.51324%
+}
+.land-icon.ldt_85,
+.sports-top__country-item[data-country="85"]:before {
+    background-position:19.1446% 28.51324%
+}
+.land-icon.ldt_86,
+.sports-top__country-item[data-country="86"]:before {
+    background-position:23.8289% 28.51324%
+}
+.land-icon.ldt_87,
+.sports-top__country-item[data-country="87"]:before {
+    background-position:28.5132% 28.51324%
+}
+.land-icon.ldt_88,
+.sports-top__country-item[data-country="88"]:before {
+    background-position:33.1976% 28.51324%
+}
+.land-icon.ldt_89,
+.sports-top__country-item[data-country="89"]:before {
+    background-position:37.8819% 28.51324%
+}
+.land-icon.ldt_90,
+.sports-top__country-item[data-country="90"]:before {
+    background-position:42.5662% 28.51324%
+}
+.land-icon.ldt_91,
+.sports-top__country-item[data-country="91"]:before {
+    background-position:47.2505% 28.51324%
+}
+.land-icon.ldt_92,
+.sports-top__country-item[data-country="92"]:before {
+    background-position:51.9348% 28.51324%
+}
+.land-icon.ldt_93,
+.sports-top__country-item[data-country="93"]:before {
+    background-position:56.6191% 28.51324%
+}
+.land-icon.ldt_95,
+.sports-top__country-item[data-country="95"]:before {
+    background-position:98.8035% 47.25051%
+}
+.land-icon.ldt_96,
+.sports-top__country-item[data-country="96"]:before {
+    background-position:65.9878% 28.51324%
+}
+.land-icon.ldt_97,
+.sports-top__country-item[data-country="97"]:before {
+    background-position:70.6721% 28.51324%
+}
+.land-icon.ldt_98,
+.sports-top__country-item[data-country="98"]:before {
+    background-position:75.3564% 28.51324%
+}
+.land-icon.ldt_99,
+.sports-top__country-item[data-country="99"]:before {
+    background-position:80.0407% 28.51324%
+}
+.land-icon.ldt_100,
+.sports-top__country-item[data-country="100"]:before {
+    background-position:84.7251% 28.51324%
+}
+.land-icon.ldt_101,
+.sports-top__country-item[data-country="101"]:before {
+    background-position:89.4094% 28.51324%
+}
+.land-icon.ldt_102,
+.sports-top__country-item[data-country="102"]:before {
+    background-position:94.0937% 28.51324%
+}
+.land-icon.ldt_103,
+.sports-top__country-item[data-country="103"]:before {
+    background-position:98.778% 28.51324%
+}
+.land-icon.ldt_104,
+.sports-top__country-item[data-country="104"]:before {
+    background-position:.407332% 33.19756%
+}
+.land-icon.ldt_105,
+.sports-top__country-item[data-country="105"]:before {
+    background-position:5.09165% 33.19756%
+}
+.land-icon.ldt_106,
+.sports-top__country-item[data-country="106"]:before {
+    background-position:9.77597% 33.19756%
+}
+.land-icon.ldt_107,
+.sports-top__country-item[data-country="107"]:before {
+    background-position:14.4603% 33.19756%
+}
+.land-icon.ldt_108,
+.sports-top__country-item[data-country="108"]:before {
+    background-position:19.1446% 33.19756%
+}
+.land-icon.ldt_109,
+.sports-top__country-item[data-country="109"]:before {
+    background-position:23.8289% 33.19756%
+}
+.land-icon.ldt_110,
+.sports-top__country-item[data-country="110"]:before {
+    background-position:28.5132% 33.19756%
+}
+.land-icon.ldt_111,
+.sports-top__country-item[data-country="111"]:before {
+    background-position:33.1976% 33.19756%
+}
+.land-icon.ldt_112,
+.sports-top__country-item[data-country="112"]:before {
+    background-position:37.8819% 33.19756%
+}
+.land-icon.ldt_113,
+.sports-top__country-item[data-country="113"]:before {
+    background-position:42.5662% 33.19756%
+}
+.land-icon.ldt_114,
+.sports-top__country-item[data-country="114"]:before {
+    background-position:47.2505% 33.19756%
+}
+.land-icon.ldt_115,
+.sports-top__country-item[data-country="115"]:before {
+    background-position:51.9348% 33.19756%
+}
+.land-icon.ldt_116,
+.sports-top__country-item[data-country="116"]:before {
+    background-position:56.6191% 33.19756%
+}
+.land-icon.ldt_117,
+.sports-top__country-item[data-country="117"]:before {
+    background-position:61.3035% 33.19756%
+}
+.land-icon.ldt_118,
+.sports-top__country-item[data-country="118"]:before {
+    background-position:65.9878% 33.19756%
+}
+.land-icon.ldt_119,
+.sports-top__country-item[data-country="119"]:before {
+    background-position:70.6721% 33.19756%
+}
+.land-icon.ldt_120,
+.sports-top__country-item[data-country="120"]:before {
+    background-position:75.3564% 33.19756%
+}
+.land-icon.ldt_121,
+.sports-top__country-item[data-country="121"]:before {
+    background-position:80.0407% 33.19756%
+}
+.land-icon.ldt_122,
+.sports-top__country-item[data-country="122"]:before {
+    background-position:84.7251% 33.19756%
+}
+.land-icon.ldt_123,
+.sports-top__country-item[data-country="123"]:before {
+    background-position:89.4094% 33.19756%
+}
+.land-icon.ldt_124,
+.sports-top__country-item[data-country="124"]:before {
+    background-position:94.0937% 33.19756%
+}
+.land-icon.ldt_125,
+.sports-top__country-item[data-country="125"]:before {
+    background-position:98.778% 33.19756%
+}
+.land-icon.ldt_126,
+.sports-top__country-item[data-country="126"]:before {
+    background-position:.407332% 37.88187%
+}
+.land-icon.ldt_127,
+.sports-top__country-item[data-country="127"]:before {
+    background-position:5.09165% 37.88187%
+}
+.land-icon.ldt_128,
+.sports-top__country-item[data-country="128"]:before {
+    background-position:9.77597% 37.88187%
+}
+.land-icon.ldt_129,
+.sports-top__country-item[data-country="129"]:before {
+    background-position:14.4603% 37.88187%
+}
+.land-icon.ldt_130,
+.sports-top__country-item[data-country="130"]:before {
+    background-position:19.1446% 37.88187%
+}
+.land-icon.ldt_131,
+.sports-top__country-item[data-country="131"]:before {
+    background-position:23.8289% 37.88187%
+}
+.land-icon.ldt_132,
+.sports-top__country-item[data-country="132"]:before {
+    background-position:28.5132% 37.88187%
+}
+.land-icon.ldt_133,
+.sports-top__country-item[data-country="133"]:before {
+    background-position:33.1976% 37.88187%
+}
+.land-icon.ldt_134,
+.sports-top__country-item[data-country="134"]:before {
+    background-position:37.8819% 37.88187%
+}
+.land-icon.ldt_135,
+.sports-top__country-item[data-country="135"]:before {
+    background-position:42.5662% 37.88187%
+}
+.land-icon.ldt_136,
+.sports-top__country-item[data-country="136"]:before {
+    background-position:47.2505% 37.88187%
+}
+.land-icon.ldt_137,
+.sports-top__country-item[data-country="137"]:before {
+    background-position:51.9348% 37.88187%
+}
+.land-icon.ldt_138,
+.sports-top__country-item[data-country="138"]:before {
+    background-position:56.6191% 37.88187%
+}
+.land-icon.ldt_139,
+.sports-top__country-item[data-country="139"]:before {
+    background-position:61.3035% 37.88187%
+}
+.land-icon.ldt_140,
+.sports-top__country-item[data-country="140"]:before {
+    background-position:65.9878% 37.88187%
+}
+.land-icon.ldt_141,
+.sports-top__country-item[data-country="141"]:before {
+    background-position:70.6721% 37.88187%
+}
+.land-icon.ldt_142,
+.sports-top__country-item[data-country="142"]:before {
+    background-position:75.3564% 37.88187%
+}
+.land-icon.ldt_143,
+.sports-top__country-item[data-country="143"]:before {
+    background-position:80.0407% 37.88187%
+}
+.land-icon.ldt_144,
+.sports-top__country-item[data-country="144"]:before {
+    background-position:84.7251% 37.88187%
+}
+.land-icon.ldt_145,
+.sports-top__country-item[data-country="145"]:before {
+    background-position:89.4094% 37.88187%
+}
+.land-icon.ldt_146,
+.sports-top__country-item[data-country="146"]:before {
+    background-position:94.0937% 37.88187%
+}
+.land-icon.ldt_147,
+.sports-top__country-item[data-country="147"]:before {
+    background-position:98.778% 37.88187%
+}
+.land-icon.ldt_148,
+.sports-top__country-item[data-country="148"]:before {
+    background-position:.407332% 42.56619%
+}
+.land-icon.ldt_149,
+.sports-top__country-item[data-country="149"]:before {
+    background-position:5.09165% 42.56619%
+}
+.land-icon.ldt_151,
+.sports-top__country-item[data-country="151"]:before {
+    background-position:9.77597% 42.56619%
+}
+.land-icon.ldt_152,
+.sports-top__country-item[data-country="152"]:before {
+    background-position:14.4603% 42.56619%
+}
+.land-icon.ldt_153,
+.sports-top__country-item[data-country="153"]:before {
+    background-position:19.1446% 42.56619%
+}
+.land-icon.ldt_154,
+.sports-top__country-item[data-country="154"]:before {
+    background-position:23.8289% 42.56619%
+}
+.land-icon.ldt_155,
+.sports-top__country-item[data-country="155"]:before {
+    background-position:28.5132% 42.56619%
+}
+.land-icon.ldt_156,
+.sports-top__country-item[data-country="156"]:before {
+    background-position:33.1976% 42.56619%
+}
+.land-icon.ldt_157,
+.sports-top__country-item[data-country="157"]:before {
+    background-position:37.8819% 42.56619%
+}
+.land-icon.ldt_158,
+.sports-top__country-item[data-country="158"]:before {
+    background-position:42.5662% 42.56619%
+}
+.land-icon.ldt_159,
+.sports-top__country-item[data-country="159"]:before {
+    background-position:47.2505% 42.56619%
+}
+.land-icon.ldt_160,
+.sports-top__country-item[data-country="160"]:before {
+    background-position:51.9348% 42.56619%
+}
+.land-icon.ldt_161,
+.sports-top__country-item[data-country="161"]:before {
+    background-position:56.6191% 42.56619%
+}
+.land-icon.ldt_162,
+.sports-top__country-item[data-country="162"]:before {
+    background-position:61.3035% 42.56619%
+}
+.land-icon.ldt_163,
+.sports-top__country-item[data-country="163"]:before {
+    background-position:65.9878% 42.56619%
+}
+.land-icon.ldt_164,
+.sports-top__country-item[data-country="164"]:before {
+    background-position:70.6721% 42.56619%
+}
+.land-icon.ldt_165,
+.sports-top__country-item[data-country="165"]:before {
+    background-position:75.3564% 42.56619%
+}
+.land-icon.ldt_166,
+.sports-top__country-item[data-country="166"]:before {
+    background-position:80.0407% 42.56619%
+}
+.land-icon.ldt_167,
+.sports-top__country-item[data-country="167"]:before {
+    background-position:84.7251% 42.56619%
+}
+.land-icon.ldt_168,
+.sports-top__country-item[data-country="168"]:before {
+    background-position:89.4094% 42.56619%
+}
+.land-icon.ldt_169,
+.sports-top__country-item[data-country="169"]:before {
+    background-position:94.0937% 42.56619%
+}
+.land-icon.ldt_170,
+.sports-top__country-item[data-country="170"]:before {
+    background-position:98.778% 42.56619%
+}
+.land-icon.ldt_171,
+.sports-top__country-item[data-country="171"]:before {
+    background-position:.407332% 47.25051%
+}
+.land-icon.ldt_172,
+.sports-top__country-item[data-country="172"]:before {
+    background-position:5.09165% 47.25051%
+}
+.land-icon.ldt_173,
+.sports-top__country-item[data-country="173"]:before {
+    background-position:9.77597% 47.25051%
+}
+.land-icon.ldt_174,
+.sports-top__country-item[data-country="174"]:before {
+    background-position:14.4603% 47.25051%
+}
+.land-icon.ldt_175,
+.sports-top__country-item[data-country="175"]:before {
+    background-position:19.1446% 47.25051%
+}
+.land-icon.ldt_176,
+.sports-top__country-item[data-country="176"]:before {
+    background-position:23.8289% 47.25051%
+}
+.land-icon.ldt_177,
+.sports-top__country-item[data-country="177"]:before {
+    background-position:28.5132% 47.25051%
+}
+.land-icon.ldt_178,
+.sports-top__country-item[data-country="178"]:before {
+    background-position:33.1976% 47.25051%
+}
+.land-icon.ldt_179,
+.sports-top__country-item[data-country="179"]:before {
+    background-position:89.4094% 47.25051%
+}
+.land-icon.ldt_180,
+.sports-top__country-item[data-country="180"]:before {
+    background-position:42.5662% 47.25051%
+}
+.land-icon.ldt_181,
+.sports-top__country-item[data-country="181"]:before {
+    background-position:47.2505% 47.25051%
+}
+.land-icon.ldt_182,
+.sports-top__country-item[data-country="182"]:before {
+    background-position:51.9348% 47.25051%
+}
+.land-icon.ldt_183,
+.sports-top__country-item[data-country="183"]:before {
+    background-position:56.6191% 47.25051%
+}
+.land-icon.ldt_184,
+.sports-top__country-item[data-country="184"]:before {
+    background-position:61.3035% 47.25051%
+}
+.land-icon.ldt_185,
+.sports-top__country-item[data-country="185"]:before {
+    background-position:65.9878% 47.25051%
+}
+.land-icon.ldt_186,
+.sports-top__country-item[data-country="186"]:before {
+    background-position:70.6721% 47.25051%
+}
+.land-icon.ldt_187,
+.sports-top__country-item[data-country="187"]:before {
+    background-position:75.3564% 47.25051%
+}
+.land-icon.ldt_188,
+.sports-top__country-item[data-country="188"]:before {
+    background-position:80.0407% 47.25051%
+}
+.land-icon.ldt_243,
+.land-icon.ldt_279,
+.sports-top__country-item[data-country="243"]:before,
+.sports-top__country-item[data-country="279"]:before {
+    background-position:94.0937% 47.25051%
+}
+.land-icon.ldt_281,
+.sports-top__country-item[data-country="281"]:before {
+    background-position:.407332% 51.93483%
+}
+.langDT17.ldt_225,
+.sports-top__country-item[data-country="225"]:before {
+    background-position:23.8289% 51.93483%
+}
+.langDT17.ldt_229,
+.sports-top__country-item[data-country="229"]:before {
+    background-position:19.1446% 51.93483%
+}
+.langDT17.ldt_94,
+.sports-top__country-item[data-country="94"]:before {
+    background-position:28.5132% 51.93483%
+}
+.langDT17.ldt_150,
+.sports-top__country-item[data-country="150"]:before {
+    background-position:9.77597% 51.93483%
+}
+.langDT17.ldt_278,
+.sports-top__country-item[data-country="278"]:before {
+    background-position:33.1976% 51.93483%
+}
+.langDT17.ldt_234,
+.sports-top__country-item[data-country="234"]:before {
+    background-position:37.79165% 51.91756%
+}
+.langDT17.ldt_246,
+.sports-top__country-item[data-country="246"]:before {
+    background-position:42.49165% 51.91756%
+}
+
+.flag-lang {
+    background-image: url("https://feedh.fra1.digitaloceanspaces.com/statistics/imgs/flags.png");
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    text-indent: 200px;
+    white-space: nowrap;
+    vertical-align: baseline;
+    float: right;
+    margin-top: 11px;
+    margin-left: 5px;
+}
+.flag-lang.flagEN {
+    background-position: 0px 0;
+}
+.flag-lang.flagES {
+    background-position: -114px 0;
+}
+.flag-lang.flagIT {
+    background-position: -76px 0;
+}
+.header .langs {
+    position: absolute;
+    right: 15px;
+    top:calc(50% - 22px);
+}
+.header .langs a.actualLang {
+    line-height: 44px;
+    display: inline-block;
+    vertical-align: baseline;
+    border: 1px solid var(--nav-bg-color);
+    text-decoration: unset;
+    color: #fff;
+    padding: 0 10px;
+}
+.container_languager {
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    text-align: center;
+    display: none;
+}
+.container_languager .language_item {
+    line-height: 44px;
+    display: block;
+    vertical-align: baseline;
+    border: 1px solid var(--nav-bg-color);
+    text-decoration: unset;
+    color: #fff;
+    padding: 0 10px;
+    margin:auto;
+    margin-top:10px;
+    width: 190px;
+}
+.container_languager .close_window {
+    background-image: url(//testsite.spzcdn.com/statistics/assets/imgs/x-close-icon-white.png);
+    background-size:100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width:32px;
+    height: 32px;
+    position: fixed;
+    right:10px;
+    top:10px;
+}
+.no-data-message {
+    margin: 0;
+    background: var(--third-bg-color);
+    padding: 15px;
+    margin-top: 5px;
+    color: var(--main-font-color);
+    border-radius: 6px;
+}
+.event-header, .match_details_content {
+    background: var(--main-bg-color);
+}
+.match_details_content {
+    color: var(--primary-font-color);
+    padding: 15px;
+}
+.match_details_item {
+    margin-top:15px;
+}
+.match_details_item:nth-child(1){
+    margin-top:0px;
+}
+.match_details_item-head {
+    background: var(--container-head-color);
+    padding: 10px 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 6px 6px 0 0;
+}
+.match_details_item-body table {
+    width: 100%;
+}
+.match_details_item-body table tbody tr td {
+    text-align: center;
+    border-top: 1px solid var(--ks-border);
+}
+.match_details_item-body table tbody tr td:nth-child(1) {
+    text-align: left;
+    border-right: 1px solid var(--ks-border);
+    padding-left:10px;
+}
+.event-header-team-logo img {
+    margin-bottom: 15px;
+}
+.match_details_item-progressbody {
+    padding:15px;
+    color: #fff;
+    background: var(--container-head-color);
+}
+.match_details_item-progressbar {
+    position: relative;
+    height: 24px;
+    background: #ef4444;
+}
+.match_details_item-progressbar .match_details_item-progressbar-value {
+    height: 100%;
+    background: #22c55e;
+    display: inline-block;
+}
+.match_details_item-progressbar .match_details_item-progressbar-txt-h {
+    position: absolute;
+    top: 4px;
+    left: 5px;
+}
+.match_details_item-progressbar .match_details_item-progressbar-txt-a {
+    position: absolute;
+    top: 4px;
+    right: 5px;
+}
+.match_details_item-progressbar-title {
+    margin-top: 15px;
+    text-transform: uppercase;
+    margin-bottom:5px;
+}
+.match_details_item-progressbar-title:first-child {
+    margin-top: 0px;
+}
+.match_promotion_play {
+    background: var(--third-bg-color);
+    padding: 50px 0px;
+    color: var(--primary-font-color);
+}
+.match_promotion_play-odds {
+    margin-bottom: 15px;
+}
+.match_promotion_play .match_promotion_play-message {
+    text-align: center;
+}
+.match_promotion_play .match_promotion_play-odds > div {
+    width: calc(33.333333% - 5px);
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+.match_promotion_play .match_promotion_play-odds > div .match_promotion_play-odds-odd {
+    display: inline-block;
+    background: var(--nav-bg-color);
+    padding: 10px;
+    position: relative;
+    cursor:pointer;
+    text-align: center;
+    width: 80px;
+    border-radius: 4px;
+    color: #000;
+}
+.match_promotion_play .match_promotion_play-odds > div .match_promotion_play-odds-odd > span {
+    position: absolute;
+    top: calc(-100% + 16px);
+    left: 50%;
+    transform: translate(-50%);
+}
+.liveEventsBar {
+    margin-bottom: 5px;
+    background: var(--container-head-color);
+    padding-left: 10px;
+    color: var(--primary-font-color);
+    line-height: 38px;
+    border-radius: 8px;
+    position: relative;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    border: 1px solid var(--ks-border);
+    transition: background var(--ks-transition-fast);
+}
+.liveEventsBar:hover {
+    background: var(--ks-surface-hover);
+}
+.liveEventsBar .liveEventsBar-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+    background: #22c55e;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.liveEventsBar span {
+    position: absolute;
+    right: 10px;
+}
+
+.scroll-minimalista {
+    --scrollbar-width: 6px;
+    --scrollbar-height: 6px;
+    --scrollbar-thumb-color: #3a4455;
+    --scrollbar-thumb-hover: #4a5568;
+    --scrollbar-track-color: var(--secundary-bg-color);
+}
+
+.scroll-minimalista::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-height);
+}
+
+.scroll-minimalista::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 3px;
+}
+
+.scroll-minimalista::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+}
+
+.scroll-minimalista::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+}
+
+/* Page content (dynamic pages) */
+.page-content {
+    padding: 20px 0;
+    color: var(--primary-font-color);
+    min-height: 400px;
+}
+.page-content h1, .page-content h2, .page-content h3 {
+    color: #fff;
+}
+.page-content a {
+    color: var(--nav-bg-color);
+}
+
+/* Event list styles */
+.event-on-list-details {
+    display: block;
+    text-decoration: none;
+    color: var(--primary-font-color);
+    background: var(--secundary-bg-color);
+    border: 1px solid var(--ks-border);
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: all var(--ks-transition-fast);
+}
+.event-on-list-details:hover {
+    background: var(--ks-surface-hover);
+    border-color: var(--ks-border-hover);
+}
+.event-on-list {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+}
+.event-on-list-col:first-child {
+    width: 60px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--ks-text-secondary);
+    flex-shrink: 0;
+}
+.event-on-list-col:nth-child(2) {
+    flex: 1;
+}
+.event-on-list-col:last-child {
+    width: 30px;
+    text-align: center;
+    color: var(--ks-text-muted);
+    flex-shrink: 0;
+}
+.event-on-list-team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+.event-on-list-team span {
+    color: var(--primary-font-color);
+    font-size: 13px;
+}
+.event-on-list-team-score {
+    font-weight: 700;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CROSS-BROWSER COMPATIBILITY FIXES
+   Override inline light-theme styles on sport/category pages,
+   fix broken flag images, fix overflow issues.
+   ═══════════════════════════════════════════════════════ */
+
+/* --- Sport & Category pages: force dark theme over inline styles --- */
+div#content_sport {
+    background: var(--third-bg-color) !important;
+    color: var(--primary-font-color) !important;
+    padding: 15px;
+    min-height: 600px;
+}
+.category_item a {
+    background: var(--secundary-bg-color) !important;
+    color: var(--primary-font-color) !important;
+    border: 1px solid var(--ks-border) !important;
+    border-radius: 6px !important;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    padding-left: 40px;
+    margin-bottom: 8px;
+    position: relative;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all var(--ks-transition-fast);
+}
+.category_item a:hover {
+    background: var(--ks-surface-hover) !important;
+    border-color: var(--ks-border-hover) !important;
+    color: #fff !important;
+}
+.category_item a img.flagicon {
+    height: 14px;
+    position: absolute;
+    top: 12px;
+    left: 11px;
+}
+.category_item a i {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+    color: var(--ks-text-muted);
+}
+.search_box_sport {
+    color: var(--primary-font-color) !important;
+}
+.search_box_sport i {
+    color: var(--ks-text-secondary) !important;
+}
+.search_box_sport input {
+    background: var(--secundary-bg-color) !important;
+    color: var(--primary-font-color) !important;
+    border: 1px solid var(--ks-border) !important;
+    border-radius: 6px !important;
+}
+
+/* --- Tournament page: force dark theme --- */
+div#content_tournament {
+    background: var(--third-bg-color) !important;
+}
+.titleOfTournament {
+    color: var(--primary-font-color) !important;
+    background: rgba(34, 197, 94, 0.08) !important;
+}
+.tournamentInfo {
+    background: var(--secundary-bg-color) !important;
+    color: var(--primary-font-color) !important;
+    border: 1px solid var(--ks-border) !important;
+}
+.tournamentInfo a {
+    color: var(--primary-font-color) !important;
+    text-decoration: none;
+}
+
+/* --- Broken flag images: graceful fallback --- */
+img.flagicon {
+    vertical-align: middle;
+}
+img.flagicon[src=""],
+img.flagicon:not([src]) {
+    display: none !important;
+}
+/* Hide broken image icon on failed loads */
+img.flagicon {
+    font-size: 0;
+    color: transparent;
+}
+
+/* --- Sports menu grid: prevent overflow --- */
+#content_sportsmenu {
+    overflow: hidden !important;
+    max-width: 100%;
+}
+#content_sportsmenu ul {
+    max-width: 100%;
+    overflow: hidden;
+}
+#content_sportsmenu ul li a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 20px) !important;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Global overflow prevention --- */
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+}
+.main-container {
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+.mainRow {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* --- Event list items: prevent text overflow --- */
+.league_line_items {
+    max-width: 100%;
+    overflow: hidden;
+}
+.league_line_items_header {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.league_line_items_events .league_line_items_event > div.league_line_items_event_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Subheader sports bar: prevent overflow --- */
+.ks-subheader {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+}
+
+/*
+
+MEDIA QUERIES
+
+*/
+@media only screen and (max-width: 768px) {
+    .main-container {
+        padding: 0 16px;
+    }
+    .header .logo {
+    }
+    .subhead,
+    .contentColTitle h5 {
+        text-align: center;
+    }
+    .contentColPage.active[data="live_score"] .contentColTitle h5 {
+        text-align: left;
+    }
+    .menuCol {
+        width: calc(100% - 10px);
+        display: block;
+    }
+    .contentCol {
+        width: 100%;
+    }
+    #content_competitions ul li.title {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .resp_standingsTable {
+        overflow-x: auto;
+        width: 100%;
+    }
+    .match_details_head {
+        background-size: auto 100%;
+    }
+    .header .langs {
+        position: static;
+        margin: auto;
+        display: block;
+        right: unset;
+        top: unset;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .contentColTitle .label {
+        position: relative;
+        right: 0;
+        color: var(--primary-font-color);
+        font-size: 10px;
+        display: block;
+    }
+    #last_results_hp .eventContent .eventDateTime {
+        width: 110px;
+    }
+    #content_sportsmenu {
+        padding-bottom: 50px;
+        padding-top: 50px;
+    }
+}
