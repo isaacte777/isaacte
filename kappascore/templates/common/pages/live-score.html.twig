@@ -208,7 +208,7 @@
             white-space: nowrap;
             padding: 24px 0;
             display: flex;
-            align-items: stretch;
+            align-items: flex-start;
             gap: 16px;
         }
         .right-container {
@@ -229,6 +229,9 @@
             padding: 14px;
             overflow: hidden;
             margin-bottom: 0;
+            position: sticky;
+            top: 110px;
+            max-height: calc(100vh - 140px);
         }
 
         ul.list-left-bar-hp {

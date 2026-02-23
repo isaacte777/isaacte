@@ -358,7 +358,7 @@
             white-space: nowrap;
             padding: 24px 0;
             display: flex;
-            align-items: stretch;
+            align-items: flex-start;
             gap: 16px;
         }
         .right-container {
@@ -379,6 +379,9 @@
             padding: 14px;
             overflow: hidden;
             margin-bottom: 0;
+            position: sticky;
+            top: 110px;
+            max-height: calc(100vh - 140px);
         }
 
         ul.list-left-bar-hp {
@@ -466,6 +469,21 @@
     </style>
     <div class="main-container">
 
+        <div class="ks-ad-wrapper" id="ks-ad-top" style="margin-top: 24px;">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
+                    crossorigin="anonymous"></script>
+            <!-- Banner Top Side -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2502506691273037"
+                 data-ad-slot="7159679298"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
         <div class="hp-contents">
 
             <div class="left-bar-container">
@@ -536,21 +554,6 @@
             </div>
 
             <div class="right-container">
-
-                <div class="ks-ad-wrapper" id="ks-ad-top">
-                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
-                            crossorigin="anonymous"></script>
-                    <!-- Banner Top Side -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-2502506691273037"
-                         data-ad-slot="7159679298"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                      (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
-                </div>
 
                 {% if favorite_events|length > 0 %}
 
