@@ -206,23 +206,29 @@
 
         .hp-contents {
             white-space: nowrap;
-            min-height: 600px;
-            padding: 24px 0 48px;
+            padding: 0 0 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
         }
         .right-container {
-            width: calc(100% - 260px);
-            display: inline-block;
+            width: calc(100% - 256px);
+            display: flex;
+            flex-direction: column;
             vertical-align: top;
-            padding-left: 24px;
         }
         .left-bar-container {
             width: 240px;
-            display: inline-block;
+            min-width: 240px;
+            display: flex;
+            flex-direction: column;
             vertical-align: top;
             background: var(--third-bg-color);
             border: 1px solid var(--ks-border);
             border-radius: var(--ks-radius);
             padding: 14px;
+            overflow: hidden;
+            margin-bottom: 0;
         }
 
         ul.list-left-bar-hp {
