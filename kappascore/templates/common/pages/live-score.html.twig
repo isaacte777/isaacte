@@ -206,32 +206,23 @@
 
         .hp-contents {
             white-space: nowrap;
-            padding: 24px 0;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
+            min-height: 600px;
+            padding: 24px 0 48px;
         }
         .right-container {
-            width: calc(100% - 256px);
-            display: flex;
-            flex-direction: column;
+            width: calc(100% - 260px);
+            display: inline-block;
             vertical-align: top;
+            padding-left: 24px;
         }
         .left-bar-container {
             width: 240px;
-            min-width: 240px;
-            display: flex;
-            flex-direction: column;
+            display: inline-block;
             vertical-align: top;
             background: var(--third-bg-color);
             border: 1px solid var(--ks-border);
             border-radius: var(--ks-radius);
             padding: 14px;
-            overflow: hidden;
-            margin-bottom: 0;
-            position: sticky;
-            top: 110px;
-            max-height: calc(100vh - 140px);
         }
 
         ul.list-left-bar-hp {
@@ -277,7 +268,7 @@
         }
 
         .list-left-bar-hp-countries {
-            flex: 1;
+            max-height: 400px;
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.1) transparent;

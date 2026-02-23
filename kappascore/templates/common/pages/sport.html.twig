@@ -11,7 +11,21 @@
         div#content_sport {
             background: var(--secundary-bg-color);
             padding: 24px 15px;
-            min-height: 600px;
+            min-height: 200px;
+            max-height: 70vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.15) transparent;
+        }
+        div#content_sport::-webkit-scrollbar {
+            width: 5px;
+        }
+        div#content_sport::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        div#content_sport::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.15);
+            border-radius: 4px;
         }
         .category_item a {
             padding: 12px 16px 12px 44px;

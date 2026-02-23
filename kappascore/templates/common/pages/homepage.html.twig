@@ -356,16 +356,17 @@
 
         .hp-contents {
             white-space: nowrap;
-            padding: 24px 0;
+            min-height: 600px;
+            padding: 24px 0 48px;
             display: flex;
             align-items: flex-start;
-            gap: 16px;
         }
         .right-container {
-            width: calc(100% - 256px);
+            width: calc(100% - 260px);
             display: flex;
             flex-direction: column;
             vertical-align: top;
+            padding-left: 24px;
         }
         .left-bar-container {
             width: 240px;
@@ -373,15 +374,13 @@
             display: flex;
             flex-direction: column;
             vertical-align: top;
+            gap: 12px;
+        }
+        .left-bar-section {
             background: var(--third-bg-color);
             border: 1px solid var(--ks-border);
             border-radius: var(--ks-radius);
             padding: 14px;
-            overflow: hidden;
-            margin-bottom: 0;
-            position: sticky;
-            top: 110px;
-            max-height: calc(100vh - 140px);
         }
 
         ul.list-left-bar-hp {
@@ -429,7 +428,7 @@
         }
 
         .list-left-bar-hp-countries {
-            flex: 1;
+            max-height: 280px;
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.15) transparent;
@@ -469,21 +468,6 @@
     </style>
     <div class="main-container">
 
-        <div class="ks-ad-wrapper" id="ks-ad-top" style="margin-top: 24px;">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
-                    crossorigin="anonymous"></script>
-            <!-- Banner Top Side -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-2502506691273037"
-                 data-ad-slot="7159679298"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
         <div class="hp-contents">
 
             <div class="left-bar-container">
@@ -499,7 +483,7 @@
                 {% endfor %}
 
                 {% if fixed_leagues > 0 %}
-
+                <div class="left-bar-section">
                     <h2><i class="fa fa-thumb-tack" aria-hidden="true"></i> {{ Translate('Fixed leagues') }}</h2>
 
                     <ul class="list-left-bar-hp">
@@ -513,28 +497,30 @@
                             {% endif %}
                         {% endfor %}
                     </ul>
-
+                </div>
                 {% endif %}
 
-                <h2>{{ Translate('Countries') }}</h2>
+                <div class="left-bar-section">
+                    <h2>{{ Translate('Countries') }}</h2>
 
-                <ul class="list-left-bar-hp list-left-bar-hp-countries">
-                    {% set unique_countries = [] %}
-                    {% set total_countries = 0 %}
-                    {% for result in next_events %}
-                        {% if result.country not in unique_countries %}
-                            {% set unique_countries = unique_countries|merge([result.country]) %}
-                            <li class="filter-by-country-btn" data-cid="{{ result.country_id }}" data-country-code="{{ countyToCode(result.country) }}" data-cn="{{ result.country }}">
-                                <a href="#" data-type="tournament">
-                                    {{ countryToFlag(result.country) }}
-                                    {{ result.country }}
-                                    <i class="fa fa-window-close-o" aria-hidden="true"></i>
-                                </a>
-                            </li>
-                            {% set total_countries = total_countries+1 %}
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                    <ul class="list-left-bar-hp list-left-bar-hp-countries">
+                        {% set unique_countries = [] %}
+                        {% set total_countries = 0 %}
+                        {% for result in next_events %}
+                            {% if result.country not in unique_countries %}
+                                {% set unique_countries = unique_countries|merge([result.country]) %}
+                                <li class="filter-by-country-btn" data-cid="{{ result.country_id }}" data-country-code="{{ countyToCode(result.country) }}" data-cn="{{ result.country }}">
+                                    <a href="#" data-type="tournament">
+                                        {{ countryToFlag(result.country) }}
+                                        {{ result.country }}
+                                        <i class="fa fa-window-close-o" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                {% set total_countries = total_countries+1 %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
 
                 <div class="ks-ad-wrapper" id="ks-ad-leftbar">
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
@@ -554,6 +540,21 @@
             </div>
 
             <div class="right-container">
+
+                <div class="ks-ad-wrapper" id="ks-ad-top">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2502506691273037"
+                            crossorigin="anonymous"></script>
+                    <!-- Banner Top Side -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-2502506691273037"
+                         data-ad-slot="7159679298"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
 
                 {% if favorite_events|length > 0 %}
 
